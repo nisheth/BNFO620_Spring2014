@@ -2,12 +2,39 @@
 
 import argparse
 import os.path
+import sys
 
 
 SEED_FILE = 'OTU_seed.txt'
 FREQ_FILE = 'OTU_frequency.txt'
 ASS_FILE = 'OTU_Assignment.txt'
 WORD_FILE = 'OTU_word.txt'
+
+
+class Sequence:
+    """
+    Holds data for a particular sequence
+    """
+    def __init__(self, defline = None, length = None, sequence = None):
+        self.defline = defline
+        self.sequence = sequence
+        if sequence:
+            self.length = len(sequence)
+        else:
+            self.length = length
+
+    def __str__(self):
+        return '>{}\n{}'.format(self.defline, self.sequence)
+
+    def __lt__(self, other):
+        pass
+
+    def __gt__(self, other):
+        pass
+
+    def __eq__(self, other):
+        pass
+
 
 
 def set_up_parser():
@@ -48,13 +75,32 @@ def fully_qualify_output_files(outdir):
     return so, fo, ao, wo
 
 
+def has_bad_args(*args):
+    """
+    Ascertains whether the given files or directories exist on disk.
+    """
+    bad_args = []
+    for arg in args:
+        if os.path.exists(arg):
+            continue
+        else:
+            bad_args.append(arg)
+    return bad_args
+
+
 def main():
     args = parse_args(set_up_parser())
     infile = args['in_file']
     outdir = args['out_dir']
+
+    # don't want to proceed if the input source or output target don't exist
+    err = has_bad_args(infile, outdir)
+    if err:
+        for bad_arg in err:
+            print "ERROR: path \"{}\" not found".format(bad_arg)
+        sys.exit(1)
+
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
-    # don't want to process anything if the input source or output target don't exist
-    # with open(infile, 'r') as ifh,
 
 
 if __name__ == '__main__':
