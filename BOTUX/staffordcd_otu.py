@@ -17,6 +17,8 @@ class Sequence:
     Holds data for a particular sequence. Implemented comparison functions lt, gt, eq based on length of
     sequence. Implemented len based on length of sequence. Implemented string representation as standard FASTA
     record.
+
+    Python doesn't have static variables, so the module-level global dict freqs{} will be used to fake it.
     """
     # TODO: Add handler for FASTQ formatting?
 
@@ -70,15 +72,27 @@ class Sequence:
             return self.length > other.length
 
     def __eq__(self, other):
-        # todo update this to reflect length vs frequency equality as in lt and gt
-        return self.length == other.length
+        if self.length == other.length:
+            return freqs[self.sequence] == freqs[other.sequence]
+        else:
+            return self.length == other.length
+
+
+class CustomParser(argparse.ArgumentParser):
+    # pass
+    def error(self, message):
+        sys.stderr.write('error: {}\n'.format(message))
+        self.print_help()
+        sys.exit(2)
 
 
 def set_up_parser():
     """
     A simple argv parser, looks for one input file and one output directory
     """
-    parser = argparse.ArgumentParser()
+
+    # parser = argparse.ArgumentParser()
+    parser = CustomParser()
     parser.add_argument('-i',
                         dest = 'in_file',
                         metavar = 'input_file',
@@ -125,6 +139,15 @@ def has_bad_args(*args):
     return bad_args
 
 
+def test1(seqs):
+    i = 1
+    for s in seqs:
+        print '{}: {} {} {}'.format(i, s.defline.split('|')[1], s.length, freqs[s.sequence])
+        if i % 100 == 0:
+            raw_input("Waiting...")
+        i += 1
+
+
 def main():
     args = parse_args(set_up_parser())
     infile = args['in_file']
@@ -148,12 +171,13 @@ def main():
         header = header.lstrip('>')
         sequence = sequence.rstrip()
         seqs.append(Sequence(header, sequence))
-        if sequence in freqs:
-            freqs[sequence] += 1
-        else:
-            freqs[sequence] = 1
+        # if sequence in freqs:
+        #     freqs[sequence] += 1
+        # else:
+        #     freqs[sequence] = 1
     ifh.close()
-    seqs.sort()
+    seqs.sort(reverse = True)
+    # test1(seqs)
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
 
 
