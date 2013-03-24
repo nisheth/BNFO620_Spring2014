@@ -9,32 +9,69 @@ SEED_FILE = 'OTU_seed.txt'
 FREQ_FILE = 'OTU_frequency.txt'
 ASS_FILE = 'OTU_Assignment.txt'
 WORD_FILE = 'OTU_word.txt'
+freqs = {}
 
 
 class Sequence:
     """
-    Holds data for a particular sequence
+    Holds data for a particular sequence. Implemented comparison functions lt, gt, eq based on length of
+    sequence. Implemented len based on length of sequence. Implemented string representation as standard FASTA
+    record.
     """
-    def __init__(self, defline = None, length = None, sequence = None):
+    # TODO: Add handler for FASTQ formatting?
+
+    def __init__(self, defline = None, sequence = None):
+        # self.defline = defline
+        # self.sequence = sequence
+        # if sequence:
+        #     self.length = len(sequence)
+        # else:
+        #     self.length = None
         self.defline = defline
         self.sequence = sequence
         if sequence:
             self.length = len(sequence)
         else:
-            self.length = length
+            self.length = None
+        if sequence in freqs:
+            freqs[sequence] += 1
+            # self.freq = freqs[sequence]
+        else:
+            freqs[sequence] = 1
+            # self.freq = freqs[sequence]
 
     def __str__(self):
+        """
+        Assumes that the input sequence defline will be stripped of the leading '>', otherwise output will feature
+        two of them.
+        """
+
         return '>{}\n{}'.format(self.defline, self.sequence)
 
+    def __len__(self):
+        return self.length
+
+    # def __lt__(self, other):
+    #     return self.length < other.length
+    #
+    # def __gt__(self, other):
+    #     return self.length > other.length
+
     def __lt__(self, other):
-        pass
+        if self.length == other.length:
+            return freqs[self.sequence] < freqs[other.sequence]
+        else:
+            return self.length < other.length
 
     def __gt__(self, other):
-        pass
+        if self.length == other.length:
+            return freqs[self.sequence] > freqs[other.sequence]
+        else:
+            return self.length > other.length
 
     def __eq__(self, other):
-        pass
-
+        # todo update this to reflect length vs frequency equality as in lt and gt
+        return self.length == other.length
 
 
 def set_up_parser():
@@ -100,6 +137,23 @@ def main():
             print "ERROR: path \"{}\" not found".format(bad_arg)
         sys.exit(1)
 
+    seqs = []
+    ifh = open(infile, 'r')
+    while True:
+        header = ifh.readline()
+        sequence = ifh.readline()
+        if not sequence:
+            break
+        header = header.rstrip()
+        header = header.lstrip('>')
+        sequence = sequence.rstrip()
+        seqs.append(Sequence(header, sequence))
+        if sequence in freqs:
+            freqs[sequence] += 1
+        else:
+            freqs[sequence] = 1
+    ifh.close()
+    seqs.sort()
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
 
 
