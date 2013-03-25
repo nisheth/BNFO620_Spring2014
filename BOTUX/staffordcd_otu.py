@@ -23,24 +23,18 @@ class Sequence:
     # TODO: Add handler for FASTQ formatting?
 
     def __init__(self, defline = None, sequence = None):
-        # self.defline = defline
-        # self.sequence = sequence
-        # if sequence:
-        #     self.length = len(sequence)
-        # else:
-        #     self.length = None
         self.defline = defline
         self.sequence = sequence
         if sequence:
             self.length = len(sequence)
         else:
             self.length = None
+        # can probably remove this if, and keep the code in the else; this logic is more or less
+        # handled by the de-dup strategy in main(), I think
         if sequence in freqs:
             freqs[sequence] += 1
-            # self.freq = freqs[sequence]
         else:
             freqs[sequence] = 1
-            # self.freq = freqs[sequence]
 
     def __str__(self):
         """
@@ -52,12 +46,6 @@ class Sequence:
 
     def __len__(self):
         return self.length
-
-    # def __lt__(self, other):
-    #     return self.length < other.length
-    #
-    # def __gt__(self, other):
-    #     return self.length > other.length
 
     def __lt__(self, other):
         if self.length == other.length:
@@ -142,7 +130,7 @@ def has_bad_args(*args):
 def test1(seqs):
     i = 1
     for s in seqs:
-        print '{}: {} {} {}'.format(i, s.defline.split('|')[1], s.length, freqs[s.sequence])
+        print '{:4}: {} {} {}'.format(i, s.defline.split('|')[1], s.length, freqs[s.sequence])
         if i % 100 == 0:
             raw_input("Waiting...")
         i += 1
@@ -170,11 +158,11 @@ def main():
         header = header.rstrip()
         header = header.lstrip('>')
         sequence = sequence.rstrip()
-        seqs.append(Sequence(header, sequence))
-        # if sequence in freqs:
-        #     freqs[sequence] += 1
-        # else:
-        #     freqs[sequence] = 1
+        # roughing in a de-duplication strategy with this if-else
+        if sequence not in freqs:
+            seqs.append(Sequence(header, sequence))
+        else:
+            freqs[sequence] += 1
     ifh.close()
     seqs.sort(reverse = True)
     # test1(seqs)
