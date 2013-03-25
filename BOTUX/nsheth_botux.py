@@ -10,3 +10,6 @@ FREQ_FILE = 'OTU_frequency.txt'
 ASS_FILE = 'OTU_Assignment.txt'
 WORD_FILE = 'OTU_word.txt'
 freqs = {}
+
+
+# Comment ......
