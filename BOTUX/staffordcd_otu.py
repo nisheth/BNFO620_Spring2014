@@ -14,9 +14,9 @@ freqs = {}
 
 class Sequence:
     """
-    Holds data for a particular sequence. Implemented comparison functions lt, gt, eq based on length of
-    sequence. Implemented len based on length of sequence. Implemented string representation as standard FASTA
-    record.
+    Holds data for a particular sequence. Implemented comparison functions lt, gt, eq based on length of sequence first,
+    then based on abundance of sequence. Implemented len based on length of sequence. Implemented string representation
+    as standard FASTA record.
 
     Python doesn't have static variables, so the module-level global dict freqs{} will be used to fake it.
     """
@@ -38,8 +38,8 @@ class Sequence:
 
     def __str__(self):
         """
-        Assumes that the input sequence defline will be stripped of the leading '>', otherwise output will feature
-        two of them.
+        Assumes that the input sequence defline will be stripped of the leading '>' elsewhere, otherwise output will
+        feature two of them.
         """
 
         return '>{}\n{}'.format(self.defline, self.sequence)
