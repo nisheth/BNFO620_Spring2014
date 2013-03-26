@@ -80,17 +80,24 @@ def set_up_parser():
     """
 
     # parser = argparse.ArgumentParser()
-    parser = CustomParser()
-    parser.add_argument('-i',
-                        dest = 'in_file',
-                        metavar = 'input_file',
-                        help = 'The fully-qualified path to the FASTA input file',
-                        required = True)
-    parser.add_argument('-o',
-                        dest = 'out_dir',
-                        metavar = 'output_directory',
-                        help = 'The fully-qualified path to the desired output directory',
-                        required = True)
+    parser = CustomParser(formatter_class = argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('in_file',
+                        metavar = 'input_file'.upper(),
+                        help = 'The fully-qualified path to the FASTA input file')
+    parser.add_argument('out_dir',
+                        metavar = 'output_directory'.upper(),
+                        help = 'The fully-qualified path to the desired output directory')
+    parser.add_argument('-t',
+                        dest = 'trim_length',
+                        help = 'Trim sequences to the specified length',
+                        required = False,
+                        default = None)
+    parser.add_argument('-v',
+                        dest = 'threshold',
+                        metavar = 'threshold_value'.upper(),
+                        help = 'help',
+                        required = False,
+                        default = 0.65)
     return parser
 
 
@@ -145,7 +152,7 @@ def main():
     err = has_bad_args(infile, outdir)
     if err:
         for bad_arg in err:
-            print "ERROR: path \"{}\" not found".format(bad_arg)
+            print "ERROR: target \"{}\" not found".format(bad_arg)
         sys.exit(1)
 
     seqs = []
@@ -158,6 +165,11 @@ def main():
         header = header.rstrip()
         header = header.lstrip('>')
         sequence = sequence.rstrip()
+        # print 'lenght = {}'.format(len(sequence))
+        if args['trim_length'] and len(sequence) > int(args['trim_length']):
+            # print 'Trimming to {}'.format(args['trim_length'])
+            sequence = sequence[:int(args['trim_length'])]
+        # print 'lenght = {}'.format(len(sequence))
         # roughing in a de-duplication strategy with this if-else
         if sequence not in freqs:
             seqs.append(Sequence(header, sequence))
@@ -165,7 +177,7 @@ def main():
             freqs[sequence] += 1
     ifh.close()
     seqs.sort(reverse = True)
-    # test1(seqs)
+    test1(seqs)
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
 
 
