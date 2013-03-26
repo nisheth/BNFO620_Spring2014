@@ -1,3 +1,4 @@
+
 __author__ = 'Marco Abreu'
 
 import subprocess
@@ -7,14 +8,17 @@ import os
 
 Bin_Size = 100
 #GenSource = "/home/bnfo620/M-CAT"
+#Dump = ""
 #Source = ""
 #Results_to = ''
 ### program as arguments accepts the directory with flagstat files and a filename to be written to
 try:
-    if len(sys.argv)<2:
+    if len(sys.argv)<3:
         print "USAGE: python sys.argv[0] input-dir output-dir index \n",
         print "Attempting default value test parameters...."
-        GenSource = 'C:/Users/Owner/PycharmProjects/Homework/mcattest.txt'
+        #GenSource = 'C:/Users/Owner/PycharmProjects/Homework/mcattest.txt'
+        GenSource = 'C:/Users/bccl_user/Desktop/Bnfo691_602/testgenome.txt'
+        Dump = 'C:/Users/bccl_user/Desktop/Bnfo691_602/dump.txt'
         #Results_to = ''
     else:
         GenSource = sys.argv[1]
@@ -25,6 +29,19 @@ print "Source: ",GenSource
 
 #Takein arguments from commandline, and run script which runs 3 programs
 
+def TaxID_to_GI(Dump):
+    f =open(Dump)
+    dump_hash = {}
+    for line in f:
+        gi, tax_id = line.split()
+        #print gi,tax_id
+        if gi not in dump_hash.keys():
+            dump_hash[gi] = tax_id
+        else:
+            pass
+    return dump_hash
+
+
 def Genome_Binner(GenSource, Bin_Size = 1000):
     f =open(GenSource)
     Gen_Bin_Array = []
@@ -34,11 +51,19 @@ def Genome_Binner(GenSource, Bin_Size = 1000):
         if line[0] == ">":
             Gen_Bin_Array.append([Genome_name,sequence_count])
             sequence_count = 0
-            Genome_name = line
+            Genome_name = line.strip()
         else:
             sequence_count += len(line)
     Gen_Bin_Array.append([Genome_name,sequence_count])
     print Gen_Bin_Array
+    return Gen_Bin_Array
+
+def TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000):
+    Hash = TaxID_to_GI(Dump)
+    Array = Genome_Binner(GenSource,Bin_Size)
+    taxID_bins = {}
+
+
 
 
 def fileProcess(Source):
@@ -49,4 +74,4 @@ def fileParse(file):
     pass
 
 
-Genome_Binner(GenSource,Bin_Size
+TaxID_gi_bin_hasher(Dump,GenSource)
