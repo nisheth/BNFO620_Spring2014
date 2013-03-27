@@ -32,6 +32,7 @@ print "Source: ",GenSource, "\n", Dump
 #Takein arguments from commandline, and run script which runs 3 programs
 
 def TaxID_to_GI(Dump):
+    print "TaxIN to gi...START",
     f =open(Dump)
     dump_hash = {}
     for line in f:
@@ -41,9 +42,11 @@ def TaxID_to_GI(Dump):
             dump_hash[gi] = tax_id
         else:
             pass
+    print "TaxID_to_GI...END\n"
     return dump_hash
 
 def Genome_Binner(GenSource, Bin_Size = 1000):
+    print "Genome_Binner... START",
     f =open(GenSource)
     Gen_Bin_Array = []
     sequence_count = 0
@@ -58,15 +61,20 @@ def Genome_Binner(GenSource, Bin_Size = 1000):
             sequence_count += len(line)
     Gen_Bin_Array.append([Genome_name,sequence_count])
     #print Gen_Bin_Array
+    print "Genome_Binner...END\n"
     return Gen_Bin_Array
 
 def TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000):
+    print "TaxID_gi_bin_Hasher... START\n",
     Hash = TaxID_to_GI(Dump)  #hash[gi]=tax id
     Array = Genome_Binner(GenSource,Bin_Size)  #gi_num, sequence length
     taxID_bins = {}
     for i,index in enumerate(Array):
-        gi_num = Array[0]
-        bin_num = Array[1]/Bin_Size
+        if i%Bin_Size == 0:
+            print "Count: ",i
+        #print "0",Array[0],"1", Array[1],index
+        gi_num = index[0]
+        bin_num = int(index[1])/int(Bin_Size)
         if gi_num in Hash.keys():
             tax_num = Hash[gi_num]
             if tax_num not in taxID_bins.keys():
@@ -77,6 +85,7 @@ def TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000):
                     taxID_bins[tax_num][gi_num][i] = 0
         else:
             pass
+    print "TAXID gi bin hasher....END\n"
     return taxID_bins
 
 def fileProcess(Source):
@@ -86,4 +95,6 @@ def fileProcess(Source):
 def fileParse(file):
     pass
 
+print "START"
 print TaxID_gi_bin_hasher(Dump,GenSource)
+print "END"
