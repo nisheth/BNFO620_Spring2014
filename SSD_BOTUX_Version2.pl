@@ -25,24 +25,29 @@ my $uniq = 0;
 $line = <IN>;
 chomp $line;
 
-	while($line = <IN>) {	
-			if ($line =~ /^>(\w+)\|/)  {
-			$SeqName =$1;
-			}
-			else {
-			$num_of_reads ++;
-			$seq = $line;
-			$seq_length = length($seq) -1 ;
-			}
-#print OUT ($seq_length, "\t", $seq, "\n");			
-		
+$seq = "";
+
+while($line = <IN>) {	
+		if ($line =~ /^>(\w+)\|/)  {
+			if($seq ne "") { 				
+				$seq_length = length($seq) ;
 				if(exists $Seq_Hash{$seq_length}{$seq}){
-					$Seq_Hash{$seq_length}{$seq}{count} +=1;
+				    $Seq_Hash{$seq_length}{$seq}{count} +=1;
 				}
 				else{
-					$Seq_Hash{$seq_length}{$seq}{count} = 1;
-					$uniq ++;
+				    $Seq_Hash{$seq_length}{$seq}{count} = 1;
+				    $uniq ++;
 				}				
+			$SeqName =$1;
+			$seq = "";	
+		}
+		else {
+			$num_of_reads ++;
+			$seq .= $line;  # sequence can be on multiple lines  
+		}
+#print OUT ($seq_length, "\t", $seq, "\n");			
+		
+				
 }
 
 foreach $seq_length ( sort (keys (%Seq_Hash))) {
