@@ -8,24 +8,26 @@ import os
 
 Bin_Size = 100
 #GenSource = "/home/bnfo620/M-CAT"
-#Dump = ""
 #Source = ""
 #Results_to = ''
 ### program as arguments accepts the directory with flagstat files and a filename to be written to
 try:
-    if len(sys.argv)<3:
+    if len(sys.argv)<2:
         print "USAGE: python sys.argv[0] input-dir output-dir index \n",
         print "Attempting default value test parameters...."
         #GenSource = 'C:/Users/Owner/PycharmProjects/Homework/mcattest.txt'
-        GenSource = 'C:/Users/bccl_user/Desktop/Bnfo691_602/testgenome.txt'
-        Dump = 'C:/Users/bccl_user/Desktop/Bnfo691_602/dump.txt'
+        #GenSource = 'C:/Users/bccl_user/Desktop/Bnfo691_602/testgenome.txt'
+        #Dump = 'C:/Users/bccl_user/Desktop/Bnfo691_602/dump.txt'
+        #Dump = 'C:/Users/Owner/PycharmProjects/Homework/dump.txt'
         #Results_to = ''
+        GenSource = "/home/bnfo620/M-CAT/All_Bacteria_Drafts+.fna"
+        Dump = "/home/bnfo620/M-CAT/gi_taxid_nucl.dmp"
     else:
         GenSource = sys.argv[1]
         #Results_to = sys.argv[2]
 except IOError:
     print "Error in input"
-print "Source: ",GenSource
+print "Source: ",GenSource, "\n", Dump
 
 #Takein arguments from commandline, and run script which runs 3 programs
 
@@ -41,7 +43,6 @@ def TaxID_to_GI(Dump):
             pass
     return dump_hash
 
-
 def Genome_Binner(GenSource, Bin_Size = 1000):
     f =open(GenSource)
     Gen_Bin_Array = []
@@ -51,20 +52,32 @@ def Genome_Binner(GenSource, Bin_Size = 1000):
         if line[0] == ">":
             Gen_Bin_Array.append([Genome_name,sequence_count])
             sequence_count = 0
-            Genome_name = line.strip()
+            temp = line.split("|")
+            Genome_name = temp[1]
         else:
             sequence_count += len(line)
     Gen_Bin_Array.append([Genome_name,sequence_count])
-    print Gen_Bin_Array
+    #print Gen_Bin_Array
     return Gen_Bin_Array
 
 def TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000):
-    Hash = TaxID_to_GI(Dump)
-    Array = Genome_Binner(GenSource,Bin_Size)
+    Hash = TaxID_to_GI(Dump)  #hash[gi]=tax id
+    Array = Genome_Binner(GenSource,Bin_Size)  #gi_num, sequence length
     taxID_bins = {}
-
-
-
+    for i,index in enumerate(Array):
+        gi_num = Array[0]
+        bin_num = Array[1]/Bin_Size
+        if gi_num in Hash.keys():
+            tax_num = Hash[gi_num]
+            if tax_num not in taxID_bins.keys():
+                taxID_bins[tax_num] = {}
+            if gi_num not in taxID_bins[tax_num].keys():
+                taxID_bins[tax_num][gi_num]={}
+                for i in xrange(bin_num):
+                    taxID_bins[tax_num][gi_num][i] = 0
+        else:
+            pass
+    return taxID_bins
 
 def fileProcess(Source):
     for filename in os.listdir(Source):
@@ -73,5 +86,4 @@ def fileProcess(Source):
 def fileParse(file):
     pass
 
-
-TaxID_gi_bin_hasher(Dump,GenSource)
+print TaxID_gi_bin_hasher(Dump,GenSource)
