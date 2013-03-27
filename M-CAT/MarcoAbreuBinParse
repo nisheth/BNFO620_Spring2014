@@ -1,0 +1,52 @@
+__author__ = 'Marco Abreu'
+
+import subprocess
+import sys
+import os
+
+
+Bin_Size = 100
+#GenSource = "/home/bnfo620/M-CAT"
+#Source = ""
+#Results_to = ''
+### program as arguments accepts the directory with flagstat files and a filename to be written to
+try:
+    if len(sys.argv)<2:
+        print "USAGE: python sys.argv[0] input-dir output-dir index \n",
+        print "Attempting default value test parameters...."
+        GenSource = 'C:/Users/Owner/PycharmProjects/Homework/mcattest.txt'
+        #Results_to = ''
+    else:
+        GenSource = sys.argv[1]
+        #Results_to = sys.argv[2]
+except IOError:
+    print "Error in input"
+print "Source: ",GenSource
+
+#Takein arguments from commandline, and run script which runs 3 programs
+
+def Genome_Binner(GenSource, Bin_Size = 1000):
+    f =open(GenSource)
+    Gen_Bin_Array = []
+    sequence_count = 0
+    Genome_name = ""
+    for line in f:
+        if line[0] == ">":
+            Gen_Bin_Array.append([Genome_name,sequence_count])
+            sequence_count = 0
+            Genome_name = line
+        else:
+            sequence_count += len(line)
+    Gen_Bin_Array.append([Genome_name,sequence_count])
+    print Gen_Bin_Array
+
+
+def fileProcess(Source):
+    for filename in os.listdir(Source):
+        print "filename:", filename
+
+def fileParse(file):
+    pass
+
+
+Genome_Binner(GenSource,Bin_Size

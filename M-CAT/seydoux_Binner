@@ -1,0 +1,71 @@
+import sys
+import os
+from __future__ import division
+import re
+from collections import defaultdict
+from Bio import SeqIO
+import math
+
+class binner(object):
+
+    ### check to see if the 2 files were inputted from the command line and outfile was enetered and if bin length was given
+    if len(sys.argv) < 4 or len(sys.argv) > 4:
+        print "USAGE: python sys.argv[0] dmp File, gi File and out File \n"
+        print "Using default files and bin length of 1000 ncs"
+        dmpFile = "/home/bnfo620/M-CAT/gi_taxid_nucl.dmp"
+        giFile = "/home/bnfo620/M-CAT/All_Bacteria_Drafts+.fna"
+        outFile = "/home/seydouxmib/bnfo620/outfile.txt"
+        binlenth = 1000
+
+    elif len(sys.argv) == 4:
+        dmpFile = sys.argv[1]
+        giFile = sys.argv[2]
+        outFile = sys.argv[3]
+        binlength = sys.argv[4]
+
+    ### now create dicts need one for the dmp file
+    names = {}
+    ### open dmp file and read in line by line to generate dict
+    try:
+        f = file(dmpFile)
+    except IOError:
+        print "The file, %s, does not exist" % dmpFile
+
+    for line in f:
+        info = line.split("\t")
+        gi = info[0]
+        tax = info[1]
+        names[gi] = tax
+
+    lengths = {}
+    ### now go through fasta file to store seq len, gi and get tax
+    for seq_record in SeqIO.parse(giFile, "fasta"):
+        header = seq_record.id
+        info = header.spilt("|")
+        ### this is based off of the gi number being then 2nd element in the header
+        gi = info[1]
+        #print repr(seq_record.seq)
+        length = len(seq_record)
+        tax = names[gi]
+        lengths[tax][gi] = length
+
+
+    bins = {}
+    giBins = {}
+
+    for taxID in lengths:
+        bincount = 1
+        for gis in lengths[taxID]:
+            remain = lengths[taxID][gis] % binlength
+            if remain < binlength /2:
+                numBins = lengths[taxID][gis] / binlength
+            else:
+                numBins = lengths[taxID][gis] / binlength
+                numBins += 1
+            giBins[gis] = numBins
+
+
+
+    out = open(outFile, 'w')
+    for each in bins:
+        out.write(each)
