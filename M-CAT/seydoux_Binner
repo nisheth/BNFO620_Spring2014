@@ -1,8 +1,5 @@
-import sys
-import os
 from __future__ import division
-import re
-from collections import defaultdict
+import sys
 from Bio import SeqIO
 import math
 
@@ -63,9 +60,40 @@ class binner(object):
                 numBins = lengths[taxID][gis] / binlength
                 numBins += 1
             giBins[gis] = numBins
+            ### now calc bins
+            start = 0
+            end = binlength
+            i = 1
+            while i <= numBins:
+                if i == numBins:
+                    end = lengths[taxID][gis]
+                    bins[(taxID, gis, i)] = [start, end]
+                else:
+                    bins[(taxID, gis, i)] = [start, end]
+                    start += binlength
+                    end += binlength
+                i += 1
+    #
+    # for taxID in lengths:
+    #     bincount = 1
+    #     for gis in lengths[taxID]:
+    #         start = 0
+    #         end = binlength
+    #         numBins = giBins[gis]
+    #         i = 1
+    #         while i <= numBins:
+    #             if i == numBins:
+    #                 end = lengths[taxID][gis]
+    #                 bins[(taxID, gis, i)] = [start, end]
+    #             else:
+    #                 bins[(taxID, gis, i)] = [start, end]
+    #                 start += binlength
+    #                 end += binlength
+    #             i += 1
 
 
 
     out = open(outFile, 'w')
+    out.write("TaxID \t gi \t start \t end \t binNum")
     for each in bins:
-        out.write(each)
+        out.write(each[0],"\t",each[1],'\t',bins[each][0],"\t",bins[each][1],"\t",each[2])
