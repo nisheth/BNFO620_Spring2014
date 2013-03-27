@@ -76,7 +76,8 @@ class CustomParser(argparse.ArgumentParser):
 
 def set_up_parser():
     """
-    A simple argv parser, looks for one input file and one output directory
+    A simple argv parser, looks for one input file and one output directory (positional, mandatory); desired trim
+    length and threshold value (flags, optional)
     """
 
     # parser = argparse.ArgumentParser()
