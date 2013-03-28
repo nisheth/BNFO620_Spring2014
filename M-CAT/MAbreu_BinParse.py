@@ -1,4 +1,3 @@
-
 __author__ = 'Marco Abreu'
 
 import subprocess
@@ -16,9 +15,9 @@ try:
         print "USAGE: python sys.argv[0] input-dir output-dir index \n",
         print "Attempting default value test parameters...."
         #GenSource = 'C:/Users/Owner/PycharmProjects/Homework/mcattest.txt'
+        #Dump = 'C:/Users/Owner/PycharmProjects/Homework/dump.txt'
         #GenSource = 'C:/Users/bccl_user/Desktop/Bnfo691_602/testgenome.txt'
         #Dump = 'C:/Users/bccl_user/Desktop/Bnfo691_602/dump.txt'
-        #Dump = 'C:/Users/Owner/PycharmProjects/Homework/dump.txt'
         #Results_to = ''
         GenSource = "/home/bnfo620/M-CAT/All_Bacteria_Drafts+.fna"
         Dump = "/home/bnfo620/M-CAT/gi_taxid_nucl.dmp"
@@ -38,14 +37,15 @@ def TaxID_to_GI(Dump):
     for line in f:
         gi, tax_id = line.split()
         #print gi,tax_id
-        if gi not in dump_hash.keys():
-            dump_hash[gi] = tax_id
+        if tax_id not in dump_hash.keys():
+            dump_hash[tax_id] = []
+            dump_hash[tax_id].append(gi)
         else:
-            pass
+            dump_hash[tax_id].append(gi)
     print "TaxID_to_GI...END\n"
     return dump_hash
 
-def Genome_Binner(GenSource, Bin_Size = 1000):
+def Genome_Binner(dump_hash,GenSource, Bin_Size = 1000):
     print "Genome_Binner... START",
     f =open(GenSource)
     Gen_Bin_Array = []
@@ -53,21 +53,49 @@ def Genome_Binner(GenSource, Bin_Size = 1000):
     Genome_name = ""
     for line in f:
         if line[0] == ">":
-            Gen_Bin_Array.append([Genome_name,sequence_count])
+            #print sequence_count
+            if sequence_count != 0:
+                bin = Scount_bin(sequence_count,Bin_Size)
+                #Gen_Bin_Array.append([Genome_name,sequence_count])
+                for key in dump_hash.keys():
+                    #print "Key",key
+                    if Genome_name in dump_hash.keys():
+                        dump_hash[key][Genome_name]=bin
+                    else:
+                        pass
             sequence_count = 0
             temp = line.split("|")
             Genome_name = temp[1]
         else:
+            Gen_Bin_Array=[]  #reset to 0
             sequence_count += len(line)
-    Gen_Bin_Array.append([Genome_name,sequence_count])
+    #Gen_Bin_Array.append([Genome_name,sequence_count])
     #print Gen_Bin_Array
     print "Genome_Binner...END\n"
-    return Gen_Bin_Array
+    return dump_hash
+
+def Scount_bin(counts, size):
+    bin={}
+    bin_number = float(float(counts)/float(size))
+    #print "Sbin",bin_number
+    if bin_number >= 1:
+        remainder = bin_number-int(bin_number)
+        if remainder >= .5:
+            bin_number=int(bin_number)+1
+        else:
+            bin_number=int(bin_number)
+        for i in xrange(bin_number):
+            bin[str(str(i)+"_bin")]=0
+    else:
+        bin["0_bin"]=0
+    return bin
+
+
 
 def TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000):
     print "TaxID_gi_bin_Hasher... START\n",
-    Hash = TaxID_to_GI(Dump) #hash[gi]=tax id
-    Array = Genome_Binner(GenSource,Bin_Size) #gi_num, sequence length
+    Hash = TaxID_to_GI(Dump)  #hash[gi]=tax id
+    Array = Genome_Binner(GenSource,Bin_Size)  #gi_num, sequence length
     taxID_bins = {}
     for i,index in enumerate(Array):
         if i%Bin_Size == 0:
@@ -96,6 +124,7 @@ def fileParse(file):
     pass
 
 print "START"
-print TaxID_gi_bin_hasher(Dump,GenSource)
+
+Genome_Binner(TaxID_to_GI(Dump),GenSource)
+#print TaxID_gi_bin_hasher(Dump,GenSource)
 print "END"
- 

@@ -43,7 +43,11 @@ class binner(object):
         gi = info[1]
         #print repr(seq_record.seq)
         length = len(seq_record)
-        tax = names[gi]
+        ### checks to see if tax id exists, if not, assigns default value that we can search for later and remove orphan gis
+        if names[gi]:
+            tax = names[gi]
+        else:
+            tax = 0000
         lengths[tax][gi] = length
 
 

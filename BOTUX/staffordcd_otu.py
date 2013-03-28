@@ -20,7 +20,8 @@ class Sequence:
 
     Python doesn't have static variables, so the module-level global dict freqs{} will be used to fake it.
     """
-    # TODO: Add handler for FASTQ formatting?
+    # TODO: Add list of IDs that correspond with a given sequence
+    # TODO: Add list of words in the sequence, window size = 8
 
     def __init__(self, defline = None, sequence = None):
         self.defline = defline
@@ -76,7 +77,8 @@ class CustomParser(argparse.ArgumentParser):
 
 def set_up_parser():
     """
-    A simple argv parser, looks for one input file and one output directory
+    A simple argv parser, looks for one input file and one output directory (positional, mandatory); desired trim
+    length and threshold value (flags, optional)
     """
 
     # parser = argparse.ArgumentParser()
@@ -137,13 +139,14 @@ def has_bad_args(*args):
 def test1(seqs):
     i = 1
     for s in seqs:
-        print '{:4}: {} {} {}'.format(i, s.defline.split('|')[1], s.length, freqs[s.sequence])
+        print '{:4}: {} {}'.format(i, s.length, freqs[s.sequence])
         if i % 100 == 0:
-            raw_input("Waiting...")
+            raw_input("Press enter to continue...")
         i += 1
 
 
 def main():
+    # TODO: add FASTQ handler
     args = parse_args(set_up_parser())
     infile = args['in_file']
     outdir = args['out_dir']
