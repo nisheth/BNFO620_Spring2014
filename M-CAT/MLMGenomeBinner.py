@@ -3,6 +3,7 @@ import re
 import os
 import sys
 import math
+import profile
 
 def load_Tax_id(filename):
     """
@@ -20,9 +21,10 @@ def load_Tax_id(filename):
     print "creating gi => tax_id hash..."
     for line in f:
         line = line.rstrip()
-        info = re.search(r'(?P<gi>\d+)\s+(?P<tax>\d+)\s*',line)             #get the gi number and tax_id
-        taxId[info.group('gi')]= info.group('tax')                          #create the hash
+        gi,tax = line.split()             #get the gi number and tax_id
+        taxId[gi]= tax                          #create the hash
     print "Finished"
+    f.close()
     return taxId
 
 def load_sequences(reference,taxIDRef,binSize,output):
@@ -51,14 +53,17 @@ def load_sequences(reference,taxIDRef,binSize,output):
 
     print "Loading sequences and creating bin hash file..."
 
-    count = 0                           #initialize a counter, every 1000 sequences I will print something
+    count = 1                           #initialize a counter, every 1000 sequences I will print something
 
     for line in f:                                 #go line by line through the file until the end of the file
         if re.match("^>",line):                 #see if it starts with '>' if so store the header
             line = line.rstrip()                #remove whitespace at end of line
             line = line.strip(">")              #remove the > from the header
-            gi = re.search(r'gi\|(?P<giNumber>\d+)\|',line)               #retrieve the gi number
-            tax_id = taxID[gi.group('giNumber')]                          #retrieve the tax_id from the taxId hash
+            gi,giNumber,ref,refNumber,stuff = line.split('|')               #retrieve the gi number
+            try:
+                tax_id = taxID[giNumber]                          #retrieve the tax_id from the taxId hash
+            except KeyError:
+                tax_id = refNumber
             if not previous:                                              #if there was no previous seq
                 previous = tax_id                                         #set previous to current tax_id
             else:
@@ -69,12 +74,14 @@ def load_sequences(reference,taxIDRef,binSize,output):
             binHash,Bin = bin_genome(line.rstrip(),binSize,Bin)           #get binHash for current sequence
             for each in binHash:                                          #for each in the bin hash
                 start,end = binHash[each].split("...")                    #get the start and end positions
-                string = tax_id+"\t\t"+gi.group('giNumber')+"\t\t"+start+"\t\t"+end+"\t\t"+str(each)                #create a string with the bin information
+                string = tax_id+"\t\t"+giNumber+"\t\t"+start+"\t\t"+end+"\t\t"+str(each)                #create a string with the bin information
                 print >> out,string                                       #print string to the out file
             count += 1
+            #tax_id = None
         if count % 1000 == 0:
             print count, "Sequences have been processed and the length of the current sequence was", len(line),"..."
     print "Finished!"
+    print "Your output was printed to "+output
 
 def bin_genome(sequence,binSize,Bin):
     """
@@ -130,15 +137,16 @@ def main():
     taxIdRef = sys.argv[2]
     binSize = int(sys.argv[3])
     output = sys.argv[4]
-    #reference = "MLMTestRef.fna"                         #use for testing
-    #taxIdRef = "MLMTestTax.fna"                          #use for testing
-    #binSize = 5                                          #use for testing
-    #output = "MLMTestOut.txt"                            #use for testing
+    '''
+    reference = "MLMTestRef.fna"
+    taxIdRef = "MLMTestTax.fna"
+    binSize = 5
+    output = "MLMTestOut.txt"
+    '''
     load_sequences(reference,taxIdRef,binSize,output)
 
-
 if __name__ == '__main__':
-    main()
+    profile.run("main()","genomebinprofile.tmp")
 
 
 
