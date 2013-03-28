@@ -1,48 +1,62 @@
 use strict;
-use warnings;
+use warnings; 
 
-my $inputfile = shift;
-my $outfile = shift;
+my $inputfile = shift; 
+my $outfile = shift; 
 
-if(!defined ($outfile)) {
-  print "USAGE Instruction: Please provide an input file and output file"; 
+if (!defined ($outfile)) {
+	print "USAGE: Please provide an input file and output file"; 
 }
 
-my %myHash;
-my @ProjectArray;
-my @lengths; 
-my @sortSequence;
+my %seqHash; 
+my ($lengthOfSequence, $duplicatedSeq); 
+my $sequence = "";
+my $firstline = 1; 
+my $totalReads = 0; 
+my $uniqueSeq; 
 
-my $count =0;
-my $Sequence = "";  
-my $lengthsSequence; 
-my $header; 
+open INFILE, "$inputfile" or die "Error in opening the $inputfile\n"; 
+open OUTFILE, ">$outfile" or die "Error in opening the $outfile\n";
 
-open INFILE, "$inputfile" or die "Error in opening the $inputfile\n";
-open OUTFILE, ">$outfile" or die "Error in opening the $outfile\n"; 
+while(<INFILE>) {	
+		if (m/^>/)  {
+			if(!$firstline) {
+				$sequence = ""; 
+				} 
+				$firstline = 0; 
+			}
+			else {
+				chomp;
+				$sequence .= $_; 
+				$lengthOfSequence = length ($sequence); 
+				$totalReads++; 
+				#print OUTFILE $lengthOfSequence. "\t";
 
-my $line = <INFILE>;
-while ($line = <INFILE>) {
-	chomp $line;
-	if ($line =~ /^>(\w+)\|/) 
-	{	
-		$header = $1;
-	} 
-	else {
-	$Sequence = $line; 
+				if(exists $seqHash{$lengthOfSequence}{$sequence}) {
+					$seqHash{$lengthOfSequence}{$sequence} += 1; 
+				} else {
+					$seqHash{$lengthOfSequence}{$sequence} = 1; 
+					$uniqueSeq++; 
+				}
+			} 
+			#print OUTFILE $sequence. "\n";
+		} #end of while-loop
+
+my $abundance; 
+my $length; 
+
+foreach my $firstKey (sort keys %seqHash){
+	print OUTFILE ("--------------------------------", "\n");
+	foreach my $secondKey (sort keys %{$seqHash{$firstKey}}){
+
+		#print OUTFILE ("Sequence:", $secondKey, "\n"); 
+		$abundance = $seqHash{$firstKey}{$secondKey};
+		$length = $firstKey;
+		print OUTFILE ("Length:", $length, "\t", "\t", "\t", "Abundance:", $abundance, "\n"); 
+	}
 }
-$lengthsSequence = length($Sequence);
 
-if (exists $myHash{$Sequence}) {
-		$myHash{$Sequence}{$count}++; 
-}
-	else {
-	$myHash{$Sequence}{$count}= 1; 
-}
+print OUTFILE ("\nTotal Reads:", $totalReads, "\n", "Total unique sequences:", $uniqueSeq, "\n"); 
 
-}
-
-foreach my $key (sort {$myHash{$b}{$count} <=> $myHash{$a}{$count}} keys %myHash) {
-	my $numbers = $myHash{$key}{$count};
-	print OUTFILE "\nCount Of Duplicate Sequenceuence = $numbers\t";	
-}
+close INFILE; 
+close OUTFILE; 
