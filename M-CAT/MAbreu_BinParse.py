@@ -37,11 +37,11 @@ def TaxID_to_GI(Dump):
     for line in f:
         gi, tax_id = line.split()
         #print gi,tax_id
-        if tax_id not in dump_hash.keys():
-            dump_hash[tax_id] = []
-            dump_hash[tax_id].append(gi)
+        if int(tax_id) not in dump_hash.keys():
+            dump_hash[int(tax_id)] = {}
+            dump_hash[int(tax_id)][int(gi)]={}
         else:
-            dump_hash[tax_id].append(gi)
+            dump_hash[int(tax_id)][int(gi)]={}
     print "TaxID_to_GI...END\n"
     return dump_hash
 
@@ -58,18 +58,19 @@ def Genome_Binner(dump_hash,GenSource, Bin_Size = 1000):
                 bin = Scount_bin(sequence_count,Bin_Size)
                 #Gen_Bin_Array.append([Genome_name,sequence_count])
                 for key in dump_hash.keys():
-                    #print "Key",key
-                    if Genome_name in dump_hash.keys():
+                    print "Key",key,dump_hash[key],":",Genome_name
+                    if Genome_name in dump_hash[key]:
+                        print "test:",key, Genome_name,bin
                         dump_hash[key][Genome_name]=bin
                     else:
                         pass
             sequence_count = 0
             temp = line.split("|")
-            Genome_name = temp[1]
+            Genome_name = int(temp[1])
         else:
-            Gen_Bin_Array=[]  #reset to 0
+            Gen_Bin_Array=[] #reset to 0
             sequence_count += len(line)
-    #Gen_Bin_Array.append([Genome_name,sequence_count])
+        #Gen_Bin_Array.append([Genome_name,sequence_count])
     #print Gen_Bin_Array
     print "Genome_Binner...END\n"
     return dump_hash
@@ -88,19 +89,20 @@ def Scount_bin(counts, size):
             bin[str(str(i)+"_bin")]=0
     else:
         bin["0_bin"]=0
+    #print bin
     return bin
 
 
 
 def TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000):
     print "TaxID_gi_bin_Hasher... START\n",
-    Hash = TaxID_to_GI(Dump)  #hash[gi]=tax id
-    Array = Genome_Binner(GenSource,Bin_Size)  #gi_num, sequence length
+    Hash = TaxID_to_GI(Dump) #hash[gi]=tax id
+    Array = Genome_Binner(GenSource,Bin_Size) #gi_num, sequence length
     taxID_bins = {}
     for i,index in enumerate(Array):
         if i%Bin_Size == 0:
             print "Count: ",i
-        #print "0",Array[0],"1", Array[1],index
+            #print "0",Array[0],"1", Array[1],index
         gi_num = index[0]
         bin_num = int(index[1])/int(Bin_Size)
         if gi_num in Hash.keys():
@@ -125,6 +127,10 @@ def fileParse(file):
 
 print "START"
 
-Genome_Binner(TaxID_to_GI(Dump),GenSource)
+hashX= Genome_Binner(TaxID_to_GI(Dump),GenSource)
 #print TaxID_gi_bin_hasher(Dump,GenSource)
 print "END"
+
+for key in hashX.keys():
+    #for key2 in hashX[key].keys():
+        print key,hashX[key]

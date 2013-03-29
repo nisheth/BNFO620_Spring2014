@@ -1,0 +1,73 @@
+use strict;
+use warnings;
+
+my $infile = shift;
+my $outfile = shift;
+
+if(!defined ($outfile)) {
+  print "ERROR MSG: Please provide an input file and an output file\n"; 
+}
+open IFH, "$infile" or die "Error in opening the infile\n";
+open OFH, ">$outfile" or die "Error in opening the infile\n";
+
+my %HashOfSeq;
+my $line; 
+my $Header; 
+my $Seq = "";
+my $LenSeq =0; 
+my $TotalSeqInFile =0; 
+my $nonDuplicatedSeq =0; 
+my $LenSubString;
+my $subString;
+my $bothLen; 
+my $Multiple_Read;
+
+while($line = <IFH>){
+if ($line =~ /(^>\w+\|)/g) {
+	chomp $line; 
+	$Header = $1; 
+	#print $Header, "\n\n"; 
+}
+else {
+	$Seq = $line; 
+	#print $Seq, "\n\n"; 
+	$LenSeq = length($Seq); 
+if ($LenSeq > 480) {
+	$subString = substr($Seq, 0, 480);
+	#print $subString, "\n";
+	#print $LenSubString = length($subString), "\n"; 
+}
+elsif($LenSeq < 480) {
+	#print $LenSeq, "\n"; 
+	$bothLen = ($LenSubString, $LenSeq);
+	#print $bothLen, "\n\n";
+
+if (exists $HashOfSeq{$bothLen}{$Seq}){
+	$HashOfSeq{$bothLen}{$Seq} ++; 
+} # end if exists loop
+
+else {
+	$HashOfSeq{$bothLen}{$Seq} = 1; 
+	$nonDuplicatedSeq++; 
+} # end second else loop
+	
+}
+	#print $LenSeq, "\n";
+	$TotalSeqInFile++; 
+} # end else loop
+} # end while
+#print $TotalSeqInFile, "\n"; 
+
+
+
+
+foreach my $Len_element ( sort keys %HashOfSeq) {
+print OFH "---------------------------------------------\n"; 
+foreach my $Seq_element ( sort keys %{$HashOfSeq{$Len_element}}) {
+
+$Multiple_Read = $HashOfSeq{$Len_element}{$Seq_element};
+print OFH "Abundance = $Multiple_Read, Length = $Len_element\n\n"; 
+} # end second foreach
+} # end first foreach
+
+print OFH ("Total number of sequences = $TotalSeqInFile, \n Single Read = $nonDuplicatedSeq \n"); 
