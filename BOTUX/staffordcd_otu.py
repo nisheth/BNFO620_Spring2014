@@ -67,7 +67,7 @@ class Sequence:
             return self.length == other.length
 
 
-class CustomParser(argparse.ArgumentParser):
+class CustomCLOptionParser(argparse.ArgumentParser):
     # pass
     def error(self, message):
         sys.stderr.write('error: {}\n'.format(message))
@@ -75,17 +75,29 @@ class CustomParser(argparse.ArgumentParser):
         sys.exit(2)
 
 
-def set_up_parser():
+# def legal_trim_length(tl):
+#     if tl < 0 or not isinstance(tl, int):
+#         raise argparse.ArgumentTypeError("trim length must be an integer")
+#
+# def legal_threshold_value(tv):
+#     if tv < 0 or
+
+
+def set_up_CL_parser():
     """
     A simple argv parser, looks for one input file and one output directory (positional, mandatory); desired trim
     length and threshold value (flags, optional)
     """
 
     # parser = argparse.ArgumentParser()
-    parser = CustomParser(formatter_class = argparse.ArgumentDefaultsHelpFormatter)
+    parser = CustomCLOptionParser(formatter_class = argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('in_file',
                         metavar = 'input_file'.upper(),
-                        help = 'The fully-qualified path to the FASTA input file')
+                        help = 'The fully-qualified path to the input file.')
+    parser.add_argument('-fq',
+                        action = 'store_true',
+                        help = 'Set input file type to FASTQ',
+                        default = False)
     parser.add_argument('out_dir',
                         metavar = 'output_directory'.upper(),
                         help = 'The fully-qualified path to the desired output directory')
@@ -93,12 +105,14 @@ def set_up_parser():
                         dest = 'trim_length',
                         help = 'Trim sequences to the specified length',
                         required = False,
+                        type = int,
                         default = None)
     parser.add_argument('-v',
                         dest = 'threshold',
                         metavar = 'threshold_value'.upper(),
-                        help = 'help',
+                        help = 'Minimum threshold for calling a \"match\" between a sequence and an OTU',
                         required = False,
+                        type = float,
                         default = 0.65)
     return parser
 
@@ -109,6 +123,28 @@ def parse_args(parser):
     a Namespace object. The dict seems easier to work with at this point.
     """
     return vars(parser.parse_args())
+
+
+def parse_fasta(fasta_file):
+    header, sequence = None, []
+    for line in fasta_file:
+        line = line.rstrip()
+        if line.startswith(">"):
+            if header:
+                yield (header, ''.join(sequence))
+            header, sequence = line.lstrip('>'), []
+        else:
+            sequence.append(line)
+    if header:
+        yield (header, ''.join(sequence))
+
+
+def parse_fastq(fastq_file):
+    """
+    Note: assumes a "standard" 4-line fastq formatted file. Results will be unpredictable otherwise.
+    """
+    # header, sequence, score = None, None, None
+    print "FASTQ file parsing not implemented."
 
 
 def fully_qualify_output_files(outdir):
@@ -145,9 +181,19 @@ def test1(seqs):
         i += 1
 
 
+def read_fasta_file(ifh, trim_to, seqs):
+    for h, s in parse_fasta(ifh):
+        if trim_to and len(s) > int(trim_to):
+            s = s[:int(trim_to)]
+        if s not in freqs:
+            seqs.append(Sequence(h, s))
+        else:
+            freqs[s] += 1
+
+
 def main():
     # TODO: add FASTQ handler
-    args = parse_args(set_up_parser())
+    args = parse_args(set_up_CL_parser())
     infile = args['in_file']
     outdir = args['out_dir']
 
@@ -159,26 +205,14 @@ def main():
         sys.exit(1)
 
     seqs = []
-    ifh = open(infile, 'r')
-    while True:
-        header = ifh.readline()
-        sequence = ifh.readline()
-        if not sequence:
-            break
-        header = header.rstrip()
-        header = header.lstrip('>')
-        sequence = sequence.rstrip()
-        # print 'lenght = {}'.format(len(sequence))
-        if args['trim_length'] and len(sequence) > int(args['trim_length']):
-            # print 'Trimming to {}'.format(args['trim_length'])
-            sequence = sequence[:int(args['trim_length'])]
-        # print 'lenght = {}'.format(len(sequence))
-        # roughing in a de-duplication strategy with this if-else
-        if sequence not in freqs:
-            seqs.append(Sequence(header, sequence))
-        else:
-            freqs[sequence] += 1
-    ifh.close()
+    if not args['fq']:
+        ifh = open(infile, 'r')
+        read_fasta_file(ifh, args['trim_length'], seqs)
+        ifh.close()
+    else:
+        ifh = open(infile, 'r')
+        parse_fastq(ifh)
+        ifh.close()
     seqs.sort(reverse = True)
     test1(seqs)
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
