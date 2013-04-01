@@ -1,4 +1,3 @@
-
 __author__ = 'Marco Abreu'
 
 import subprocess
@@ -134,7 +133,7 @@ def outfileprint(hash): #Test by printing created outfile
     for key in hash.keys():
         for key1 in hash[key].keys():
             for key2 in hash[key][key1].keys():
-                toString += str(key1)+"\t"+str(key2)+"\t"+str(key)+"\t"+str(hash[key][key1][key2])+"\n"
+                toString += str(key)+"\t"+str(key1)+"\t"+str(key2)+"\t"+str(hash[key][key1][key2])+"\n"
     print "Write...",
     outFile.write(toString)
     print "Close", outFile
