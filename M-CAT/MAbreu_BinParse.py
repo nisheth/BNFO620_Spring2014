@@ -1,3 +1,4 @@
+
 __author__ = 'Marco Abreu'
 
 import subprocess
@@ -61,7 +62,7 @@ def Genome_Binner(dump_hash,GenSource, Bin_Size = 1000):
                 for key in dump_hash.keys():
                     #print "Key",key,dump_hash[key],":",Genome_name
                     if Genome_name in dump_hash[key]:
-                        print "test:",key, Genome_name,bin
+                        #print "test:",key, Genome_name,bin
                         dump_hash[key][Genome_name]=bin
                     else:
                         pass
@@ -145,6 +146,4 @@ hashX= Genome_Binner(TaxID_to_GI(Dump),GenSource)
 outfileprint(hashX)
 #print TaxID_gi_bin_hasher(Dump,GenSource)
 print "END"
-
-
 
