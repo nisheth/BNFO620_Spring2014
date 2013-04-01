@@ -23,6 +23,7 @@ try:
         Dump = "/home/bnfo620/M-CAT/gi_taxid_nucl.dmp"
     else:
         GenSource = sys.argv[1]
+        Dump = sys.arg[2]
         #Results_to = sys.argv[2]
 except IOError:
     print "Error in input"
@@ -70,8 +71,8 @@ def Genome_Binner(dump_hash,GenSource, Bin_Size = 1000):
         else:
             Gen_Bin_Array=[] #reset to 0
             sequence_count += len(line)
-        #Gen_Bin_Array.append([Genome_name,sequence_count])
-    #print Gen_Bin_Array
+            #Gen_Bin_Array.append([Genome_name,sequence_count])
+        #print Gen_Bin_Array
     print "Genome_Binner...END\n"
     return dump_hash
 
@@ -89,7 +90,7 @@ def Scount_bin(counts, size):
             bin[str(str(i)+"_bin")]=0
     else:
         bin["0_bin"]=0
-    #print bin
+        #print bin
     return bin
 
 
@@ -125,12 +126,24 @@ def fileProcess(Source):
 def fileParse(file):
     pass
 
+def outfileprint(hash): #Test by printing created outfile
+    #f =open(str(os.getcwd()+"/MarcoAbreuResult.txt"))
+    outFile = open('MarcoAbreuResult.txt','w')
+    toString = ""
+    for key in hash.keys():
+        for key1 in hash[key].keys():
+            for key2 in hash[key][key1].keys():
+                toString += str(key1)+"\t"+str(key2)+"\t"+str(key)+"\t"+str(hash[key][key1][key2])
+    print "Write...",
+    outFile.write(toString)
+    print "Close", outFile
+    outFile.close()
+    return "Write Complete"
 print "START"
 
 hashX= Genome_Binner(TaxID_to_GI(Dump),GenSource)
+outfileprint(hashX)
 #print TaxID_gi_bin_hasher(Dump,GenSource)
 print "END"
 
-for key in hashX.keys():
-    #for key2 in hashX[key].keys():
-        print key,hashX[key]
+
