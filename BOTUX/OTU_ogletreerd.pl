@@ -5,7 +5,7 @@ my $inputfile = shift;
 my $outfile = shift; 
 
 if (!defined ($outfile)) {
-	print "USAGE: Please provide an input file and output file"; 
+	die "USAGE: Please provide an input file and output file"; 
 }
 
 my %seqHash; 
@@ -45,7 +45,7 @@ while(<INFILE>) {
 my $abundance; 
 my $length; 
 
-foreach my $firstKey (sort keys %seqHash){
+foreach my $firstKey (reverse sort keys %seqHash){
 	print OUTFILE ("--------------------------------", "\n");
 	foreach my $secondKey (sort keys %{$seqHash{$firstKey}}){
 
