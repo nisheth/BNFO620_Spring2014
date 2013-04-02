@@ -15,10 +15,7 @@ WORD_FILE = 'OTU_word.txt'
 class Sequence:
     """
     Holds data for a particular sequence. Implemented comparison functions lt, gt, eq based on length of sequence first,
-    then based on abundance of sequence. Implemented len based on length of sequence. Implemented string representation
-    as standard FASTA record.
-
-    Python doesn't have static variables, so the module-level global dict freqs{} will be used to fake it.
+    then based on abundance of sequence. Implemented len based on length of sequence.
     """
     # TODO: Add list of IDs that correspond with a given sequence
     # TODO: Add list of words in the sequence, window size = 8
@@ -74,6 +71,8 @@ class Sequence:
             return self.length == other.length
 
     def make_words(self, sequence, word_size):
+        # use a dict instead? is it significant if a word appears more than once?
+        # this just blindly adds each new word w/o regard to uniqueness
         for i in xrange(len(sequence) - word_size + 1):
             self.words.append(sequence[i:word_size + i])
 
@@ -82,6 +81,17 @@ class Sequence:
 
     def get_abundance(self):
         return len(self.deflines)
+
+
+class OTU:
+    def __init__(self, seq, words, read_id):
+        self.seed_seq = seq
+        self.words = words
+        self.read_ids = []
+        self.add_id(read_id)
+
+    def add_id(self, read_id):
+        self.read_ids.append(read_id)
 
 
 class CustomCLOptionParser(argparse.ArgumentParser):
@@ -216,6 +226,12 @@ def read_fasta_file(ifh, trim_to, seqs, word_size):
     return seqs
 
 
+def test2():
+    otus = []
+    otus.append(OTU('ATGC', dict(AT=1, TG=1, GC=1), 'read1'))
+    otus.append(OTU('GTGT', dict(GT=2, TG=1), 'read2'))
+
+
 def main():
     # TODO: add FASTQ handler
     args = parse_args(set_up_CL_parser())
@@ -241,8 +257,8 @@ def main():
         ifh.close()
     sorted_seqs = seqs.values()
     sorted_seqs.sort(reverse = True)
-    test1(sorted_seqs)
-
+    # test1(sorted_seqs)
+    test2()
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
 
 
