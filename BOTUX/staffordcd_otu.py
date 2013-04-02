@@ -9,7 +9,7 @@ SEED_FILE = 'OTU_seed.txt'
 FREQ_FILE = 'OTU_frequency.txt'
 ASS_FILE = 'OTU_Assignment.txt'
 WORD_FILE = 'OTU_word.txt'
-freqs = {}
+# freqs = {}
 
 
 class Sequence:
@@ -24,7 +24,8 @@ class Sequence:
     # TODO: Add list of words in the sequence, window size = 8
 
     def __init__(self, defline = None, sequence = None):
-        self.defline = defline
+        self.deflines = []
+        self.add_header(defline)
         self.sequence = sequence
         if sequence:
             self.length = len(sequence)
@@ -32,39 +33,48 @@ class Sequence:
             self.length = None
         # can probably remove this if, and keep the code in the else; this logic is more or less
         # handled by the de-dup strategy in main(), I think
-        if sequence in freqs:
-            freqs[sequence] += 1
-        else:
-            freqs[sequence] = 1
+        # if sequence in freqs:
+        #     freqs[sequence] += 1
+        # else:
+        #     freqs[sequence] = 1
 
-    def __str__(self):
-        """
-        Assumes that the input sequence defline will be stripped of the leading '>' elsewhere, otherwise output will
-        feature two of them.
-        """
-
-        return '>{}\n{}'.format(self.defline, self.sequence)
+    # def __str__(self):
+    #     """
+    #     Assumes that the input sequence defline will be stripped of the leading '>' elsewhere, otherwise output will
+    #     feature two of them.
+    #     """
+    #
+    #     return '>{}\n{}'.format(self.defline, self.sequence)
 
     def __len__(self):
         return self.length
 
     def __lt__(self, other):
         if self.length == other.length:
-            return freqs[self.sequence] < freqs[other.sequence]
+            # return freqs[self.sequence] < freqs[other.sequence]
+            return self.get_abundance() < other.get_abundance()
         else:
             return self.length < other.length
 
     def __gt__(self, other):
         if self.length == other.length:
-            return freqs[self.sequence] > freqs[other.sequence]
+            # return freqs[self.sequence] > freqs[other.sequence]
+            return self.get_abundance() > other.get_abundance()
         else:
             return self.length > other.length
 
     def __eq__(self, other):
         if self.length == other.length:
-            return freqs[self.sequence] == freqs[other.sequence]
+            # return freqs[self.sequence] == freqs[other.sequence]
+            return self.get_abundance() == other.get_abundance()
         else:
             return self.length == other.length
+
+    def add_header(self, header):
+        self.deflines.append(header)
+
+    def get_abundance(self):
+        return len(self.deflines)
 
 
 class CustomCLOptionParser(argparse.ArgumentParser):
@@ -175,7 +185,7 @@ def has_bad_args(*args):
 def test1(seqs):
     i = 1
     for s in seqs:
-        print '{:4}: {} {}'.format(i, s.length, freqs[s.sequence])
+        print '{:4}: {} {}'.format(i, s.length, s.get_abundance())
         if i % 100 == 0:
             raw_input("Press enter to continue...")
         i += 1
@@ -185,10 +195,13 @@ def read_fasta_file(ifh, trim_to, seqs):
     for h, s in parse_fasta(ifh):
         if trim_to and len(s) > int(trim_to):
             s = s[:int(trim_to)]
-        if s not in freqs:
-            seqs.append(Sequence(h, s))
+        if s not in seqs:
+            # seqs.append(Sequence(h, s))
+            seqs[s] = Sequence(h, s)
         else:
-            freqs[s] += 1
+            # freqs[s] += 1
+            seqs[s].add_header(h)
+    return seqs
 
 
 def main():
@@ -204,17 +217,19 @@ def main():
             print "ERROR: target \"{}\" not found".format(bad_arg)
         sys.exit(1)
 
-    seqs = []
+    seqs = {}
     if not args['fq']:
         ifh = open(infile, 'r')
         read_fasta_file(ifh, args['trim_length'], seqs)
         ifh.close()
     else:
         ifh = open(infile, 'r')
-        parse_fastq(ifh)
+        seqs = parse_fastq(ifh)
         ifh.close()
-    seqs.sort(reverse = True)
-    test1(seqs)
+    sorted_seqs = seqs.values()
+    sorted_seqs.sort(reverse = True)
+    test1(sorted_seqs)
+
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
 
 
