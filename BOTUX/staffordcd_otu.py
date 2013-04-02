@@ -23,12 +23,15 @@ class Sequence:
     # TODO: Add list of IDs that correspond with a given sequence
     # TODO: Add list of words in the sequence, window size = 8
 
-    def __init__(self, defline = None, sequence = None):
+    def __init__(self, defline = None, sequence = None, word_size = 8):
         self.deflines = []
         self.add_header(defline)
+        # do we really need to keep sequence in each object now that the sequence is a key to an external dict?
         self.sequence = sequence
+        self.words = []
         if sequence:
             self.length = len(sequence)
+            self.make_words(sequence, word_size)
         else:
             self.length = None
         # can probably remove this if, and keep the code in the else; this logic is more or less
@@ -70,6 +73,10 @@ class Sequence:
         else:
             return self.length == other.length
 
+    def make_words(self, sequence, word_size):
+        for i in xrange(len(sequence) - word_size + 1):
+            self.words.append(sequence[i:word_size + i])
+
     def add_header(self, header):
         self.deflines.append(header)
 
@@ -78,7 +85,6 @@ class Sequence:
 
 
 class CustomCLOptionParser(argparse.ArgumentParser):
-    # pass
     def error(self, message):
         sys.stderr.write('error: {}\n'.format(message))
         self.print_help()
@@ -124,6 +130,12 @@ def set_up_CL_parser():
                         required = False,
                         type = float,
                         default = 0.65)
+    parser.add_argument('-w',
+                        dest = 'word_size',
+                        help = 'Desired word size',
+                        required = False,
+                        type = int,
+                        default = 8)
     return parser
 
 
@@ -191,13 +203,13 @@ def test1(seqs):
         i += 1
 
 
-def read_fasta_file(ifh, trim_to, seqs):
+def read_fasta_file(ifh, trim_to, seqs, word_size):
     for h, s in parse_fasta(ifh):
         if trim_to and len(s) > int(trim_to):
             s = s[:int(trim_to)]
         if s not in seqs:
             # seqs.append(Sequence(h, s))
-            seqs[s] = Sequence(h, s)
+            seqs[s] = Sequence(h, s, word_size)
         else:
             # freqs[s] += 1
             seqs[s].add_header(h)
@@ -209,6 +221,7 @@ def main():
     args = parse_args(set_up_CL_parser())
     infile = args['in_file']
     outdir = args['out_dir']
+    word_size = args['word_size']
 
     # don't want to proceed if the input source or output target don't exist
     err = has_bad_args(infile, outdir)
@@ -220,7 +233,7 @@ def main():
     seqs = {}
     if not args['fq']:
         ifh = open(infile, 'r')
-        read_fasta_file(ifh, args['trim_length'], seqs)
+        read_fasta_file(ifh, args['trim_length'], seqs, word_size)
         ifh.close()
     else:
         ifh = open(infile, 'r')
