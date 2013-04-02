@@ -79,17 +79,30 @@ def Genome_Binner(dump_hash,GenSource, Bin_Size = 1000):
 def Scount_bin(counts, size):
     bin={}
     bin_number = float(float(counts)/float(size))
+    bin_flag=0
     #print "Sbin",bin_number
     if bin_number >= 1:
         remainder = bin_number-int(bin_number)
         if remainder >= .5:
             bin_number=int(bin_number)+1
+            bin_flag = 1
         else:
             bin_number=int(bin_number)
         for i in xrange(bin_number):
-            bin[str(str(i)+"_bin")]=0
+            if i==bin_number-1 and bin_flag == 0:
+                bin[i]=[0,str(str(i*size)+"-"+str(((i+1)*size)-1))]
+                bin[i]=[0,str(str((i)*size)+"-"+str(((i+1)*size)+int(remainder*size)))]
+
+            elif i==bin_number-1 and bin_flag == 1:
+                bin[i]=[0,str(str(i*size)+"-"+str(((i+1)*size)-1))]
+                bin[i+1]=[0,str(str((i+1)*size)+"-"+str(((i+1)*size)+int(remainder*size)))]
+            elif i == 0:
+                bin[i]=[0,str(str(i*size)+"-"+str((size)-1))]
+            else:
+                bin[i]=[0,str(str(i*size)+"-"+str(((i+1)*size)-1))]
+
     else:
-        bin["0_bin"]=0
+        bin[0]=[0,str("0-"+str(counts)),counts]
         #print bin
     return bin
 
@@ -129,11 +142,11 @@ def fileParse(file):
 def outfileprint(hash): #Test by printing created outfile
     #f =open(str(os.getcwd()+"/MarcoAbreuResult.txt"))
     outFile = open('MarcoAbreuResult.txt','w')
-    toString = ""
-    for key in hash.keys():
-        for key1 in hash[key].keys():
-            for key2 in hash[key][key1].keys():
-                toString += str(key)+"\t"+str(key1)+"\t"+str(key2)+"\t"+str(hash[key][key1][key2])+"\n"
+    toString = "TaxID\tGiNumber\tBin\tBin Range\tCount\n"
+    for key in sorted(hash.keys()):
+        for key1 in sorted(hash[key].keys()):
+            for key2 in sorted(hash[key][key1].keys()):
+                toString += str(key)+"\t"+str(key1)+"\t"+str(key2)+"\t"+str(hash[key][key1][key2][1])+"\t"+str(hash[key][key1][key2][0])+"\n"
     print "Write...",
     outFile.write(toString)
     print "Close", outFile
