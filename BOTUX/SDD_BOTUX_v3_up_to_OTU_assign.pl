@@ -56,11 +56,11 @@ while($line = <IN>) {
 				 
 				$end = $seq_length-7;
 				for(my $i =0; $i <= $end; $i++) { #  end=length(seq)-8+1
-				$word = substr($seq, $i, 8);
+				$word = substr($seq, $i, 8); #$word_length as 
 	
 				 if(exists $Seq_Hash{$seq}){
-					$Seq_Hash{$seq}{name} = $SeqName;
-					$Seq_Hash{$seq}{words} = $word;
+					$Seq_Hash{$seq}{name} = $SeqName; # for OTU make counts of Seq_ID rather than overwritting
+					$Seq_Hash{$seq}{words} = $word; #make array of words here
 					$Seq_Hash{$seq}{$word}{word_count} ++;
 				 }
 				 else{
@@ -98,8 +98,10 @@ my $word_output = $Seq_Hash{$seq}{words};
 my $word_count = $Seq_Hash{$seq}{$word}{word_count} ++;
 $total_OTU_words = length($seq)-7;
 
-if ($seq != 0){
-$score = (($word_freq/$total_OTU_words)*(length($seq)/(length($seq))));  #Need to tweek equation
+if (length($_) != 0){
+	if ( $total_OTU_words != 0){
+	$score = (($word_freq/$total_OTU_words)*(length($_)/(length($_))));  #Need to tweek equation
+	}
 }
 
 print OUT ("Length:", length($_ ), "\t", "word freq:", $word_freq, "\t", "seq_name:", $name, "\t", "words", $word_output, "\t", "word_count", $word_count, "abundance:", $Seq_Hash{$_} ,"score:", $score, "\n" );
