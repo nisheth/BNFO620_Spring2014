@@ -94,10 +94,10 @@ def main ():
 	
 	args = parser.parse_args()
 	
-	infile = args['infile']
-	threshold = args['threshold']
-	wordLen = args['wordLen']
-	trimlen = args['trimlen']
+	infile = args.infile
+	threshold = args.threshold
+	wordLen = args.wordLen
+	trimlen = args.trimlen
 	
 	
 	outf = 'sorted_by_abundance_and_length.txt'
