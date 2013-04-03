@@ -3,6 +3,7 @@
 import argparse
 import os.path
 import sys
+from itertools import chain
 
 
 SEED_FILE = 'OTU_seed.txt'
@@ -25,7 +26,7 @@ class Sequence:
         self.add_header(defline)
         # do we really need to keep sequence in each object now that the sequence is a key to an external dict?
         self.sequence = sequence
-        self.words = []
+        self.words = {}
         if sequence:
             self.length = len(sequence)
             self.make_words(sequence, word_size)
@@ -71,10 +72,12 @@ class Sequence:
             return self.length == other.length
 
     def make_words(self, sequence, word_size):
-        # use a dict instead? is it significant if a word appears more than once?
-        # this just blindly adds each new word w/o regard to uniqueness
         for i in xrange(len(sequence) - word_size + 1):
-            self.words.append(sequence[i:word_size + i])
+            word = sequence[i:word_size + i]
+            if word in self.words:
+                self.words[word] += 1
+            else:
+                self.words[word] = 1
 
     def add_header(self, header):
         self.deflines.append(header)
@@ -85,13 +88,28 @@ class Sequence:
 
 class OTU:
     def __init__(self, seq, words, read_id):
+        """
+        With add_words and add_id, I'm trying to keep the implementation logic independent from how the methods
+        are used, in case I decide to change things in the future. The call will stay the same, but the actual steps
+        performed by the method might not.
+        """
         self.seed_seq = seq
-        self.words = words
+        self.words = {}
+        self.add_words(words)
         self.read_ids = []
         self.add_id(read_id)
 
     def add_id(self, read_id):
-        self.read_ids.append(read_id)
+        # read_id = list(chain(read_id))
+        # looks like the += operator has the desired effect of keeping the list flat
+        self.read_ids += read_id
+
+    def add_words(self, words):
+        for word in words:
+            if word in self.words:
+                self.words[word] += 1
+            else:
+                self.words[word] = 1
 
 
 class CustomCLOptionParser(argparse.ArgumentParser):
@@ -112,7 +130,7 @@ class CustomCLOptionParser(argparse.ArgumentParser):
 def set_up_CL_parser():
     """
     A simple argv parser, looks for one input file and one output directory (positional, mandatory); desired trim
-    length and threshold value (flags, optional)
+    length, fastq format, word size, and threshold value (flags, optional)
     """
 
     # parser = argparse.ArgumentParser()
@@ -226,10 +244,34 @@ def read_fasta_file(ifh, trim_to, seqs, word_size):
     return seqs
 
 
-def test2():
-    otus = []
-    otus.append(OTU('ATGC', dict(AT=1, TG=1, GC=1), 'read1'))
-    otus.append(OTU('GTGT', dict(GT=2, TG=1), 'read2'))
+def bin_reads(reads, OTUs, threshold):
+    first_seq = True
+    for read in reads:
+        if first_seq:
+            OTUs.append(OTU(read.sequence, read.words, read.deflines))
+            first_seq = False
+        else:
+            max_score = -999
+            best_otu = None
+            for curr_otu in OTUs:
+                score = score_read(read, curr_otu)
+                if score > max_score:
+                    max_score = score
+                    best_otu = curr_otu
+            if max_score > threshold:
+                print "Found best score {} in OTU {}".format(max_score, best_otu.read_ids)
+            else:
+                print "max {} smaller than threshold {}, make new otu".format(max_score, threshold)
+
+
+def score_read(read, otu):
+    running_total = 0.0
+    for word in read.words:
+        print "Looking for {}".format(word)
+        print "{} found {} times".format(word, otu.words.get(word, 0))
+        running_total += (otu.words.get(word, 0) / float(len(otu.words)))
+    running_total *= (len(otu.seed_seq) / float(len(read.sequence)))
+    return running_total
 
 
 def main():
@@ -238,6 +280,7 @@ def main():
     infile = args['in_file']
     outdir = args['out_dir']
     word_size = args['word_size']
+    threshold = args['threshold']
 
     # don't want to proceed if the input source or output target don't exist
     err = has_bad_args(infile, outdir)
@@ -247,6 +290,7 @@ def main():
         sys.exit(1)
 
     seqs = {}
+    OTUs = []
     if not args['fq']:
         ifh = open(infile, 'r')
         read_fasta_file(ifh, args['trim_length'], seqs, word_size)
@@ -257,8 +301,9 @@ def main():
         ifh.close()
     sorted_seqs = seqs.values()
     sorted_seqs.sort(reverse = True)
+    first_sequence = True
+    bin_reads(sorted_seqs, OTUs, threshold)
     # test1(sorted_seqs)
-    test2()
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
 
 
