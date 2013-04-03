@@ -18,27 +18,27 @@ def makeWordList(sequence, wordLen):
 		list.append(word)	
 	return list
 
-def makeNewOtu(sequence, wordList):
+def makeNewOtu(sequence, abund, wordList):
 	list = [] #I want element 0 to be the seed sequence and element 1 to be a dict of words element 2 to be number of sequences in that OTU
 	list.append(sequence)
 	wordDict = {}
 	for word in wordList:
 		if word in wordDict:
 			#print 'word exists:' , word
-			wordDict[word] += 1
+			wordDict[word] += abund
 		else: 
-			wordDict[word] = 1
+			wordDict[word] = abund
 	list.append(wordDict)
-	list.append(1)
+	list.append(abund)
 	otuList.append(list)
 
-def updateExistingOtu(posOfOTUtoUpdate, wordList):
+def updateExistingOtu(posOfOTUtoUpdate, abund, wordList):
 	for word in wordList:
 		if word in otuList[posOfOTUtoUpdate][1]:
-			otuList[posOfOTUtoUpdate][1][word] += 1
+			otuList[posOfOTUtoUpdate][1][word] += abund
 		else:
-			otuList[posOfOTUtoUpdate][1][word] = 1
-	otuList[posOfOTUtoUpdate][2] +=1
+			otuList[posOfOTUtoUpdate][1][word] = abund
+	otuList[posOfOTUtoUpdate][2] +=abund
 	
 def scoreOTUs(seqSequence, wordList):
 	bestScore = [-999,-999] #bestScore[0] = position of OTU; bestScore[1] = score
@@ -88,7 +88,7 @@ def main ():
 	
 	parser = argparse.ArgumentParser(description = 'BOTUX - write better description later')
 	parser.add_argument('-l','--trimlen', help='Specify trim length', required = False, type = int, default = -1)
-	parser.add_argument('-t','--threshold', help='Minimum threshold score for assigning sequence for OTU', required = False, type = float, default = 0.65)
+	parser.add_argument('-t','--threshold', help='Minimum threshold score (as a percentage - ie. for 80% enter .8) for assigning sequence for OTU', required = False, type = float, default = 0.65)
 	parser.add_argument('-i','--infile', help='full path to fasta file -- right now only takes fasta', required = True)
 	parser.add_argument('-w','--wordLen', help='word size', required = False, type = int, default = 8) 
 	
@@ -147,7 +147,7 @@ def main ():
 			if otuList == []:
 				#print 'yes otuList is empty'
 				#first seq
-				makeNewOtu(x[1],currSeqWordL)				
+				makeNewOtu(x[1], x[0], currSeqWordL)				
 			
 			else:				
 				#print '\n\nSeq #', totalSeq
@@ -158,9 +158,9 @@ def main ():
 				#scoreOTUs returns a list of length two with x[0] being pos of best otu x[1] being best score
 				if best[1] >= threshold:
 					#print "updating"
-					updateExistingOtu(best[0],currSeqWordL)
+					updateExistingOtu(best[0], x[0], currSeqWordL)
 				else:
-					makeNewOtu(x[1],currSeqWordL)	
+					makeNewOtu(x[1], x[0], currSeqWordL)	
 
 			totalReads += x[0]
 			totalSeq += 1
