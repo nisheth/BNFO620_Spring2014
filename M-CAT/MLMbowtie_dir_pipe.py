@@ -45,6 +45,12 @@ def main():
 
             runSystemCMDQsub(cmd)
 
+            projectname3 = projectname.replace(".bam",".sam")
+
+            cmd = "/home/bnfo620/bin/samtools view -h -o " + projectname3 + " " + projectname
+
+            runSystemCMDQsub(cmd)
+
 if __name__ == '__main__':
     main()
 
