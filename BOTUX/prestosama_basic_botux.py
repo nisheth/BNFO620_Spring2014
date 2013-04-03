@@ -4,6 +4,7 @@ import sys
 import re
 import os
 import operator
+import argparse
 
 otuList = [] #global variable
 screenSplit = '---------------------------------------------------'
@@ -70,20 +71,34 @@ def scoreOTUs(seqSequence, wordList):
 	return bestScore				
 	
 def main ():
-	if len(sys.argv) < 3:
-		print "Please input fasta file, threshold (as a percentage), and trimlength if using"
-		sys.exit(0)
+#	if len(sys.argv) < 3:
+#		print "Please input fasta file, threshold (as a percentage), and trimlength if using"
+#		sys.exit(0)
 	
-	if len(sys.argv) == 4:
-		infile = sys.argv[1]
-		threshold = float(sys.argv[2])
-		trimlen = int(sys.argv[3])
-		wordLen = 8
-	else:
-		infile = sys.argv[1]
-		threshold = float(sys.argv[2])
-		trimlen = -1
-		wordLen = 8
+#	if len(sys.argv) == 4:
+#		infile = sys.argv[1]
+#		threshold = float(sys.argv[2])
+#		trimlen = int(sys.argv[3])
+#		wordLen = 8
+#	else:
+#		infile = sys.argv[1]
+#		threshold = float(sys.argv[2])
+#		trimlen = -1
+#		wordLen = 8
+	
+	parser = argparse.ArgumentParser(description = 'BOTUX - write better description later')
+	parser.add_argument('-l','--trimlen', help='Specify trim length', required = False, type = int, default = -1)
+	parser.add_argument('-t','--threshold', help='Minimum threshold score for assigning sequence for OTU', required = False, type = float, default = 0.65)
+	parser.add_argument('-i','--infile', help='full path to fasta file -- right now only takes fasta', required = True)
+	parser.add_argument('-w','--wordLen', help='word size', required = False, type = int, default = 8) 
+	
+	args = parser.parse_args()
+	
+	infile = args['infile']
+	threshold = args['threshold']
+	wordLen = args['wordLen']
+	trimlen = args['trimlen']
+	
 	
 	outf = 'sorted_by_abundance_and_length.txt'
 	lenAbunD = {}
