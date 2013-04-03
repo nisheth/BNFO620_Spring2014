@@ -114,7 +114,7 @@ class B2_PLAN(object):
         #print "BAM to flag"
         if len(list)==2:
             bamlist = list
-            cmd = str("/home/bnfo620/bin/samtools merge -nuf"+ self.results + "BAMMERGE.bam " + self.results + bamlist[0] + " " + self.results + bamlist[1])
+            cmd = str("/home/bnfo620/bin/samtools cat -o "+ self.results + "BAMMERGE.bam " + self.results + bamlist[0] + " " + self.results + bamlist[1])
             self.RunCMD(cmd)
         else:
             bamlist = []
