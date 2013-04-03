@@ -18,8 +18,6 @@ class Sequence:
     Holds data for a particular sequence. Implemented comparison functions lt, gt, eq based on length of sequence first,
     then based on abundance of sequence. Implemented len based on length of sequence.
     """
-    # TODO: Add list of IDs that correspond with a given sequence
-    # TODO: Add list of words in the sequence, window size = 8
 
     def __init__(self, defline = None, sequence = None, word_size = 8):
         self.deflines = []
@@ -286,7 +284,7 @@ def score_read(read, otu):
 def printOTUs(otus):
     i = 1
     for o in otus:
-        print "OTU {}: {}".format(i, o)
+        print "OTU {}: {} members".format(i, len(o.read_ids))
         i += 1
 
 
