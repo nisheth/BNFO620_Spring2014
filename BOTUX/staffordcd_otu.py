@@ -18,7 +18,8 @@ class Sequence:
     Holds data for a particular sequence. Implemented comparison functions lt, gt, eq based on length of sequence first,
     then based on abundance of sequence. Implemented len based on length of sequence.
     """
-
+    # TODO when multiple identical seqs are gathered into Seq object, want their word abundance to be
+    # reflected in the words dict and, in turn, in the OTU it lands in
     def __init__(self, defline = None, sequence = None, word_size = 8):
         self.deflines = []
         self.add_header(defline)
@@ -271,10 +272,12 @@ def bin_reads(reads, OTUs, threshold):
 
 
 def score_read(read, otu):
+    # TODO pull this into OTU class, let it take a Seq obj but the logic remains largely the same
     running_total = 0.0
     for word in read.words:
         print "Looking for {}".format(word)
         print "{} found {} times".format(word, otu.words.get(word, 0))
+        # don't want len of otu.words (just gives distinct words), want the total number of words
         running_total += (otu.words.get(word, 0) / float(len(otu.words)))
         print "running total: {}".format(running_total)
     running_total *= (len(otu.seed_seq) / float(len(read.sequence)))
