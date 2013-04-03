@@ -99,6 +99,9 @@ class OTU:
         self.read_ids = []
         self.add_id(read_id)
 
+    def __str__(self):
+        return '{}\n'.format(self.read_ids)
+
     def add_id(self, read_id):
         # read_id = list(chain(read_id))
         # looks like the += operator has the desired effect of keeping the list flat
@@ -259,9 +262,14 @@ def bin_reads(reads, OTUs, threshold):
                     max_score = score
                     best_otu = curr_otu
             if max_score > threshold:
-                print "Found best score {} in OTU {}".format(max_score, best_otu.read_ids)
+                print "Found best score {} in OTU {}. add to current otu".format(max_score, best_otu.read_ids)
+                best_otu.add_words(read.words)
+                best_otu.add_id(read.deflines)
+                print "added to current otu"
             else:
                 print "max {} smaller than threshold {}, make new otu".format(max_score, threshold)
+                OTUs.append(OTU(read.sequence, read.words, read.deflines))
+                print "new OTU created."
 
 
 def score_read(read, otu):
@@ -270,8 +278,16 @@ def score_read(read, otu):
         print "Looking for {}".format(word)
         print "{} found {} times".format(word, otu.words.get(word, 0))
         running_total += (otu.words.get(word, 0) / float(len(otu.words)))
+        print "running total: {}".format(running_total)
     running_total *= (len(otu.seed_seq) / float(len(read.sequence)))
     return running_total
+
+
+def printOTUs(otus):
+    i = 1
+    for o in otus:
+        print "OTU {}: {}".format(i, o)
+        i += 1
 
 
 def main():
@@ -304,6 +320,7 @@ def main():
     first_sequence = True
     bin_reads(sorted_seqs, OTUs, threshold)
     # test1(sorted_seqs)
+    printOTUs(OTUs)
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
 
 
