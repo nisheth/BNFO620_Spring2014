@@ -20,7 +20,7 @@ open OUT, ">$output";
 my %Seq_Hash;
 my %WordHash;
 my %OTU_Hash;
-my ($line, $SeqName, $seq, $seq_length, $name, $read_in_seq, $word, $end, $score, $word_freq, $total_OTU_words, $OTU_length);  
+my ($line, $SeqName, $seq, $seq_length, $name, $read_in_seq, $word, $end, $score, $word_freq, $total_OTU_words, $OTU_length);	
 my $num_of_reads = 1;
 my $uniq = 0;
 my $word_length;
@@ -98,7 +98,9 @@ my $word_output = $Seq_Hash{$seq}{words};
 my $word_count = $Seq_Hash{$seq}{$word}{word_count} ++;
 $total_OTU_words = length($seq)-7;
 
-$score = (($word_freq/$total_OTU_words)*(length($seq)/(length($seq))));
+if ($seq != 0){
+$score = (($word_freq/$total_OTU_words)*(length($seq)/(length($seq))));  #Need to tweek equation
+}
 
 print OUT ("Length:", length($_ ), "\t", "word freq:", $word_freq, "\t", "seq_name:", $name, "\t", "words", $word_output, "\t", "word_count", $word_count, "abundance:", $Seq_Hash{$_} ,"score:", $score, "\n" );
 
