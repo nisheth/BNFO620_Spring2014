@@ -32,7 +32,7 @@ def makeNewOtu(sequence, abund, wordList):
 	list.append(abund)
 	otuList.append(list)
 
-def updateExistingOtu(posOfOTUtoUpdate, abundm, wordList):
+def updateExistingOtu(posOfOTUtoUpdate, abund, wordList):
 	for word in wordList:
 		if word in otuList[posOfOTUtoUpdate][1]:
 			otuList[posOfOTUtoUpdate][1][word] += abund
