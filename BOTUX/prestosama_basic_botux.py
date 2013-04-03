@@ -132,7 +132,7 @@ def main ():
 		
 	fastafile.close()
 
-	totalSeq=1
+	totalSeq=0
 	totalReads = 0
 	
 	
@@ -166,11 +166,14 @@ def main ():
 			totalSeq += 1
 				
 				
+	otusum = 0
 	print '\n\nOTU\tFirst 8 nt\t Last 8 nt \t Number of Seq in OTU'
 	for index, otu in enumerate(otuList):
 		seq = otu[0]
 		print index,'\t', seq[:8],'\t', seq[-8:], '\t', otu[2]		
-
+		otusum += otu[2]
+	
+	print 'totalReads', totalReads, '\ttotalSeq', totalSeq, '\tsum of OTUs', otusum
 	
 if __name__ == '__main__':
 	main()		
