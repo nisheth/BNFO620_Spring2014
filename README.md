@@ -6,7 +6,7 @@ BNFO620 Projects
 
 BOTUX
 ------
-[Wiki Page](BNFO620/wiki/OTU-Project)
+[Wiki Page](nisheth/BNFO620/wiki/OTU-Project)
 
 M-CAT
 -----
