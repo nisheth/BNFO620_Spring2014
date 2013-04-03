@@ -88,7 +88,7 @@ def main ():
 	
 	parser = argparse.ArgumentParser(description = 'BOTUX - write better description later')
 	parser.add_argument('-l','--trimlen', help='Specify trim length', required = False, type = int, default = -1)
-	parser.add_argument('-t','--threshold', help='Minimum threshold score for assigning sequence for OTU', required = False, type = float, default = 0.65)
+	parser.add_argument('-t','--threshold', help='Minimum threshold score (as a percentage - ie. for 80% enter .8) for assigning sequence for OTU', required = False, type = float, default = 0.65)
 	parser.add_argument('-i','--infile', help='full path to fasta file -- right now only takes fasta', required = True)
 	parser.add_argument('-w','--wordLen', help='word size', required = False, type = int, default = 8) 
 	
