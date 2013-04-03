@@ -61,7 +61,7 @@ class B2_PLAN(object):
                 pass
         return 0
 
-    def RunCMD(cmd):
+    def RunCMD(self,cmd):
         print cmd
         subprocess.call([cmd],shell = True)
 
