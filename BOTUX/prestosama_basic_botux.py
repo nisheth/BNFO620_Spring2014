@@ -8,12 +8,12 @@ import operator
 otuList = [] #global variable
 screenSplit = '---------------------------------------------------'
 
-def makeWordList(sequence):
+def makeWordList(sequence, wordLen):
 	#assuming word size 8
 	list = []
-	for pos in xrange(len(sequence) - 9):
+	for pos in xrange(len(sequence) - (wordLen + 1)):
 		#print pos , len(sequence)
-		word = sequence[pos:pos + 8]
+		word = sequence[pos:pos + wordLen]
 		list.append(word)	
 	return list
 
@@ -78,10 +78,12 @@ def main ():
 		infile = sys.argv[1]
 		threshold = float(sys.argv[2])
 		trimlen = int(sys.argv[3])
+		wordLen = 8
 	else:
 		infile = sys.argv[1]
 		threshold = float(sys.argv[2])
 		trimlen = -1
+		wordLen = 8
 	
 	outf = 'sorted_by_abundance_and_length.txt'
 	lenAbunD = {}
@@ -125,7 +127,7 @@ def main ():
 		
 		for x in items:
 			#outstring = ''.join(['SEQ NUM: ', str(i), '\t\tLEN:', str(lenn),'\t\tABUNDANCE: ', str(x[0]), '\n']) #x[1] would give you the sequence 
-			currSeqWordL = makeWordList(x[1])
+			currSeqWordL = makeWordList(x[1],wordLen)
 							
 			if otuList == []:
 				#print 'yes otuList is empty'
