@@ -20,6 +20,10 @@ my $mergeformat = "$outfile"."/"."$name"."_merged.bam";
 my $finalformat = "$outfile"."/"."$name"."_results.sam";
 my $command;
 
+unless(-e $outfile or mkdir $outfile){
+    die "Unable to create $outfile\n";
+}
+
 unless(-e $samformat1){
     $command = "/home/bnfo620/bin/bowtie2-2.0.6/bowtie2 -p 4 -x "."$ref"." -U "."$infile"." -S "."$samformat1";
     runSystemCommand($command);
