@@ -71,21 +71,7 @@ def scoreOTUs(seqSequence, wordList):
 	return bestScore				
 	
 def main ():
-#	if len(sys.argv) < 3:
-#		print "Please input fasta file, threshold (as a percentage), and trimlength if using"
-#		sys.exit(0)
-	
-#	if len(sys.argv) == 4:
-#		infile = sys.argv[1]
-#		threshold = float(sys.argv[2])
-#		trimlen = int(sys.argv[3])
-#		wordLen = 8
-#	else:
-#		infile = sys.argv[1]
-#		threshold = float(sys.argv[2])
-#		trimlen = -1
-#		wordLen = 8
-	
+
 	parser = argparse.ArgumentParser(description = 'BOTUX - write better description later')
 	parser.add_argument('-l','--trimlen', help='Specify trim length', required = False, type = int, default = -1)
 	parser.add_argument('-t','--threshold', help='Minimum threshold score (as a percentage - ie. for 80% enter .8) for assigning sequence for OTU', required = False, type = float, default = 0.65)
@@ -110,8 +96,10 @@ def main ():
 		readInCounter += 1
 		match = re.search(r'^\>.',line)
 		if match:
-			pass
+			header = line[1:];
+			#FIX THIS FIXXXX MEEEE
 		else:
+			#FIX THIS
 			length = len(line)
 			if trimlen != -1 and length > trimlen: 
 				line = line[:trimlen]
