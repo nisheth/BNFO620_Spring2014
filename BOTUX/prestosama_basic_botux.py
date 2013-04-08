@@ -52,7 +52,7 @@ def scoreOTUs(seqSequence, wordList):
 		for seqWord in wordList:
 			if seqWord in otu[1]:
 				freqofWi = otu[1][seqWord]
-				currentScoreforWi = ((float(freqofWi)/float(totalWordsinCurrentOTU)) * (float(len(otu[0]))/float(len(seqSequence))))
+				currentScoreforWi = ((float(freqofWi)/float(totalWordsinCurrentOTU)) 
 				#print currentScoreforWi
 				
 				sumScoreforOTU += currentScoreforWi				
@@ -63,6 +63,7 @@ def scoreOTUs(seqSequence, wordList):
 		#print screenSplit
 		#print 'OTU', index, 'Score', sumScoreforOTU , 'seed', len(otu[0]),'currSeq', len(seqSequence)
 
+		sumScoreforOTU = sumScoreforOTU * (float(len(otu[0]))/float(len(seqSequence))))
 		if sumScoreforOTU >= bestScore[1]:
 			#print 'replacing best score', bestScore[1], 'with new score', sumScoreforOTU
 			bestScore[0] = index
