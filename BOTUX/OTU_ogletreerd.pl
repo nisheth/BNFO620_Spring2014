@@ -75,7 +75,7 @@ foreach my $seq (@sort) {
 		if (%otuHash) {
 			makeOTU($seq, $abundance, $currSeqW_List);
 			} else {
-			($tempBestScore,$tempBestOTU) = scoreOTU ($currSeqW_List);
+			($tempBestScore,$tempBestOTU) = scoreOTU ($seq, $currSeqW_List);
 			if ($tempBestScore >= $threshold){
 				#updateOTU ();
 			} else {
@@ -86,7 +86,7 @@ foreach my $seq (@sort) {
 
 ####### SUBROUTINES ######
 sub scoreOTU {
- my ($wordListRef) = @_;
+ my ($sequence,$wordListRef) = @_;
  
  my $bestScore = -999;
  my $bestOTU = "";
@@ -101,9 +101,8 @@ sub scoreOTU {
  		if (exists $otuHash{$otuName}{word}{$word}){
  		
  			$totalwordCount = $otuHash{$otuName}{totalCount}; 
- 			$freqofWi = $seqHash{$sequence}{freqofWi};		
- 			$sedSeq = $otuHash{$otuName}{seedSeq} = $sequence; 
- 			$CurrScoreforWord = ((1/$totalwordCount) ;
+ 			$freqofWi = $otuHash{$otuName}{word}{$word};		
+ 		 	$CurrScoreforWord = (($freqofWi /$totalwordCount) ;
  			$sumScoreforOTU += $CurrScoreforWord; 
  			
  		 } else {
@@ -111,7 +110,7 @@ sub scoreOTU {
  		 }
  		 
  	} # for loop end for wordlist
- 	
+ 	$sedseq = $otuHash{$otuName}{seedseq};
  	$sumScoreforOTU *=  (length($sedSeq)/length($sequence))
 		 
  	if $sumScoreforOTU >= $bestScore {
