@@ -114,9 +114,11 @@ class OTU:
         self.read_ids += read_id
 
     def add_words(self, words):
+        # TODO: make sure this is working correctly in tandem with the word building in the Sequence class
         for word in words:
             if word in self.words:
-                self.words[word] += 1
+                # self.words[word] += 1
+                self.words[word] += int(words[word])
             else:
                 self.words[word] = 1
 
