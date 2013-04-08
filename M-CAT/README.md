@@ -27,6 +27,12 @@ Your samples need to be aligned separated to each of above two indices and then 
 Sample Data
 -----------
 /home/bnfo620/M-CAT/sampledata/hmp
-
 There are Five Samples from Human Genome Project's Health patients. These samples are from Vaginal site. 
+
+Simulated Data
+--------------
+/home/bnfo620/M-CAT/sampledata/simulatddata/Staphylococcus_aureus_epidermidis*.fastq
+
+Two Staphylococcus species mixed in one sample at 1x coverage. 
+
 
