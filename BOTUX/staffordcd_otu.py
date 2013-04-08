@@ -81,8 +81,15 @@ class Sequence:
     def add_header(self, header):
         self.deflines.append(header)
 
+    def increment_word_count(self):
+        for (word, count) in self.words.items():
+            self.words[word] += 1
+
     def get_abundance(self):
         return len(self.deflines)
+
+    def tally_words(self):
+        return sum(self.words.values())
 
 
 class OTU:
@@ -243,6 +250,7 @@ def read_fasta_file(ifh, trim_to, seqs, word_size):
         else:
             # freqs[s] += 1
             seqs[s].add_header(h)
+            seqs[s].increment_word_count()
     return seqs
 
 
@@ -278,7 +286,8 @@ def score_read(read, otu):
         print "Looking for {}".format(word)
         print "{} found {} times".format(word, otu.words.get(word, 0))
         # don't want len of otu.words (just gives distinct words), want the total number of words
-        running_total += (otu.words.get(word, 0) / float(len(otu.words)))
+        # running_total += (otu.words.get(word, 0) / float(len(otu.words)))
+        running_total += (otu.words.get(word, 0) / float(read.tally_words()))
         print "running total: {}".format(running_total)
     running_total *= (len(otu.seed_seq) / float(len(read.sequence)))
     return running_total
@@ -293,6 +302,7 @@ def printOTUs(otus):
 
 def main():
     # TODO: add FASTQ handler
+    # TODO: add paired-end read handler
     args = parse_args(set_up_CL_parser())
     infile = args['in_file']
     outdir = args['out_dir']
