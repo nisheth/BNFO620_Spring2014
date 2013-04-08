@@ -15,9 +15,9 @@ my @sort;
 my $currSeqW_List;
 my $tempBestScore;
 
-if (!defined $threshold){
-	die "USAGE: error.";
-	}
+if (!defined ($threshold)) {
+die "USAGE: Please provide an input file, output file, trimlength, and threshold.";
+}
 
 open SEQUENCE_FILE, "$inputfile" or die "Can't open $inputfile: $!\n";
 open OUTFILE, ">$outputfile" or die "USAGE: Can't open $outputfile: $!\n";
