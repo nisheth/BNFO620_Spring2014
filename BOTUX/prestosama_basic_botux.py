@@ -1,5 +1,7 @@
 #Melissa Prestosa
 
+
+## proper output print add each time you process a unique sequence say best score length and where assigned
 import sys
 import re
 import os
