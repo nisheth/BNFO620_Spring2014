@@ -270,7 +270,7 @@ def bin_reads(reads, OTUs, threshold):
                 if score > max_score:
                     max_score = score
                     best_otu = curr_otu
-            if max_score > threshold:
+            if max_score >= threshold:
                 print "Found best score {} in OTU {}. add to current otu".format(max_score, best_otu.read_ids)
                 best_otu.add_words(read.words)
                 best_otu.add_id(read.deflines)
