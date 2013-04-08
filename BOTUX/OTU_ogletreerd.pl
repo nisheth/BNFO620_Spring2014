@@ -86,7 +86,7 @@ foreach my $seq (@sort) {
 
 ####### SUBROUTINES ######
 sub scoreOTU {
- (@wordList) = @_;
+ my ($wordListRef) = @_;
  
  my $bestScore = -999;
  my $bestOTU = "";
@@ -97,7 +97,7 @@ sub scoreOTU {
  my $freqofWi; 
  
  foreach $otuName (keys %otuHash) { 
- 	foreach $seqWord (@wordList){
+ 	foreach $seqWord (@$wordListRef){
  		if (exists $otuHash{$otuName}{word}{$word}){
  		
  			$totalwordCount = $otuHash{$otuName}{totalCount}; 
@@ -133,17 +133,16 @@ sub WordList{
 		$word = substr ($sequence, $i, $i+$wordSize);
 		push @wordList, $word;		
 }
-	return @wordList; 
+	return \@wordList; 
 }
 
 sub makeOTU {
-($sequence, $abundance) = $_;
-(@wordList) = @_;
+my ($sequence, $abundance,$wordListRef) = @_;
 
  my $otuName;
  my $totalCount;
  
- foreach my $word (@wordList) {
+ foreach my $word (@$wordListRef) {
  $otuHash{$otuName}{totalCount}++; 
  $otuHash{$otuName}{seedSeq} = $sequence;
  $otuHash{$outName}{word}{$word} = $abundance;
@@ -156,13 +155,13 @@ sub makeOTU {
 
 
 sub updateOTU {
-($sequence, $abundance) = $_;
-(@wordList) = @_;
+my ($sequence, $abundance,$wordListRef) = @_;
+
 
  my $otuName;
  my $totalCount;
  
- foreach my $word (@wordList) {
+ foreach my $word (@$wordListRef) {
  $otuHash{$otuName}{totalCount}++; 
 
 	if(exists $otuHash{$otuName}{word}{$word})
