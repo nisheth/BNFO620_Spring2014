@@ -75,7 +75,7 @@ foreach my $seq (@sort) {
 		if (%otuHash) {
 			makeOTU($seq, $abundance, $currSeqW_List);
 			} else {
-			$tempBestScore = scoreOTU ($currSeqW_List);
+			($tempBestScore,$tempBestOTU) = scoreOTU ($currSeqW_List);
 			if ($tempBestScore >= $threshold){
 				#updateOTU ();
 			} else {
@@ -89,30 +89,37 @@ sub scoreOTU {
  (@wordList) = @_;
  
  my $bestScore = -999;
+ my $bestOTU = "";
  my $totalwordCount = 0; 
  my $sedSeq;  
  my $sumScoreforOTU = 0;
  my $CurrScoreforWord;
  my $freqofWi; 
  
+ foreach $otuName (keys %otuHash) { 
  	foreach $seqWord (@wordList){
  		if (exists $otuHash{$otuName}{word}{$word}){
  		
  			$totalwordCount = $otuHash{$otuName}{totalCount}; 
- 			$freqofWi = $seqHash{$sequence}{freqofWi};
+ 			$freqofWi = $seqHash{$sequence}{freqofWi};		
  			$sedSeq = $otuHash{$otuName}{seedSeq} = $sequence; 
- 			$CurrScoreforWord = (($freqofWi/$totalwordCount) * (length($sedSeq)/length($sequence));
+ 			$CurrScoreforWord = ((1/$totalwordCount) ;
  			$sumScoreforOTU += $CurrScoreforWord; 
  			
  		 } else {
  			continue; 
  		 }
+ 		 
+ 	} # for loop end for wordlist
+ 	
+ 	$sumScoreforOTU *=  (length($sedSeq)/length($sequence))
 		 
  	if $sumScoreforOTU >= $bestScore {
  		$bestScore = $sumScoreforOTU;
- 		}
+ 		$bestOTU = $otuName;
  	}
-	return $bestScore;
+ }
+	return ($bestScore,$bestOTU);
 }
 
 sub WordList{
@@ -139,10 +146,34 @@ sub makeOTU {
  foreach my $word (@wordList) {
  $otuHash{$otuName}{totalCount}++; 
  $otuHash{$otuName}{seedSeq} = $sequence;
- $otuHash{$otuName}{read} = [$header];
  $otuHash{$outName}{word}{$word} = $abundance;
  }
  
- push @{$otuHash}{$otuName}{read}, $header;
+ foreach $header (@$seqHash{$sequence}{read}}) {
+ 	push @{$otuHash}{$otuName}{read}, $header;
+ }	
+}	
+
+
+sub updateOTU {
+($sequence, $abundance) = $_;
+(@wordList) = @_;
+
+ my $otuName;
+ my $totalCount;
+ 
+ foreach my $word (@wordList) {
+ $otuHash{$otuName}{totalCount}++; 
+
+	if(exists $otuHash{$otuName}{word}{$word})
+    		$otuHash{$otuName}{word}{$word} += $abundance;
+	} else { 
+		$otuHash{$otuName}{word}{$word} = $abundance;	
+	}	
+
+}
+ foreach $header (@$seqHash{$sequence}{read}}) {
+ 	push @{$otuHash}{$otuName}{read}, $header;
+ }	
 }	
 
