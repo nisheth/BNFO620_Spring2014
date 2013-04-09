@@ -86,6 +86,8 @@ class OTU:
         self.add_words(words)
         self.read_ids = []
         self.add_id(read_id)
+        # upon creation, the OTU will have an average score of 100% (it's totally identical to itself)
+        self.avg_score = 1
 
     def __str__(self):
         return '{}\n'.format(self.read_ids)
@@ -103,8 +105,25 @@ class OTU:
             else:
                 self.words[word] = 1
 
+    def add_score(self, score):
+        self.avg_score += score
+        self.avg_score /= float(2)
+
+
     def tally_words(self):
         return sum(self.words.values())
+
+    def get_seed_seq(self):
+        return self.seed_seq
+
+    def get_num_reads(self):
+        """
+        The number of reads assigned to an OTU is the same as the number of elements in the read_ids list
+        """
+        return len(self.read_ids)
+
+    def get_word_and_freq(self):
+        return self.words
 
 
 class CustomCLOptionParser(argparse.ArgumentParser):
@@ -230,8 +249,12 @@ def read_fasta_file(ifh, trim_to, seqs, word_size):
 
 
 def bin_reads(reads, OTUs, threshold):
+    i = 1
     first_seq = True
     for read in reads:
+        if i % 50 == 0:
+            print 'Binning read {}'.format(i)
+        i += 1
         if first_seq:
             OTUs.append(OTU(read.sequence, read.words, read.deflines))
             first_seq = False
@@ -244,15 +267,16 @@ def bin_reads(reads, OTUs, threshold):
                     max_score = score
                     best_otu = curr_otu
             if max_score >= threshold:
-                print "Found best score {} in OTU {}.\nadd to current otu".format(max_score, best_otu.read_ids)
+                # print "Found best score {} in OTU {}.\nadd to current otu".format(max_score, best_otu.read_ids)
                 best_otu.add_words(read.words)
                 best_otu.add_id(read.deflines)
+                best_otu.add_score(max_score)
                 # print "added to current otu.\nNum OTUs:{}".format(len(OTUs))
                 # raw_input("Waiting...")
             else:
-                print "max {} smaller than threshold {}, make new otu".format(max_score, threshold)
+                # print "max {} smaller than threshold {}, make new otu".format(max_score, threshold)
                 OTUs.append(OTU(read.sequence, read.words, read.deflines))
-                print "new OTU created.\nNum OTUs:{}".format(len(OTUs))
+                # print "new OTU created.\nNum OTUs:{}".format(len(OTUs))
                 # raw_input("Waiting...")
 
 
@@ -277,6 +301,17 @@ def printOTUs(otus):
     for o in otus:
         print "OTU {}: {} members".format(i, len(o.read_ids))
         i += 1
+
+
+def print_seeds(outfile, OTUs):
+    # ofh = open(outfile, 'w')
+    i = 1
+    print "Simulate writing to {}".format(outfile)
+    for o in OTUs:
+        # ofh.write('OTU{}\t{}\n'.format(i, o.seed_seq))
+        print 'OTU{}\t{}'.format(i, o.seed_seq)
+        i += 1
+    # ofh.close()
 
 
 def main():
@@ -311,8 +346,9 @@ def main():
     bin_reads(sorted_seqs, OTUs, threshold)
     # test1(sorted_seqs)
     # printOTUs(OTUs)
-    print len(OTUs)
+    # print len(OTUs)
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
+    print_seeds(seed_out, OTUs)
 
 
 if __name__ == '__main__':
