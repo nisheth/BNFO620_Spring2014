@@ -3,14 +3,12 @@
 import argparse
 import os.path
 import sys
-from itertools import chain
 
 
 SEED_FILE = 'OTU_seed.txt'
 FREQ_FILE = 'OTU_frequency.txt'
 ASS_FILE = 'OTU_Assignment.txt'
 WORD_FILE = 'OTU_word.txt'
-# freqs = {}
 
 
 class Sequence:
@@ -31,41 +29,24 @@ class Sequence:
             self.make_words(sequence, word_size)
         else:
             self.length = None
-        # can probably remove this if, and keep the code in the else; this logic is more or less
-        # handled by the de-dup strategy in main(), I think
-        # if sequence in freqs:
-        #     freqs[sequence] += 1
-        # else:
-        #     freqs[sequence] = 1
-
-    # def __str__(self):
-    #     """
-    #     Assumes that the input sequence defline will be stripped of the leading '>' elsewhere, otherwise output will
-    #     feature two of them.
-    #     """
-    #
-    #     return '>{}\n{}'.format(self.defline, self.sequence)
 
     def __len__(self):
         return self.length
 
     def __lt__(self, other):
         if self.length == other.length:
-            # return freqs[self.sequence] < freqs[other.sequence]
             return self.get_abundance() < other.get_abundance()
         else:
             return self.length < other.length
 
     def __gt__(self, other):
         if self.length == other.length:
-            # return freqs[self.sequence] > freqs[other.sequence]
             return self.get_abundance() > other.get_abundance()
         else:
             return self.length > other.length
 
     def __eq__(self, other):
         if self.length == other.length:
-            # return freqs[self.sequence] == freqs[other.sequence]
             return self.get_abundance() == other.get_abundance()
         else:
             return self.length == other.length
@@ -88,8 +69,9 @@ class Sequence:
     def get_abundance(self):
         return len(self.deflines)
 
-    def tally_words(self):
-        return sum(self.words.values())
+    # likely want this in the OTU class, not the Sequence class
+    # def tally_words(self):
+    #     return sum(self.words.values())
 
 
 class OTU:
@@ -109,7 +91,6 @@ class OTU:
         return '{}\n'.format(self.read_ids)
 
     def add_id(self, read_id):
-        # read_id = list(chain(read_id))
         # looks like the += operator has the desired effect of keeping the list flat
         self.read_ids += read_id
 
@@ -122,6 +103,9 @@ class OTU:
             else:
                 self.words[word] = 1
 
+    def tally_words(self):
+        return sum(self.words.values())
+
 
 class CustomCLOptionParser(argparse.ArgumentParser):
     def error(self, message):
@@ -130,21 +114,12 @@ class CustomCLOptionParser(argparse.ArgumentParser):
         sys.exit(2)
 
 
-# def legal_trim_length(tl):
-#     if tl < 0 or not isinstance(tl, int):
-#         raise argparse.ArgumentTypeError("trim length must be an integer")
-#
-# def legal_threshold_value(tv):
-#     if tv < 0 or
-
-
 def set_up_CL_parser():
     """
     A simple argv parser, looks for one input file and one output directory (positional, mandatory); desired trim
     length, fastq format, word size, and threshold value (flags, optional)
     """
 
-    # parser = argparse.ArgumentParser()
     parser = CustomCLOptionParser(formatter_class = argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('in_file',
                         metavar = 'input_file'.upper(),
@@ -247,10 +222,8 @@ def read_fasta_file(ifh, trim_to, seqs, word_size):
         if trim_to and len(s) > int(trim_to):
             s = s[:int(trim_to)]
         if s not in seqs:
-            # seqs.append(Sequence(h, s))
             seqs[s] = Sequence(h, s, word_size)
         else:
-            # freqs[s] += 1
             seqs[s].add_header(h)
             seqs[s].increment_word_count()
     return seqs
@@ -271,27 +244,31 @@ def bin_reads(reads, OTUs, threshold):
                     max_score = score
                     best_otu = curr_otu
             if max_score >= threshold:
-                print "Found best score {} in OTU {}. add to current otu".format(max_score, best_otu.read_ids)
+                print "Found best score {} in OTU {}.\nadd to current otu".format(max_score, best_otu.read_ids)
                 best_otu.add_words(read.words)
                 best_otu.add_id(read.deflines)
-                print "added to current otu"
+                # print "added to current otu.\nNum OTUs:{}".format(len(OTUs))
+                # raw_input("Waiting...")
             else:
                 print "max {} smaller than threshold {}, make new otu".format(max_score, threshold)
                 OTUs.append(OTU(read.sequence, read.words, read.deflines))
-                print "new OTU created."
+                print "new OTU created.\nNum OTUs:{}".format(len(OTUs))
+                # raw_input("Waiting...")
 
 
 def score_read(read, otu):
     # TODO pull this into OTU class, let it take a Seq obj but the logic remains largely the same
     running_total = 0.0
     for word in read.words:
-        print "Looking for {}".format(word)
-        print "{} found {} times".format(word, otu.words.get(word, 0))
+        # print "Looking for {}".format(word)
+        # print "{} found {} times".format(word, otu.words.get(word, 0))
         # don't want len of otu.words (just gives distinct words), want the total number of words
         # running_total += (otu.words.get(word, 0) / float(len(otu.words)))
-        running_total += (otu.words.get(word, 0) / float(read.tally_words()))
-        print "running total: {}".format(running_total)
+        # running_total += (otu.words.get(word, 0) / float(read.tally_words()))
+        running_total += (otu.words.get(word, 0) / float(otu.tally_words()))
+        # print "running total: {}".format(running_total)
     running_total *= (len(otu.seed_seq) / float(len(read.sequence)))
+    # print running_total
     return running_total
 
 
@@ -333,7 +310,8 @@ def main():
     first_sequence = True
     bin_reads(sorted_seqs, OTUs, threshold)
     # test1(sorted_seqs)
-    printOTUs(OTUs)
+    # printOTUs(OTUs)
+    print len(OTUs)
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
 
 
