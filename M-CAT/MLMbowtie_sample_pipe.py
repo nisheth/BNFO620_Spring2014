@@ -27,11 +27,19 @@ def runBowtieSingle(infile1,index,samfile):
 def convertSamToBam(samfile, bamfile):
     if not isFileThere(bamfile) :
         cmd = "/home/bnfo620/bin/samtools view -bS " + samfile + " > " + bamfile
+        print cmd, "Sam to bam"
         runSystemCMD(cmd)
         
 def sortBam(bamfile,sorted):
     if not isFileThere(sorted):
-        cmd = "/home/bnfo620/bin/samtools sort -no " + bamfile + " " + sorted
+        cmd = "/home/bnfo620/bin/samtools sort -no " + bamfile + " abc " + "> " + sorted
+        print cmd, "sort"
+        runSystemCMD(cmd)
+
+def convertBamToSam(sorted, sortedsam):
+    if not isFileThere(sortedsam) :
+        cmd = "/home/bnfo620/bin/samtools view " + sorted+ " > " + sortedsam
+        print cmd, "bam to sam"
         runSystemCMD(cmd)
 
 def generateSamFlagstat(bamfile,flagstatfile):
@@ -52,19 +60,21 @@ def main():
     projectname = sys.argv[4]
     outdir = sys.argv[5]
 
-    samfile = outdir +  "/" + projectname + "_bowtie.sam"
-    bamfile = outdir +  "/" + projectname + "_bowtie.bam"
-    sorted = outdir + "/" + projectname + "_bowtie_sorted"
-    resultfile = outdir +  "/" + projectname + "_bowtie_flagstat.txt"
+    samfile = outdir +  projectname + "_bowtie.sam"
+    bamfile = outdir +  projectname + "_bowtie.bam"
+    sorted = outdir + projectname + "_bowtie_sorted.bam"
+    sortedsam = outdir + projectname + "_bowtie_sorted.sam"
+    resultfile = outdir + projectname + "_bowtie_flagstat.txt"
 
-    print samfile
-    print bamfile
+    print samfile, "SAM"
+    print bamfile, "BAM"
     print resultfile
 
     # Running Bowtie ...
     runBowtiePair(infile1,infile2,index,samfile)
     convertSamToBam(samfile,bamfile)
     sortBam(bamfile,sorted)
+    convertBamToSam(sorted,sortedsam)
     #generateSamFlagstat(bamfile,resultfile)
 
 if __name__ == '__main__':
