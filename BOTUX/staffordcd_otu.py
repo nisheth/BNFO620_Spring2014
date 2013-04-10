@@ -304,15 +304,53 @@ def printOTUs(otus):
 
 
 def print_seeds(outfile, OTUs):
-    # ofh = open(outfile, 'w')
+    ofh = open(outfile, 'w')
     i = 1
-    print "Simulate writing to {}".format(outfile)
+    # print "Simulate writing to {}".format(outfile)
     for o in OTUs:
-        # ofh.write('OTU{}\t{}\n'.format(i, o.seed_seq))
-        print 'OTU{}\t{}'.format(i, o.seed_seq)
+        ofh.write('OTU{}\t{}\n'.format(i, o.seed_seq))
+        # print 'OTU{}\t{}'.format(i, o.seed_seq)
         i += 1
-    # ofh.close()
+    ofh.close()
 
+
+def print_freqs(outfile, OTUs):
+    ofh = open(outfile, 'w')
+    i = 1
+    # print "Simulate writing to {}".format(outfile)
+    for o in OTUs:
+        ofh.write('OTU{}\t{}\t{}\n'.format(i, o.get_num_reads(), o.avg_score))
+        # print 'OTU{}\t{}\t{}'.format(i, o.get_num_reads(), o.avg_score)
+        i += 1
+    ofh.close()
+
+
+def print_words(outfile, OTUs):
+    ofh = open(outfile, 'w')
+    i = 1
+    # print "Simulate writing to {}".format(outfile)
+    for o in OTUs:
+        total = 0
+        for w in o.words:
+            # print 'OTU{}\t{}\t{}'.format(i, w, o.words[w])
+            ofh.write('OTU{}\t{}\t{}\n'.format(i, w, o.words[w]))
+            total += o.words[w]
+        # print 'OTU{} total words\t{}'.format(i, total)
+        ofh.write('OTU{} total words\t{}\n'.format(i, total))
+        i += 1
+    ofh.close()
+
+
+def print_assignment(outfile, OTUs):
+    ofh = open(outfile, 'w')
+    i = 1
+    # print 'Simulate writing to {}'.format(outfile)
+    for o in OTUs:
+        for r in o.read_ids:
+            # print '{} in OTU{}'.format(r, i)
+            ofh.write('{}\tOTU{}\t{}\n'.format(r, i))
+        i += 1
+    ofh.close()
 
 def main():
     # TODO: add FASTQ handler
@@ -349,6 +387,9 @@ def main():
     # print len(OTUs)
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
     print_seeds(seed_out, OTUs)
+    print_freqs(freq_out, OTUs)
+    print_words(word_out, OTUs)
+    print_assignment(ass_out, OTUs)
 
 
 if __name__ == '__main__':
