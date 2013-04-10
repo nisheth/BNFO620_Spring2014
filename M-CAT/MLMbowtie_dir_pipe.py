@@ -1,8 +1,8 @@
 import sys
 import os
-import bowtie_sample_pipe as bp
+import sample_pipe as bp
 
-def runSystemCMDQsub(cmd):
+def runSystemCMD(cmd):
     print "Running below command using qsub ..."
     print cmd
     qsub_cmd = "qsub /home/martinezml2/qsub_general.sh \'" + cmd + "\'"
@@ -22,34 +22,38 @@ def main():
     filepath = indir
     files = os.listdir(filepath)
     for filename in files:
-        if filename.endswith("trimmed.1.fastq"):
+        if filename.endswith("1x.1.fastq"):
             read1 = indir + filename
-            read2 = indir + filename.replace("trimmed.1.fastq","trimmed.2.fastq")
-            projectname = filename.replace(".denovo_duplicates_marked.trimmed.1.fastq","_bowtie_merged.bam")
-            projectname1 = filename.replace(".denovo_duplicates_marked.trimmed.1.fastq","_index1")
+            read2 = indir + filename.replace("1x.1.fastq","1x.2.fastq")
+            projectname = filename.replace(".1x.1.fastq","_bowtie_merged.bam")
+            projectname1 = filename.replace(".1x.1.fastq","_index1")
 
             print read1
             print read2
             print projectname
+            print projectname1
 
-            cmd = "python bowtie_sample_pipe.py " + read1 + " " + read2 + " " + index1 + " " + projectname1 + " " + outdir
+            cmd = "python sample_pipe.py " + read1 + " " + read2 + " " + index1 + " " + projectname1 + " " + outdir
 
-            runSystemCMDQsub(cmd)
+            runSystemCMD(cmd)
 
             projectname2 = projectname1.replace("_index1","_index2")
-            cmd = "python bowtie_sample_pipe.py " + read1 + " " + read2 + " " + index2 + " " + projectname2 + " " + outdir
+            print projectname2
+            cmd = "python sample_pipe.py " + read1 + " " + read2 + " " + index2 + " " + projectname2 + " " + outdir
 
-            runSystemCMDQsub(cmd)
+            runSystemCMD(cmd)
 
-            cmd = "/home/bnfo620/bin/samtools cat -o " + projectname + " " + projectname1 + "_bowtie_sorted.bam " + projectname2 + "_bowtie_sorted.bam"
 
-            runSystemCMDQsub(cmd)
+            cmd = "/home/bnfo620/bin/samtools cat -o " + outdir+ projectname + " " + outdir + projectname1 + "_bowtie_sorted.bam " + outdir + projectname2 + "_bowtie_sorted.bam"
 
-            projectname3 = projectname.replace(".bam",".sam")
+            print cmd
+            runSystemCMD(cmd)
 
-            cmd = "/home/bnfo620/bin/samtools view -h -o " + projectname3 + " " + projectname
+            merged = projectname.replace(".bam",".sam")
 
-            runSystemCMDQsub(cmd)
+            cmd = "/home/bnfo620/bin/samtools view " +outdir+ projectname + " > " + outdir+ merged
+
+            runSystemCMD(cmd)
 
 if __name__ == '__main__':
     main()
