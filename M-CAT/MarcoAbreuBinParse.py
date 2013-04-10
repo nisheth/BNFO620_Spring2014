@@ -1,14 +1,22 @@
-__author__ = 'Marco Abreu'
-
+#__author__ = 'Marco Abreu'
+from __future__ import division
 import subprocess
 import sys
 import os
+import re
+from MCATpipline import B2_PLAN
 #import argparse
 
-Bin_Size = 100
+
+Source = '/home/bnfo620/M-CAT/sampledata/simulatddata/'
+Source_Index1 = '/home/bnfo620/M-CAT/All_Bacteria_1'
+Source_Index2 = '/home/bnfo620/M-CAT/All_Bacteria_2'
+Results_to = os.getcwd()+"/"
+samtools = '/home/bnfo620/bin/samtools'
+Bin_Size = 1000
 #GenSource = "/home/bnfo620/M-CAT"
 #Source = ""
-#Results_to = ''
+#Results_to = os.getcwd()
 ### program as arguments accepts the directory with flagstat files and a filename to be written to
 try:
     if len(sys.argv)<2:
@@ -16,11 +24,11 @@ try:
         print "Attempting default value test parameters...."
         #GenSource = 'C:/Users/Owner/PycharmProjects/Homework/mcattest.txt'
         #Dump = 'C:/Users/Owner/PycharmProjects/Homework/dump.txt'
-        GenSource = 'C:/Users/bccl_user/Desktop/Bnfo691_602/testgenome.txt'
-        Dump = 'C:/Users/bccl_user/Desktop/Bnfo691_602/dump.txt'
+        #GenSource = 'C:/Users/bccl_user/Desktop/Bnfo691_602/testgenome.txt'
+        #Dump = 'C:/Users/bccl_user/Desktop/Bnfo691_602/dump.txt'
         #Results_to = ''
-        #GenSource = "/home/bnfo620/M-CAT/All_Bacteria_Drafts+.fna"
-        #Dump = "/home/bnfo620/M-CAT/gi_taxid_nucl.dmp"
+        GenSource = "/home/bnfo620/M-CAT/All_Bacteria_Drafts+.fna"
+        Dump = "/home/bnfo620/M-CAT/gi_taxid_nucl.dmp"
     else:
         GenSource = sys.argv[1]
         Dump = sys.argv[2]
@@ -100,7 +108,6 @@ def Scount_bin(counts, size):
                 bin[i]=[0,str(str(i*size)+"-"+str((size)-1))]
             else:
                 bin[i]=[0,str(str(i*size)+"-"+str(((i+1)*size)-1))]
-
     else:
         bin[0]=[0,str("0-"+str(counts)),counts]
         #print bin
@@ -152,10 +159,103 @@ def outfileprint(hash): #Test by printing created outfile
     print "Close", outFile
     outFile.close()
     return "Write Complete"
-print "START"
 
+def SAMREADER(hash,thresh=3):
+    for filename in os.listdir(Results_to):
+        name_end = filename[len(filename)-8:]
+        list = []
+        if name_end == 'CSAM.sam':
+            f = open(os.getcwd()+"\\"+filename)
+            i = 0
+            cline = ""
+            for line in f:
+                if line[:2] == 'gi':
+                    cline=line+cline
+                    if len(cline) > 250:
+                        ginum,taxnum,score,start_pos = giRead(cline)
+                        for key in hash.keys():
+                            if ginum in hash[key].keys():
+                                bins=int(start_pos/Bin_Size)
+                                hash[key][ginum][bins].append([score,taxnum])
+
+
+
+
+
+                    cline = ""
+                else:
+                    cline+=line
+                i+=1
+
+def giRead(line):
+    raw = line.split(" ")
+    #print "X",line
+    info = []
+    for part in raw:
+        lok = part.strip('\n')
+        if len(lok)>1:
+            #print len(lok),lok
+            info.append(lok)
+    #print "info",info[0],info[1],info[2],info[3],info[4],info[len(info)-2] #,info
+    raw_mdz = str(info[len(info)-2]).split(':')
+    mdz = raw_mdz[2]
+    gi = str(info[0]).split("|")
+    ginum = gi[1]
+    if len(info[1])>5:
+        cigar = info[3]
+        tax = str(info[1]).split("|")
+        taxnum = tax[1]
+        start_pos = info[2]
+    else:
+        start_pos = info[3]
+        cigar = info[4]
+        tax = str(info[2]).split("|")
+        taxnum = tax[1]
+    #print "raw",ginum,taxnum,cigar,mdz,start_pos
+    mz = int(mdz_score(mdz))
+    cig = int(cigar_score(cigar))
+    score = float(mz/float(cig))*100
+    return ginum,taxnum,score,start_pos
+
+def mdz_score(score):
+    code = re.findall(r'(\D+|\d+)',score)
+    score = 0
+    #print code
+    for i in xrange(len(code)-1):
+        try:
+            score += int(code[i])
+        except ValueError:
+            score+=len(str(code[i]))
+    return int(score)
+
+def cigar_score(score):
+    code = re.findall(r'(\D+|\d+)',score)
+    score = 0
+    #print code
+    for i in xrange(len(code)-1):
+        if i < len(code)-1:
+            if code[i+1]=='M':
+                #print i,code[i]
+                score+=int(code[i])
+    #print "Score",score
+    return int(score)
+
+
+
+
+print "START"
 hashX= Genome_Binner(TaxID_to_GI(Dump),GenSource)
-outfileprint(hashX)
+
+
+Genetics = B2_PLAN(Source,Results_to,Source_Index1,Source_Index2)
+Genetics.bowtie_OPS(Source_Index1)
+Genetics.SAM_OPS()
+Genetics.BAMMERGE_OPS()
+Genetics.B2S_OPS()
+
+#outfileprint(hashX)
+
+SAMREADER(hashX)
 #print TaxID_gi_bin_hasher(Dump,GenSource)
 print "END"
 
