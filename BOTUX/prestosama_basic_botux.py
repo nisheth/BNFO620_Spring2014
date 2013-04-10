@@ -122,14 +122,14 @@ def main ():
 				wholeSeq = ''.join(subseqList)
 				length = len(wholeSeq)
 				
+				if trimlen != -1 and length > trimlen: 
+					wholeSeq = wholeSeq[:trimlen]
+					length = len(wholeSeq)							
+			
 				if wholeSeq in seqNames:
 					seqNames[wholeSeq].append(header)
 				else:
-					seqNames[wholeSeq] = [header]
-				
-				if trimlen != -1 and length > trimlen: 
-					wholeSeq = wholeSeq[:trimlen]
-					length = len(wholeSeq)
+					seqNames[wholeSeq] = [header]				
 				
 				if length in lenAbunD: #if seqWord in otu[1]:
 					if wholeSeq in lenAbunD[length]: #if seqWord in otu[1]:
