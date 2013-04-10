@@ -80,7 +80,7 @@ foreach (@sorted_keys){
 $abundance = $Seq_Hash{$_} ;
 $particular_seq = length($_ );
 $particular_seq_word_list = Create_Words($seq);
-print OUT ("Length:", $particular_seq, "\t", "\t", "\t", "abundance:","\t", $abundance , "\t",    "\n" );
+#print OUT ("Length:", $particular_seq, "\t", "\t", "\t", "abundance:","\t", $abundance , "\t",    "\n" );
 
 	if (%OTU_Hash) {
 		Create_OTU($seq, $abundance, $particular_seq_word_list);
