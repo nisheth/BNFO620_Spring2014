@@ -44,6 +44,7 @@ $currSeqW_List = WordList ($seq, $wordSize);
 	}
 }
 
+#Printing Here!
 #print OUTFILE "\nBest Score\tLength\tAbundance\n"; 
 
 ####### SUBROUTINES ######
