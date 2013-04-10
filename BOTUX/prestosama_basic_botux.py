@@ -1,7 +1,7 @@
 #Melissa Prestosa
 
 
-## proper output print add each time you process a unique sequence say best score length and where assigned
+
 import sys
 import re
 import os
@@ -9,7 +9,8 @@ import operator
 import argparse
 
 otuList = [] #global variable
-screenSplit = '---------------------------------------------------'
+seqNames = {}
+screenSplit = '---------------------------------------------------\n'
 
 def makeWordList(sequence, wordLen):
 	#assuming word size 8
@@ -21,7 +22,12 @@ def makeWordList(sequence, wordLen):
 	return list
 
 def makeNewOtu(sequence, abund, wordList):
-	list = [] #I want element 0 to be the seed sequence and element 1 to be a dict of words element 2 to be number of sequences in that OTU
+	list = [] 
+	nameScoreDict = {}
+	#list[0] = the seed sequence 
+	#list[1] = dict of words
+	#list[2] = number of READS in that OTU
+	#list[3] = dict where header line = read name and value = score of seq when added(as a float) (which will be assigned later. if = 1 then it was seed sequence)
 	list.append(sequence)
 	wordDict = {}
 	for word in wordList:
@@ -32,21 +38,30 @@ def makeNewOtu(sequence, abund, wordList):
 			wordDict[word] = abund
 	list.append(wordDict)
 	list.append(abund)
+	
+	for header in seqNames[sequence]:
+		nameScoreDict[header] = 'SEEDSEQ'		
+	
+	list.append(nameScoreDict)
 	otuList.append(list)
 
-def updateExistingOtu(posOfOTUtoUpdate, abund, wordList):
+def updateExistingOtu(posOfOTUtoUpdate, score, abund, seq, wordList):
 	for word in wordList:
 		if word in otuList[posOfOTUtoUpdate][1]:
 			otuList[posOfOTUtoUpdate][1][word] += abund
 		else:
 			otuList[posOfOTUtoUpdate][1][word] = abund
+	
 	otuList[posOfOTUtoUpdate][2] +=abund
+	
+	for header in seqNames[seq]:
+		otuList[posOfOTUtoUpdate][3][header] = score	
 	
 def scoreOTUs(seqSequence, wordList):
 	bestScore = [-999,-999] #bestScore[0] = position of OTU; bestScore[1] = score
 	
 	for index, otu in enumerate(otuList):
-		sumScoreforOTU = 0
+		sumScoreforOTU = float(0)
 		
 		totalWordsinCurrentOTU = sum(otu[1].itervalues()) 
 		#print totalWordsinCurrentOTU		
@@ -54,10 +69,10 @@ def scoreOTUs(seqSequence, wordList):
 		for seqWord in wordList:
 			if seqWord in otu[1]:
 				freqofWi = otu[1][seqWord]
-				currentScoreforWi = ((float(freqofWi)/float(totalWordsinCurrentOTU)) 
-				#print currentScoreforWi
+				currentScoreforWi = (float(freqofWi)/float(totalWordsinCurrentOTU)) 
+				#print currentScoreforWi				
+				sumScoreforOTU += currentScoreforWi			
 				
-				sumScoreforOTU += currentScoreforWi				
 			else:
 				#word does not exist in OTU
 				pass
@@ -65,7 +80,7 @@ def scoreOTUs(seqSequence, wordList):
 		#print screenSplit
 		#print 'OTU', index, 'Score', sumScoreforOTU , 'seed', len(otu[0]),'currSeq', len(seqSequence)
 
-		sumScoreforOTU = sumScoreforOTU * (float(len(otu[0]))/float(len(seqSequence))))
+		sumScoreforOTU = sumScoreforOTU * (float(len(otu[0]))/float(len(seqSequence)))
 		if sumScoreforOTU >= bestScore[1]:
 			#print 'replacing best score', bestScore[1], 'with new score', sumScoreforOTU
 			bestScore[0] = index
@@ -89,34 +104,71 @@ def main ():
 	trimlen = args.trimlen
 	
 	
-	outf = 'sorted_by_abundance_and_length.txt'
+	outf = 'otulist.txt'
 	lenAbunD = {}
+
 	readInCounter = 0
 	
-	fastafile = open(infile)
+	fastafile = open(infile)	
+	header = ''
+	subseqList = []
+	wholeSeq = ''
 	line = fastafile.readline().strip()
 	while line != '':
 		readInCounter += 1
 		match = re.search(r'^\>.',line)
 		if match:
-			header = line[1:];
-			#FIX THIS FIXXXX MEEEE
-		else:
-			#FIX THIS
-			length = len(line)
-			if trimlen != -1 and length > trimlen: 
-				line = line[:trimlen]
-				length = len(line)
-			if length in lenAbunD: #if seqWord in otu[1]:
-				if line in lenAbunD[length]: #if seqWord in otu[1]:
-					lenAbunD[length][line] += 1
+			if header != '':
+				wholeSeq = ''.join(subseqList)
+				length = len(wholeSeq)
+				
+				if wholeSeq in seqNames:
+					seqNames[wholeSeq].append(header)
 				else:
-					lenAbunD[length][line] = 1
-			else:
-				lenAbunD[length] = {}
-				lenAbunD[length][line] = 1				
+					seqNames[wholeSeq] = [header]
+				
+				if trimlen != -1 and length > trimlen: 
+					wholeSeq = wholeSeq[:trimlen]
+					length = len(wholeSeq)
+				
+				if length in lenAbunD: #if seqWord in otu[1]:
+					if wholeSeq in lenAbunD[length]: #if seqWord in otu[1]:
+						lenAbunD[length][wholeSeq] += 1
+					else:
+						lenAbunD[length][wholeSeq] = 1
+				else:
+					lenAbunD[length] = {}
+					lenAbunD[length][wholeSeq] = 1	
+			
+			header = line[1:]
+			subseqList = []
+		else:
+			subseqList.append(line)		
 		
 		line = fastafile.readline().strip()
+	
+	wholeSeq = ''.join(subseqList)
+	length = len(wholeSeq)
+	
+	if trimlen != -1 and length > trimlen: 
+		wholeSeq = wholeSeq[:trimlen]
+		length = len(wholeSeq)
+	
+	if length in lenAbunD: #if seqWord in otu[1]:
+		if wholeSeq in lenAbunD[length]: #if seqWord in otu[1]:
+			lenAbunD[length][wholeSeq] += 1
+		else:
+			lenAbunD[length][wholeSeq] = 1
+	else:
+		lenAbunD[length] = {}
+		lenAbunD[length][wholeSeq] = 1	
+		
+	if wholeSeq in seqNames:
+		seqNames[wholeSeq].append(header)
+	else:
+		seqNames[wholeSeq] = [header]
+		
+		
 		#if readInCounter%1000 == 0:
 			#print 'read %s lines from file %s' %(readInCounter, infile)
 			
@@ -129,10 +181,13 @@ def main ():
 	
 	for lenn in sorted(lenAbunD.keys(), reverse=True):
 		#outfile.write(outline)		
-		items = sorted([(v, k) for k, v in lenAbunD[lenn].items()], reverse=True) ##makes dict into tuples NOW THE TUPLES ARE IN THE ORDER (abun, seq)!!!
+		items = sorted([(v, k) for k, v in lenAbunD[lenn].items()], reverse=True)
+		##makes dict into tuples NOW THE TUPLES ARE IN THE ORDER (abun, seq)!!!
 		
 		for x in items:
 			#outstring = ''.join(['SEQ NUM: ', str(i), '\t\tLEN:', str(lenn),'\t\tABUNDANCE: ', str(x[0]), '\n']) #x[1] would give you the sequence 
+			#x[0] give you abund
+			#x[1] gives you the seq
 			currSeqWordL = makeWordList(x[1],wordLen)
 							
 			if otuList == []:
@@ -143,13 +198,14 @@ def main ():
 			else:				
 				#print '\n\nSeq #', totalSeq
 				best = scoreOTUs(x[1], currSeqWordL) 
+				#scoreOTUs returns a list of length two with best[0] being pos of best otu best[1] being best score
 				#print "best =", best
 				#print best[1]
 				#print threshold
-				#scoreOTUs returns a list of length two with x[0] being pos of best otu x[1] being best score
+
 				if best[1] >= threshold:
 					#print "updating"
-					updateExistingOtu(best[0], x[0], currSeqWordL)
+					updateExistingOtu(best[0], best[1], x[0], x[1], currSeqWordL)
 				else:
 					makeNewOtu(x[1], x[0], currSeqWordL)	
 
@@ -158,13 +214,31 @@ def main ():
 				
 				
 	otusum = 0
-	print '\n\nOTU\tFirst 8 nt\t Last 8 nt \t Number of Seq in OTU'
-	for index, otu in enumerate(otuList):
-		seq = otu[0]
-		print index,'\t', seq[:8],'\t', seq[-8:], '\t', otu[2]		
-		otusum += otu[2]
 	
-	print 'totalReads', totalReads, '\ttotalSeq', totalSeq, '\tsum of OTUs', otusum
+	outfile = open(outf, 'w')
+	#print '\n\nOTU\tFirst 8 nt \t Number of Reads in OTU'
+	outfile.write('OTU\tFirst 8 nt \t Number of Reads in OTU\n\n')
+	for index, otu in enumerate(otuList):
+		
+		#print screenSplit
+		outfile.write(screenSplit)
+		seq = otu[0]
+		#print index,'\t', seq[:8],'\t', seq[-8:], '\t', otu[2]	
+		#print index,'\t', seq[:8], '\t', otu[2]			
+		outfile.write(''.join(['OTU', str(index),'\t', seq[:8], '\t', str(otu[2]), '\n']))
+		otusum += otu[2]
+		
+		for read in otu[3]:
+			#print read , otu[3][read]
+			outfile.write(''.join([read,'\t', str(otu[3][read]),'\n']))
+		
+	#print 'totalReads', totalReads, '\ttotalSeq', totalSeq, '\tsum of OTUs', otusum
+	outfile.write(''.join(['\n','totalReads  ', str(totalReads), '\ttotalSeq  ', str(totalSeq), '\tSum of reads in OTUs  ', str(otusum)]))
+	# print '\n\n'
+	# for seq in seqNames:
+		# print seqNames[seq]
+		# print '\n'
+	
 	
 if __name__ == '__main__':
 	main()		
