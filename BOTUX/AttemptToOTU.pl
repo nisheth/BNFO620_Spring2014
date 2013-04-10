@@ -1,109 +1,152 @@
-use strict;
-use warnings;
+##Kanika Sharma
+## Created OTU
 
+##### Variable declaration #######
 my $infile = shift;
-my $trimLength = shift; 
-my $outfile = shift;
-
-if(!defined ($outfile)) {
-  print "ERROR MSG: Please provide an input file, trimlength and an output file\n"; 
-}
-open IFH, "$infile" or die "Error in opening the infile\n";
-open OFH, ">$outfile" or die "Error in opening the infile\n";
-
-########## MAIN METHOD#####################
-my $file = makeTrimString($infile, $outfile);
+my $trimLength = shift;
+# my $threshold = shift;
+my $outfile = shift; 
 
 my %HashOfSeq;
+my %HashOfOtu; 
+my $window = 8;
+my @keys;
+my @sorted_values;
+my $SeqWordList;
+my $curBestScore; 
 my $line; 
-my $Header; 
-my $Seq = "";
-my $LenSeq =0; 
-my $TotalSeqInFile =0; 
-my $nonDuplicatedSeq =0; 
-my $LenSubString;
-my $subString;
-my $bothLen; 
-my $Multiple_Read;
-my @SeqList; 
-my @wordList;
-my @OTUList; 
-my $word;
+my $seq; 
+my $trimSeq; 
+my $header; 
+my $seqLen; 
+my $seqLen1; 
+my $Abund; 
+my $occurWords; 
 
+if (!defined($outfile)){
+	die "Error Msg: Please enter an infile, trimlength, threshold and an outfile\n";
+} # end if
 
+###### Open Files ######
+open IFH, "$infile" or die "Cannot open/locate the $infile\n";
+#open OFH, ">$outfile" or die "Cannot write to the $outfile\n"; 
 
-
-############## SUBROUTINES ##################
-sub makeTrimString{
-my ($infile, $outfile) = @_;
+##### MAIN METHOD ########
 while($line = <IFH>){
-if ($line =~ /(^>\w+\|)/g) {
-  chomp $line; 
-	$Header = $1; 
-}
-else {
-	$Seq = $line; 
-	$LenSeq = length($Seq); 
-foreach my $range (0..($LenSeq-9)){
-	$word = substr($Seq, $range, 8);
-	push (@wordList, $word);
-} # end for loop
-if ($LenSeq > $trimLength) {
-	$subString = substr($Seq, 0, $trimLength);
-	#print OFH $subString, "\n\n\n";
-}
-elsif($LenSeq <= $trimLength) {
-	$bothLen = ($LenSubString, $LenSeq);
-
-if (exists $HashOfSeq{$Seq}){
-	$HashOfSeq{$Seq}++; 
-} # end if exists loop
-
-else {
-	$HashOfSeq{$Seq} = 1; 
-	$nonDuplicatedSeq++; 
-} # end second else loop
-
-}
-	$TotalSeqInFile++; 
-} # end else loop
+	if($line =~ /^>(.*)/g) {
+		chomp $line; 
+		$header = $1; 
+		#print $header, "\n";
+	} # end if
+	else {
+		$seq = ""; 
+		$seq .= $line;  
+		$seqLen = length($seq);
+		if ($seqLen > $trimLength){
+			$seq = substr($seq, 0, $trimLength);
+		} # end if
+		#print $seq, "\n\n"; 
+		if(exists $HashofSeq{$seq}){
+			$HashofSeq{$seq}{$occurWords}++; 
+		} # end if 
+		else {
+			$HashofSeq{$seq}{$occurWords} = 1; 
+		}
+		push @{$HashOfSeq{$seq}{read}}, $header; 
+		#print $seqLen, "\n"; 
+	} # end else
+	
 } # end while
 
-} # end makeTrimString
+close IFH; 
 
-my $bestScore = -999; 
-my %WordHash;
-my $words; 
-my $la; 
-my $OtuScore; 
-my $totalScoreinCurrentOtu =0; 
-foreach(@wordList){
-$words = $_; 
-	if (exists $WordHash{$words}){
-		$WordHash{$words}++; 
-		$HashOfSeq{$Seq}{$words}++; 
-	} # end if
-	else{
-		$WordHash{$words} =1; 
-		$HashOfSeq{$Seq}{$words} =1; 
+@keys = keys %HashOfSeq; 
+@sorted_values = sort {length($b) <=> length($a) || $HashOfSeq{$b} <=> $HashOfSeq{$a}} @keys; 
+
+my $word; 
+my @wordList; 
+foreach(@sorted_values){
+	#print $_, "\n\n"; 
+	$seqLen1 = length($_);
+	$Abund = $HashOfSeq{$_};
+foreach my $i (0..$seqLen1-($window+1)){
+	$word = substr($_, $i, $window); 
+	#print $word, "\n\n";
+	push @wordList, $word; 
+} # end of second foreach
+	if(%HashOfOtu){
+		createOtu($seq, $abund, @wordList);
+	} else {
+		$curBestScore = createScore($seq,@wordList); 
 	}
-} # end foreach
-
-my @keys = keys %HashOfSeq;
-my @sorted_values = sort{ length($b) <=> length($a) || $HashOfSeq{$b} <=> $HashOfSeq{$a}} @keys;
-
-my $lenOfSeq; 
-my $Abundance; 
-foreach (@sorted_values){ 
-print $sorted_values[1], "\n"; 
-$lenOfSeq = length($_);
-$Abundance = $HashOfSeq{$_}; 
-
-#print OFH ("Length: $lenOfSeq\tAbundance:$Abundance\n\n");
-
+	if ($curBestScore >= $threshold) {
+		OTUupdate($sequence, $abund,$ListWRef); 
+	}
+	else {
+		createOtu($seq, $abund, @wordList);
+	}
 } # end first foreach
 
-#print OFH ("Total number of sequences = $TotalSeqInFile, \n Single Read = $nonDuplicatedSeq \n");
+
+sub createOtu{
+	my ($seq, $abund, $ListWRef) = @_;
+	
+	my $Otu;
+	my $totalCount; 
+	my $word; 
+	
+	foreach(@$ListWRef){
+		$HashOfOtu{$otu}{totalC}++;
+		$HashOfOtu{$otu}{seedSeq}= $seq;
+		$HashOfOtu{$otu}{word}{$word} = $abund; 
+	} # end foreach
+	
+	foreach (@HashOfSeq{$seq}{read}){
+		push @{$HashOfOtu}{$otu}{read}, $header; 
+	}
+} # createOTU
+
+sub createScore {
+	my ($seq, $ListWRef) = @_;
+	my $max_score=-999;
+	my $theOTU;
+	my $totalCount =0;	
+	my $seedSeq;
+	my $totalSum;
+	my $atMomentScore;
+	my $occWord; 
+	
+	foreach(keys %HashOfOtu){
+		foreach (@ListWRef){
+			if(exists $HashOfOtu{$otu}{$word}){
+				$totalCount = $HashOfOtu{$otu}{totalC};
+				$occWord = $HashOfOtu{$otu}{word}{$word}; 
+				$atMomentScore = ($occWord/$totalCount); 
+				$totalSum += $atMomentScore; 
+			} # end if
+		} # end second foreach
+	} # end first foreach
+	
+} # end ScoreOTU
+
+sub OTUupdate {
+my ($sequence, $abund,$ListWRef) = @_;
 
 
+ my $otu;
+ my $totalCount;
+ 
+ foreach my $word (@$ListWRef) {
+ $HashOfOtu{$otuName}{totalCount}++; 
 
+	if(exists $HashOfOtu{$otu}{word}{$word})
+    		$HashOfOtu{$otu}{word}{$word} += $abund;
+	} else { 
+		$HashOfOtu{$otu}{word}{$word} = $abund;	
+	}	
+
+}
+ foreach(@$HashOfSeq{$seq}{read}}) {
+ 	push @{$HashOfOtu}{$otu}{read}, $header;
+ }	
+}	
