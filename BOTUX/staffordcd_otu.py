@@ -16,12 +16,9 @@ class Sequence:
     Holds data for a particular sequence. Implemented comparison functions lt, gt, eq based on length of sequence first,
     then based on abundance of sequence. Implemented len based on length of sequence.
     """
-    # TODO when multiple identical seqs are gathered into Seq object, want their word abundance to be
-    # reflected in the words dict and, in turn, in the OTU it lands in
     def __init__(self, defline = None, sequence = None, word_size = 8):
         self.deflines = []
         self.add_header(defline)
-        # do we really need to keep sequence in each object now that the sequence is a key to an external dict?
         self.sequence = sequence
         self.words = {}
         if sequence:
@@ -69,10 +66,6 @@ class Sequence:
     def get_abundance(self):
         return len(self.deflines)
 
-    # likely want this in the OTU class, not the Sequence class
-    # def tally_words(self):
-    #     return sum(self.words.values())
-
 
 class OTU:
     def __init__(self, seq, words, read_id):
@@ -100,7 +93,6 @@ class OTU:
         # TODO: make sure this is working correctly in tandem with the word building in the Sequence class
         for word in words:
             if word in self.words:
-                # self.words[word] += 1
                 self.words[word] += int(words[word])
             else:
                 self.words[word] = 1
@@ -108,7 +100,6 @@ class OTU:
     def add_score(self, score):
         self.avg_score += score
         self.avg_score /= float(2)
-
 
     def tally_words(self):
         return sum(self.words.values())
@@ -286,9 +277,6 @@ def score_read(read, otu):
     for word in read.words:
         # print "Looking for {}".format(word)
         # print "{} found {} times".format(word, otu.words.get(word, 0))
-        # don't want len of otu.words (just gives distinct words), want the total number of words
-        # running_total += (otu.words.get(word, 0) / float(len(otu.words)))
-        # running_total += (otu.words.get(word, 0) / float(read.tally_words()))
         running_total += (otu.words.get(word, 0) / float(otu.tally_words()))
         # print "running total: {}".format(running_total)
     running_total *= (len(otu.seed_seq) / float(len(read.sequence)))
@@ -351,6 +339,7 @@ def print_assignment(outfile, OTUs):
             ofh.write('{}\tOTU{}\t{}\n'.format(r, i))
         i += 1
     ofh.close()
+
 
 def main():
     # TODO: add FASTQ handler
