@@ -95,8 +95,8 @@ $particular_seq_word_list = Create_Words($seq);
 		}
 	}
 }
-print OUT ("Total Number of Reads In File:", $num_of_reads, "\n");
-print OUT ("Total Number of Unique Reads:", $uniq );
+#print OUT ("Total Number of Reads In File:", $num_of_reads, "\n");
+#print OUT ("Total Number of Unique Reads:", $uniq );
 
 
 close IN;
