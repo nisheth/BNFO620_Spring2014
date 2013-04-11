@@ -3,6 +3,7 @@
 import argparse
 import os.path
 import sys
+import re
 
 
 SEED_FILE = 'OTU_seed.txt'
@@ -187,10 +188,24 @@ def parse_fasta(fasta_file):
 
 def parse_fastq(fastq_file):
     """
-    Note: assumes a "standard" 4-line fastq formatted file. Results will be unpredictable otherwise.
+    Note: assumes a "standard" 4-line fastq formatted file. Results may be unpredictable otherwise.
     """
-    # header, sequence, score = None, None, None
-    print "FASTQ file parsing not implemented."
+    header, sequence, score = None, None, None
+    for line in fastq_file:
+        line = line.rstrip()
+        if line.startswith('@'):
+            if header:
+                yield (header, sequence, score)
+            header, sequence, score = line.lstrip('@'), None, None
+        elif line.startswith('+'):
+            # don't really care about the tag line
+            continue
+        elif re.match('^[A-Za-z]', line):
+            sequence = line
+        else:
+            score = line
+    if header:
+        yield (header, sequence, score)
 
 
 def fully_qualify_output_files(outdir):
