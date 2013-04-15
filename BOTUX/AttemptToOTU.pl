@@ -63,23 +63,25 @@ while($line = <IFH>){
 close IFH; 
 
 @keys = keys %HSeq; 
-@sorted_values = sort {length($b) <=> length($a) || $HSeq{$b} <=> $HSeq{$a}} @keys; 
+@sorted_values = sort {length($b) <=> length($a) || $HSeq{$b}{$occurwords} <=> $HSeq{$a}{$occurwords}} @keys; 
 
 my $word; 
 my @wordList; 
-foreach(@sorted_values){
+foreach $seq (@sorted_values){
 	#print $_, "\n\n"; 
-	$seqLen1 = length($_);
-	$Abund = $HSeq{$_};
-foreach my $i (0..$seqLen1-($window+1)){
-	$word = substr($_, $i, $window); 
-	#print $word, "\n\n";
-	push @wordList, $word; 
-} # end of second foreach
+	$seqLen1 = length($seq);
+	$Abund = $HSeq{$seq}{$occurwords};
+
+	@wordlist = ();
+	foreach my $i (0..$seqLen1-($window+1)){
+		$word = substr($seq, $i, $window); 
+		#print $word, "\n\n";
+		push @wordList, $word; 
+	} # end of second foreach
 	if(%H_otu){
-		createOtu($seq, $Abund, $wordList[$_]);
+		createOtu($seq, $Abund, \@wordList);
 	} else {
-		$curBestScore = createScore($seq,$wordList[$_]); 
+		$curBestScore = createScore($seq,\@wordList); 
 	}
 	if ($curBestScore >= $threshold) {
 		OTUupdate($seq, $Abund,$wordList[$_]); 
@@ -99,10 +101,10 @@ sub createOtu{
 	my $totalCount; 
 	my $word; 
 	
-	foreach(@$ListWRef){
+	foreach $word (@$ListWRef){
 		$H_otu{$otu}{totalC}++;
 		$H_otu{$otu}{seedSeq}= $seq;
-		$H_otu{$otu}{W}{$_} = $abund; 
+		$H_otu{$otu}{W}{$word} = $abund; 
 	} # end foreach
 	
 	foreach (@{$HSeq{$seq}{read}}){
