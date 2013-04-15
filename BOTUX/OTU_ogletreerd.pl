@@ -48,7 +48,7 @@ $currSeqW_List = WordList ($seq, $wordSize);
 #print OUTFILE "\nBest Score\tLength\tAbundance\n"; 
 
 ####### SUBROUTINES ######
-sub read_Fasta {
+#sub read_Fasta {
 my ($inputfile) = $_;
 
    my $line;
@@ -90,8 +90,8 @@ if (! exists $seqHash{$sequence}){
     $seqHash{$sequence}{freqofWi}++;
 }
 push @{$seqHash{$sequence}{read}}, $header;
-return ($sequence, $header);
-}
+#return ($sequence, $header);
+#}
 
 sub WordList{
 my ($sequence, $wordSize) = $_;
