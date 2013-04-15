@@ -25,11 +25,13 @@ open SEQUENCE_FILE, "$inputfile" or die "Can't open $inputfile: $!\n";
 open OUTFILE, ">$outputfile" or die "USAGE: Can't open $outputfile: $!\n";
 
 @keys = keys %seqHash;
-@sort = sort {length($b) <=> length($a) || $seqHash{$b} <=> $seqHash{$a}} @keys;
+@sort = sort {length($b) <=> length($a) || $seqHash{$b}{freqofWi} <=> $seqHash{$a}{freqofWi}} @keys;
 
 foreach my $seq (@sort) {
-$len = length($_);
-$abundance = $seqHash{$_};
+$len = length($seq);
+$abundance = $seqHash{$seq}{freqofwi};
+print "Abudance = $abundance\n";
+
 $currSeqW_List = WordList ($seq, $wordSize);
 
 	if (%otuHash) {
@@ -145,9 +147,10 @@ my ($sequence, $abundance,$wordListRef) = @_;
 my $otuName;
 my $totalCount;
  
+otuHash{$otuName}{seedSeq} = $sequence;
  foreach my $word (@$wordListRef) {
  $otuHash{$otuName}{totalCount}++;
- $otuHash{$otuName}{seedSeq} = $sequence;
+ $
  $otuHash{$otuName}{word}{$word} = $abundance;
  }
  
