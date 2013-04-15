@@ -9,8 +9,8 @@ my $trimLength = shift;
 my $threshold = shift;
 my $outfile = shift; 
 
-my %SeqHash;
-my %HashOfOtu; 
+my %HSeq;
+my %H_otu; 
 my $window = 8;
 my @keys;
 my @sorted_values;
@@ -31,7 +31,7 @@ if (!defined($outfile)){
 
 ###### Open Files ######
 open IFH, "$infile" or die "Cannot open/locate the $infile\n";
-#open OFH, ">$outfile" or die "Cannot write to the $outfile\n"; 
+open OFH, ">$outfile" or die "Cannot write to the $outfile\n"; 
 
 ##### MAIN METHOD ########
 while($line = <IFH>){
@@ -48,13 +48,13 @@ while($line = <IFH>){
 			$seq = substr($seq, 0, $trimLength);
 		} # end if
 		#print $seq, "\n\n"; 
-		if(exists $SeqHash{$seq}){
-			$SeqHash{$seq}{$occurWords}++; 
+		if(exists $HSeq{$seq}){
+			$HSeq{$seq}{$occurWords}++; 
 		} # end if 
 		else {
-			$SeqHash{$seq}{$occurWords} = 1; 
+			$HSeq{$seq}{$occurWords} = 1; 
 		}
-		push @{$SeqHash{$seq}{read}}, $header; 
+		push @{$HSeq{$seq}{read}}, $header; 
 		#print $seqLen, "\n"; 
 	} # end else
 	
@@ -62,21 +62,21 @@ while($line = <IFH>){
 
 close IFH; 
 
-@keys = keys %SeqHash; 
-@sorted_values = sort {length($b) <=> length($a) || $SeqHash{$b} <=> $SeqHash{$a}} @keys; 
+@keys = keys %HSeq; 
+@sorted_values = sort {length($b) <=> length($a) || $HSeq{$b} <=> $HSeq{$a}} @keys; 
 
 my $word; 
 my @wordList; 
 foreach(@sorted_values){
 	#print $_, "\n\n"; 
 	$seqLen1 = length($_);
-	$Abund = $SeqHash{$_};
+	$Abund = $HSeq{$_};
 foreach my $i (0..$seqLen1-($window+1)){
 	$word = substr($_, $i, $window); 
 	#print $word, "\n\n";
 	push @wordList, $word; 
 } # end of second foreach
-	if(%HashOfOtu){
+	if(%H_otu){
 		createOtu($seq, $Abund, $wordList[$_]);
 	} else {
 		$curBestScore = createScore($seq,$wordList[$_]); 
@@ -90,6 +90,8 @@ foreach my $i (0..$seqLen1-($window+1)){
 } # end first foreach
 
 
+###########SUBROUTINES##################
+
 sub createOtu{
 	my ($seq, $abund, $ListWRef) = @_;
 	
@@ -98,13 +100,13 @@ sub createOtu{
 	my $word; 
 	
 	foreach(@$ListWRef){
-		$HashOfOtu{$otu}{totalC}++;
-		$HashOfOtu{$otu}{seedSeq}= $seq;
-		$HashOfOtu{$otu}{word}{$word} = $abund; 
+		$H_otu{$otu}{totalC}++;
+		$H_otu{$otu}{seedSeq}= $seq;
+		$H_otu{$otu}{W}{$_} = $abund; 
 	} # end foreach
 	
-	foreach (@{$SeqHash{$seq}{read}}){
-		push @{$HashOfOtu{$otu}{read}}, $header; 
+	foreach (@{$HSeq{$seq}{read}}){
+		push @{$H_otu{$otu}{read}}, $_; 
 	}
 } # createOTU
 
@@ -118,11 +120,11 @@ sub createScore {
 	my $atMomentScore;
 	my $occWord; 
 	
-	foreach(keys %HashOfOtu){
-		foreach my $Wlist (@$ListWRef){
-			if(exists $HashOfOtu{$otu}{$word}){
-				$totalCount = $HashOfOtu{$otu}{totalC};
-				$occWord = $HashOfOtu{$otu}{word}{$word}; 
+	foreach $otu (keys %H_otu){
+		foreach my $W(@$ListWRef){
+			if(exists $H_otu{$otu}{W}{$W}){
+				$totalCount = $H_otu{$otu}{totalC};
+				$occWord = $H_otu{$otu}{W}{$W}; 
 				$atMomentScore = ($occWord/$totalCount); 
 				$totalSum += $atMomentScore; 
 			} # end if
@@ -139,16 +141,20 @@ my ($sequence, $abund,$ListWRef) = @_;
  my $totalCount;
  
  foreach my $word (@$ListWRef) {
- $HashOfOtu{$otu}{totalCount}++; 
+ $H_otu{$otu}{totalCount}++; 
 
-	if(exists $HashOfOtu{$otu}{word}{$word}){
-    		$HashOfOtu{$otu}{word}{$word} += $abund;
+	if(exists $H_otu{$otu}{word}{$word}){
+    	$H_otu{$otu}{word}{$word} += $abund;
 	} else { 
-		$HashOfOtu{$otu}{word}{$word} = $abund;	
+		$H_otu{$otu}{word}{$word} = $abund;	
 	}	
 
-}
- foreach (@{$SeqHash{$seq}{read}}) {
- 	push @{$HashOfOtu{$otu}{read}}, $header;
+} # end foreach
+
+ foreach (@{$HSeq{$seq}{read}}) {
+ 	push @{$H_otu{$otu}{read}}, $_;
  }	
-}
+} ## end OTUupdate
+
+
+close OFH; 
