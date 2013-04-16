@@ -189,13 +189,15 @@ def parse_fasta(fasta_file):
 def parse_fastq(fastq_file):
     """
     Note: assumes a "standard" 4-line fastq formatted file. Results may be unpredictable otherwise.
+
+    Score line is "turned off" in the yields because I don't need it in this program.
     """
     header, sequence, score = None, None, None
     for line in fastq_file:
         line = line.rstrip()
         if line.startswith('@'):
             if header:
-                yield (header, sequence, score)
+                yield (header, sequence)
             header, sequence, score = line.lstrip('@'), None, None
         elif line.startswith('+'):
             # don't really care about the tag line
@@ -205,7 +207,7 @@ def parse_fastq(fastq_file):
         else:
             score = line
     if header:
-        yield (header, sequence, score)
+        yield (header, sequence)
 
 
 def fully_qualify_output_files(outdir):
@@ -252,6 +254,17 @@ def read_fasta_file(ifh, trim_to, seqs, word_size):
             seqs[s].add_header(h)
             seqs[s].increment_word_count()
     return seqs
+
+
+def read_fastq_file(ifh, trim_to, seqs, word_size):
+    for h, s in parse_fastq(ifh):
+        if trim_to and len(s) > int(trim_to):
+            s = s[:int(trim_to)]
+        if s not in seqs:
+            seqs[s] = Sequence(h, s, word_size)
+        else:
+            seqs[s].add_header(h)
+            seqs[s].increment_word_count()
 
 
 def bin_reads(reads, OTUs, threshold):
@@ -351,14 +364,13 @@ def print_assignment(outfile, OTUs):
     for o in OTUs:
         for r in o.read_ids:
             # print '{} in OTU{}'.format(r, i)
-            ofh.write('{}\tOTU{}\t{}\n'.format(r, i))
+            ofh.write('{}\tOTU{}\n'.format(r, i))
         i += 1
     ofh.close()
 
 
 def main():
     # TODO: add FASTQ handler
-    # TODO: add paired-end read handler
     args = parse_args(set_up_CL_parser())
     infile = args['in_file']
     outdir = args['out_dir']
@@ -380,7 +392,8 @@ def main():
         ifh.close()
     else:
         ifh = open(infile, 'r')
-        seqs = parse_fastq(ifh)
+        read_fastq_file(ifh, args['trim_length'], seqs, word_size)
+        # seqs = parse_fastq(ifh)
         ifh.close()
     sorted_seqs = seqs.values()
     sorted_seqs.sort(reverse = True)
