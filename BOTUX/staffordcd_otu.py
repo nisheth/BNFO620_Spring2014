@@ -79,16 +79,22 @@ class OTU:
         self.words = {}
         self.add_words(words)
         self.read_ids = []
-        self.add_id(read_id)
         # upon creation, the OTU will have an average score of 100% (it's totally identical to itself)
         self.avg_score = 1
+        # need to score read ids that are identical (reported in OTU_assignment output)...
+        # this assigns them 100% identity
+        self.scores = [1] * len(read_id)
+        self.add_id(read_id, None)
 
     def __str__(self):
         return '{}\n'.format(self.read_ids)
 
-    def add_id(self, read_id):
+    def add_id(self, read_id, score):
         # looks like the += operator has the desired effect of keeping the list flat
         self.read_ids += read_id
+        if score:
+            self.scores.extend([score] * len(read_id))
+        # self.scores[read_id] = None
 
     def add_words(self, words):
         # TODO: make sure this is working correctly in tandem with the word building in the Sequence class
@@ -101,6 +107,8 @@ class OTU:
     def add_score(self, score):
         self.avg_score += score
         self.avg_score /= float(2)
+        self.scores.append(score)
+        # self.scores[read_id] = score
 
     def tally_words(self):
         return sum(self.words.values())
@@ -288,7 +296,7 @@ def bin_reads(reads, OTUs, threshold):
             if max_score >= threshold:
                 # print "Found best score {} in OTU {}.\nadd to current otu".format(max_score, best_otu.read_ids)
                 best_otu.add_words(read.words)
-                best_otu.add_id(read.deflines)
+                best_otu.add_id(read.deflines, max_score)
                 best_otu.add_score(max_score)
                 # print "added to current otu.\nNum OTUs:{}".format(len(OTUs))
                 # raw_input("Waiting...")
@@ -362,15 +370,17 @@ def print_assignment(outfile, OTUs):
     i = 1
     # print 'Simulate writing to {}'.format(outfile)
     for o in OTUs:
+        j = 0
         for r in o.read_ids:
             # print '{} in OTU{}'.format(r, i)
-            ofh.write('{}\tOTU{}\n'.format(r, i))
+            ofh.write('{}\tOTU{}\t{}\n'.format(r, i, o.scores[j]))
+            # ofh.write('{}\tOTU{}\n'.format(r, i))
+            j += 1
         i += 1
     ofh.close()
 
 
 def main():
-    # TODO: add FASTQ handler
     args = parse_args(set_up_CL_parser())
     infile = args['in_file']
     outdir = args['out_dir']
