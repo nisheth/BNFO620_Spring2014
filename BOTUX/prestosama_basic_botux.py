@@ -226,10 +226,7 @@ def main ():
 	#print '\n\nOTU\tFirst 8 nt \t Number of Reads in OTU'
 	#outfile.write('OTU\tFirst 8 nt \t Number of Reads in OTU\n\n')
 	
-	for index, otu in enumerate(otuList):
-		
-		
-		
+	for index, otu in enumerate(otuList):		
 		
 		sumOfScores = 0
 		seedSeq = otu[0]		
@@ -240,7 +237,7 @@ def main ():
 			sumOfScores += otu[3][read]
 			outA.write(''.join([read, '\t', 'OTU', str(index+1),'\t', str(otu[3][read]),'\n'])) #for OTU_assignment.txt
 		
-		print 'sum ', sumOfScores
+		#print 'sum ', sumOfScores
 		avgScore = sumOfScores / otu[2]
 		outF.write(''.join(['OTU', str(index+1),'\t', str(otu[2]), '\t', str(avgScore), '\n'])) #for OTU_frequency.txt
 	
@@ -251,6 +248,10 @@ def main ():
 		totalWordsinCurrentOTU = sum(otu[1].itervalues()) 
 		outW.write(''.join(['OTU', str(index+1),' total\t', str(totalWordsinCurrentOTU), '\n']))
 	
+	outS.close()
+	outA.close()
+	outF.close()
+	outW.close()
 	#print 'totalReads', totalReads, '\ttotalSeq', totalSeq, '\tsum of OTUs', otusum
 	#outfile.write(''.join(['\n','totalReads  ', str(totalReads), '\ttotalSeq  ', str(totalSeq), '\tSum of reads in OTUs  ', str(otusum)]))
 	# print '\n\n'
