@@ -40,7 +40,7 @@ def makeNewOtu(sequence, abund, wordList):
 	list.append(abund)
 	
 	for header in seqNames[sequence]:
-		nameScoreDict[header] = 'SEEDSEQ'		
+		nameScoreDict[header] = 1		
 	
 	list.append(nameScoreDict)
 	otuList.append(list)
@@ -104,7 +104,11 @@ def main ():
 	trimlen = args.trimlen
 	
 	
-	outf = 'otulist.txt'
+	outSeed = 'MAP_OTU_seed.txt'
+	outFreq = 'MAP_OTU_frequency.txt'
+	outAssign = 'MAP_OTU_assignment.txt'
+	outWord = 'MAP_OTU_word.txt'
+	
 	lenAbunD = {}
 
 	readInCounter = 0
@@ -215,25 +219,40 @@ def main ():
 				
 	otusum = 0
 	
-	outfile = open(outf, 'w')
+	outS = open(outSeed, 'w')
+	outF = open(outFreq, 'w')
+	outA = open(outAssign, 'w')
+	outW = open(outWord, 'w')
 	#print '\n\nOTU\tFirst 8 nt \t Number of Reads in OTU'
-	outfile.write('OTU\tFirst 8 nt \t Number of Reads in OTU\n\n')
+	#outfile.write('OTU\tFirst 8 nt \t Number of Reads in OTU\n\n')
+	
 	for index, otu in enumerate(otuList):
 		
-		#print screenSplit
-		outfile.write(screenSplit)
-		seq = otu[0]
-		#print index,'\t', seq[:8],'\t', seq[-8:], '\t', otu[2]	
-		#print index,'\t', seq[:8], '\t', otu[2]			
-		outfile.write(''.join(['OTU', str(index),'\t', seq[:8], '\t', str(otu[2]), '\n']))
-		otusum += otu[2]
 		
+		
+		
+		sumOfScores = 0
+		seedSeq = otu[0]		
+		outS.write(''.join(['OTU', str(index+1),'\t', seedSeq, '\n'])) #for OTU_seed.txt
+				
 		for read in otu[3]:
 			#print read , otu[3][read]
-			outfile.write(''.join([read,'\t', str(otu[3][read]),'\n']))
+			sumOfScores += otu[3][read]
+			outA.write(''.join([read, '\t', 'OTU', str(index+1),'\t', str(otu[3][read]),'\n'])) #for OTU_assignment.txt
 		
+		print 'sum ', sumOfScores
+		avgScore = sumOfScores / otu[2]
+		outF.write(''.join(['OTU', str(index+1),'\t', str(otu[2]), '\t', str(avgScore), '\n'])) #for OTU_frequency.txt
+	
+		for word in otu[1]:
+			outW.write(''.join(['OTU', str(index+1), '\t', word, '\t', str(otu[1][word]), '\n']))
+	
+		
+		totalWordsinCurrentOTU = sum(otu[1].itervalues()) 
+		outW.write(''.join(['OTU', str(index+1),' total\t', str(totalWordsinCurrentOTU), '\n']))
+	
 	#print 'totalReads', totalReads, '\ttotalSeq', totalSeq, '\tsum of OTUs', otusum
-	outfile.write(''.join(['\n','totalReads  ', str(totalReads), '\ttotalSeq  ', str(totalSeq), '\tSum of reads in OTUs  ', str(otusum)]))
+	#outfile.write(''.join(['\n','totalReads  ', str(totalReads), '\ttotalSeq  ', str(totalSeq), '\tSum of reads in OTUs  ', str(otusum)]))
 	# print '\n\n'
 	# for seq in seqNames:
 		# print seqNames[seq]
