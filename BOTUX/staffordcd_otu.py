@@ -74,7 +74,11 @@ class OTU:
         With add_words and add_id, I'm trying to keep the implementation logic independent from how the methods
         are used, in case I decide to change things in the future. The call will stay the same, but the actual steps
         performed by the method might not.
+
+        I muddied the nomenclature a little bit accidentally: here, read_id is the list of deflines passed in from
+        the body of the program. I'll correct it in a refactor.
         """
+        #TODO: rename read_id in OTU object to deflines for consistency in nomenclature
         self.seed_seq = seq
         self.words = {}
         self.add_words(words)
