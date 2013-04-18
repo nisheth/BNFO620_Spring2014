@@ -43,14 +43,20 @@ def TaxID_to_GI(Dump):
     print "TaxIN to gi...START",
     f =open(Dump)
     dump_hash = {}
+    print "process lines"
+    count = 0
     for line in f:
         gi, tax_id = line.split()
-        #print gi,tax_id
+        #print gi,tax_id,count,count%10000
         if int(tax_id) not in dump_hash.keys():
             dump_hash[int(tax_id)] = {}
             dump_hash[int(tax_id)][int(gi)]={}
         else:
             dump_hash[int(tax_id)][int(gi)]={}
+        count +=1
+        clock = count%250000
+        if clock == 1:
+            print "Lines read",count
     print "TaxID_to_GI...END\n"
     return dump_hash
 
@@ -82,6 +88,7 @@ def Genome_Binner(dump_hash,GenSource, Bin_Size = 1000):
             #Gen_Bin_Array.append([Genome_name,sequence_count])
         #print Gen_Bin_Array
     print "Genome_Binner...END\n"
+    #outfileprint(dump_hash)
     return dump_hash
 
 def Scount_bin(counts, size):
@@ -117,27 +124,32 @@ def Scount_bin(counts, size):
 
 def TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000):
     print "TaxID_gi_bin_Hasher... START\n",
-    Hash = TaxID_to_GI(Dump) #hash[gi]=tax id
-    Array = Genome_Binner(GenSource,Bin_Size) #gi_num, sequence length
-    taxID_bins = {}
-    for i,index in enumerate(Array):
-        if i%Bin_Size == 0:
-            #print "Count: ",i
-            #print "0",Array[0],"1", Array[1],index
-            gi_num = index[0]
-            bin_num = int(index[1])/int(Bin_Size)
-        if gi_num in Hash.keys():
-            tax_num = Hash[gi_num]
-            if tax_num not in taxID_bins.keys():
-                taxID_bins[tax_num] = {}
-            if gi_num not in taxID_bins[tax_num].keys():
-                taxID_bins[tax_num][gi_num]={}
-                for i in xrange(bin_num):
-                    taxID_bins[tax_num][gi_num][i] = 0
-        else:
-            pass
-    print "TAXID gi bin hasher....END\n"
-    return taxID_bins
+    if 'MarcoAbreuResult.txt' in os.listdir(str(os.getcwd()+"\\")):
+        Hash = TaxID_to_GI(Dump) #hash[gi]=tax id
+        Array = Genome_Binner(GenSource,Bin_Size) #gi_num, sequence length
+        taxID_bins = {}
+        for i,index in enumerate(Array):
+            if i%Bin_Size == 0:
+                #print "Count: ",i
+                #print "0",Array[0],"1", Array[1],index
+                gi_num = index[0]
+                bin_num = int(index[1])/int(Bin_Size)
+            if gi_num in Hash.keys():
+                tax_num = Hash[gi_num]
+                if tax_num not in taxID_bins.keys():
+                    taxID_bins[tax_num] = {}
+                if gi_num not in taxID_bins[tax_num].keys():
+                    taxID_bins[tax_num][gi_num]={}
+                    for i in xrange(bin_num):
+                        taxID_bins[tax_num][gi_num][i] = 0
+            else:
+                pass
+        print "TAXID gi bin hasher....END\n"
+        #return taxID_bins
+        outfileprint(taxID_bins)
+    else:
+        print "Results already exist:", 'MarcoAbreuResult.txt'
+        return
 
 def fileProcess(Source):
     for filename in os.listdir(Source):
@@ -146,19 +158,47 @@ def fileProcess(Source):
 def fileParse(file):
     pass
 
-def outfileprint(hash): #Test by printing created outfile
+def outfileprint(Hash): #Test by printing created outfile
     #f =open(str(os.getcwd()+"/MarcoAbreuResult.txt"))
     outFile = open('MarcoAbreuResult.txt','w')
     toString = "TaxID\tGiNumber\tBin\tBin Range\tCount\n"
-    for key in sorted(hash.keys()):
-        for key1 in sorted(hash[key].keys()):
-            for key2 in sorted(hash[key][key1].keys()):
-                toString += str(key)+"\t"+str(key1)+"\t"+str(key2)+"\t"+str(hash[key][key1][key2][1])+"\t"+str(hash[key][key1][key2][0])+"\n"
+    for key in sorted(Hash.keys()):
+        for key1 in sorted(Hash[key].keys()):
+            for key2 in sorted(Hash[key][key1].keys()):
+                toString += str(key)+"\t"+str(key1)+"\t"+str(key2)+"\t"+str(Hash[key][key1][key2][1])+"\t"+str(Hash[key][key1][key2][0])+"\n"
     print "Write...",
     outFile.write(toString)
     print "Close", outFile
     outFile.close()
     return "Write Complete"
+
+def refined_hash(hash_source=""):
+    hash_source=open('MarcoAbreuResult.txt')
+    f=hash_source
+    tax_list = []
+    tax_hash = {}
+    count = 1
+    for line in f:
+        if count == 1:
+            pass
+        else:
+            #print 'line',line
+            seg = line.split('\t')
+            #print seg[0],seg[1],seg[2]
+            taxID = seg[0]
+            giID = seg[1]
+            binNum = seg[2]
+            if str(taxID) not in tax_list:
+                tax_list.append(str(taxID))
+                tax_hash[taxID]={}
+                tax_hash[taxID][giID]=[0]
+            elif giID not in tax_hash[taxID].keys():
+                tax_hash[taxID][giID].append(0)
+            else:
+                tax_hash[taxID][giID].append(0)
+        count +=1
+    return tax_hash
+
 
 def SAMREADER(hash,thresh=3):
     for filename in os.listdir(Results_to):
@@ -177,11 +217,6 @@ def SAMREADER(hash,thresh=3):
                             if ginum in hash[key].keys():
                                 bins=int(start_pos/Bin_Size)
                                 hash[key][ginum][bins].append([score,taxnum])
-
-
-
-
-
                     cline = ""
                 else:
                     cline+=line
@@ -244,18 +279,18 @@ def cigar_score(score):
 
 
 print "START"
-hashX= Genome_Binner(TaxID_to_GI(Dump),GenSource)
-
-
-Genetics = B2_PLAN(Source,Results_to,Source_Index1,Source_Index2)
-Genetics.bowtie_OPS(Source_Index1)
-Genetics.SAM_OPS()
-Genetics.BAMMERGE_OPS()
-Genetics.B2S_OPS()
-
-#outfileprint(hashX)
-
-SAMREADER(hashX)
-#print TaxID_gi_bin_hasher(Dump,GenSource)
+print "Check for merged bowtie files"
+if file[-8:] in os.listdir(str(os.getcwd()+"/")) != 'CSMA.sam':
+    Genetics = B2_PLAN(Source,Results_to,Source_Index1,Source_Index2)
+    Genetics.bowtie_OPS(Source_Index1)
+    Genetics.SAM_OPS()
+    Genetics.BAMMERGE_OPS()
+    Genetics.B2S_OPS()
+    #SAMREADER(hashX)
+    #print TaxID_gi_bin_hasher(Dump,GenSource)
+print "Check for results"
+TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000)
+print "Run bins"
+SAMREADER(refined_hash())
 print "END"
 

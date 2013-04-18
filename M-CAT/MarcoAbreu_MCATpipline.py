@@ -166,8 +166,8 @@ class B2_PLAN(object):
                 print str(filename[:-12]+"CSAM.sam"), 'most likely already exist'
     #################################################################################
 
-Genetics = B2_PLAN(Source,Results_to,Source_Index1,Source_Index2)
-Genetics.bowtie_OPS(Source_Index1)
-Genetics.SAM_OPS()
-Genetics.BAMMERGE_OPS()
-Genetics.B2S_OPS()
+#Genetics = B2_PLAN(Source,Results_to,Source_Index1,Source_Index2)
+#Genetics.bowtie_OPS(Source_Index1)
+#Genetics.SAM_OPS()
+#Genetics.BAMMERGE_OPS()
+#Genetics.B2S_OPS()
