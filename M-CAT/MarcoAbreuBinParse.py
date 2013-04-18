@@ -185,7 +185,7 @@ def refined_hash(hash_source=""):
     return tax_hash
 
 
-def SAMREADER(hash,thresh=3):
+def SAMREADER(Hash,thresh=3):
     for filename in os.listdir(Results_to):
         name_end = filename[len(filename)-8:]
         list = []
@@ -197,12 +197,17 @@ def SAMREADER(hash,thresh=3):
                 if line[:2] == 'gi':
                     cline=line+cline
                     if len(cline) > 250:
-                        ginum,taxnum,score,start_pos = giRead(cline)
-                        for key in hash.keys():
-                            if ginum in hash[key].keys():
-                                bins=int(start_pos/Bin_Size)
-                                hash[key][ginum][bins].append([score,taxnum])
-                    cline = ""
+                        try:
+                            ginum,taxnum,score,start_pos = giRead(cline)
+                            for key in Hash.keys():
+                                if ginum in Hash[key].keys():
+                                    bins=int(start_pos/Bin_Size)
+                                    Hash[key][ginum][bins].append([score,taxnum])
+                        except TypeError:
+                            print 'end\n'
+                            return Hash
+
+                        cline = ""
                 else:
                     cline+=line
                 i+=1
@@ -219,7 +224,7 @@ def giRead(line):
             #print len(lok),lok
             info.append(lok)
     if len(info)>7:
-        print "info",info[0],info[1],info[2],info[3],info[4],info[len(info)-2] #,info
+        print '\n',"info",info[0],info[1],info[2],info[3],info[4],info[len(info)-2] #,info
         raw_mdz = str(info[len(info)-2]).split(':')
         mdz = raw_mdz[2]
         gi = str(info[0]).split("|")
@@ -255,12 +260,13 @@ def mdz_score(score):
         try:
             score += int(code[i])
         except ValueError:
-            score+=len(str(code[i]))
+            #score+=len(str(code[i]))
+            pass
     return int(score)
 
 def cigar_score(score):
     code = re.findall(r'(\D+|\d+)',score)
-    score = 0.01
+    score = 0
     print code
     for i in xrange(len(code)-1):
         if i < len(code)-1:
@@ -271,7 +277,22 @@ def cigar_score(score):
     print "Score",score
     return (score)
 
+def Endprint(Hash): #Test by printing created outfile
+    #f =open(str(os.getcwd()+"/MarcoAbreuFinalResult.txt"))
+    outFile = open('MarcoAbreuFinalResult.txt','w')
+    toString = "TaxID\tGiNumber\tBin\tBin Range\tCount\n"
+    for key in sorted(Hash.keys()):
+        for key1 in sorted(Hash[key].keys()):
+            for i,bin in enumerate(Hash[key][key1]):
+            #for key2 in sorted(Hash[key][key1]):
+                toString += str(key)+"\t"+str(key1)+"\t"+str(i)+"\t"+"\t"+str(Hash[key][key1][i])+"\t"+"\t"+"\n"
 
+            print 'T:',key,"G",key1,'#Bins',len(Hash[key][key1]),"Max-filled",max(Hash[key][key1])
+    print "Write...",
+    outFile.write(toString)
+    print "Close", outFile
+    outFile.close()
+    return "Write Complete"
 
 
 print "START"
@@ -287,6 +308,6 @@ if file in os.listdir(str(os.getcwd()+"/")) and file[-8:] != 'CSMA.sam':
 print "Check for results"
 TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000)
 print "Run bins"
-SAMREADER(refined_hash())
+Endprint(SAMREADER(refined_hash()))
 print "END"
 
