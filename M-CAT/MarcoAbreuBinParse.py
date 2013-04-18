@@ -27,8 +27,8 @@ try:
         #GenSource = 'C:/Users/bccl_user/Desktop/Bnfo691_602/testgenome.txt'
         #Dump = 'C:/Users/bccl_user/Desktop/Bnfo691_602/dump.txt'
         #Results_to = ''
-        GenSource = "/home/bnfo620/M-CAT/All_Bacteria_Drafts+.fna"
-        Dump = "/home/bnfo620/M-CAT/gi_taxid_nucl.dmp"
+        GenSource = "/home/bnfo620/M-CAT/test/All_Bacteria_clean_test.fna"
+        Dump = "/home/bnfo620/M-CAT/test/gi_taxid_nucl_test.dmp"
     else:
         GenSource = sys.argv[1]
         Dump = sys.argv[2]
@@ -47,7 +47,7 @@ def TaxID_to_GI(Dump):
     count = 0
     for line in f:
         gi, tax_id = line.split()
-        #print gi,tax_id,count,count%10000
+        print gi,tax_id,count,count%10000
         if int(tax_id) not in dump_hash.keys():
             dump_hash[int(tax_id)] = {}
             dump_hash[int(tax_id)][int(gi)]={}
@@ -58,11 +58,12 @@ def TaxID_to_GI(Dump):
         if clock == 1:
             print "Lines read",count
     print "TaxID_to_GI...END\n"
+    #print dump_hash
     return dump_hash
 
 def Genome_Binner(dump_hash,GenSource, Bin_Size = 1000):
     print "Genome_Binner... START",
-    f =open(GenSource)
+    f =open(str(GenSource))
     Gen_Bin_Array = []
     sequence_count = 0
     Genome_name = ""
@@ -71,7 +72,8 @@ def Genome_Binner(dump_hash,GenSource, Bin_Size = 1000):
             #print sequence_count
             if sequence_count != 0:
                 bin = Scount_bin(sequence_count,Bin_Size)
-                #Gen_Bin_Array.append([Genome_name,sequence_count])
+                Gen_Bin_Array.append([Genome_name,sequence_count])
+                #print "HERE!!!",dump_hash
                 for key in dump_hash.keys():
                     #print "Key",key,dump_hash[key],":",Genome_name
                     if Genome_name in dump_hash[key]:
@@ -89,6 +91,7 @@ def Genome_Binner(dump_hash,GenSource, Bin_Size = 1000):
         #print Gen_Bin_Array
     print "Genome_Binner...END\n"
     #outfileprint(dump_hash)
+    #print dump_hash
     return dump_hash
 
 def Scount_bin(counts, size):
@@ -124,28 +127,10 @@ def Scount_bin(counts, size):
 
 def TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000):
     print "TaxID_gi_bin_Hasher... START\n",
-    if 'MarcoAbreuResult.txt' in os.listdir(str(os.getcwd()+"\\")):
+    if 'MarcoAbreuResult.txt' in os.listdir(str(os.getcwd()+"/")):
         Hash = TaxID_to_GI(Dump) #hash[gi]=tax id
-        Array = Genome_Binner(GenSource,Bin_Size) #gi_num, sequence length
-        taxID_bins = {}
-        for i,index in enumerate(Array):
-            if i%Bin_Size == 0:
-                #print "Count: ",i
-                #print "0",Array[0],"1", Array[1],index
-                gi_num = index[0]
-                bin_num = int(index[1])/int(Bin_Size)
-            if gi_num in Hash.keys():
-                tax_num = Hash[gi_num]
-                if tax_num not in taxID_bins.keys():
-                    taxID_bins[tax_num] = {}
-                if gi_num not in taxID_bins[tax_num].keys():
-                    taxID_bins[tax_num][gi_num]={}
-                    for i in xrange(bin_num):
-                        taxID_bins[tax_num][gi_num][i] = 0
-            else:
-                pass
-        print "TAXID gi bin hasher....END\n"
-        #return taxID_bins
+        taxID_bins = Genome_Binner(Hash,GenSource) #gi_num, sequence length
+
         outfileprint(taxID_bins)
     else:
         print "Results already exist:", 'MarcoAbreuResult.txt'
@@ -205,7 +190,7 @@ def SAMREADER(hash,thresh=3):
         name_end = filename[len(filename)-8:]
         list = []
         if name_end == 'CSAM.sam':
-            f = open(os.getcwd()+"\\"+filename)
+            f = open(os.getcwd()+"/"+filename)
             i = 0
             cline = ""
             for line in f:
@@ -221,9 +206,11 @@ def SAMREADER(hash,thresh=3):
                 else:
                     cline+=line
                 i+=1
+    print cline
+
 
 def giRead(line):
-    raw = line.split(" ")
+    raw = line.split("\t")
     #print "X",line
     info = []
     for part in raw:
@@ -231,26 +218,34 @@ def giRead(line):
         if len(lok)>1:
             #print len(lok),lok
             info.append(lok)
-    #print "info",info[0],info[1],info[2],info[3],info[4],info[len(info)-2] #,info
-    raw_mdz = str(info[len(info)-2]).split(':')
-    mdz = raw_mdz[2]
-    gi = str(info[0]).split("|")
-    ginum = gi[1]
-    if len(info[1])>5:
-        cigar = info[3]
-        tax = str(info[1]).split("|")
-        taxnum = tax[1]
-        start_pos = info[2]
+    if len(info)>7:
+        print "info",info[0],info[1],info[2],info[3],info[4],info[len(info)-2] #,info
+        raw_mdz = str(info[len(info)-2]).split(':')
+        mdz = raw_mdz[2]
+        gi = str(info[0]).split("|")
+        ginum = gi[1]
+        if len(info[1])>5:
+            cigar = info[3]
+            tax = str(info[1]).split("|")
+            taxnum = tax[1]
+            start_pos = info[2]
+            print "XXX"
+        else:
+            start_pos = info[3]
+            cigar = info[4]
+            tax = str(info[2]).split("|")
+            taxnum = tax[1]
+            print 'xxx'
+        print "raw",len(info),'gi:',ginum,'tax:',taxnum,'cig:',cigar,'md:',mdz,'SP:',start_pos
+        mz = int(mdz_score(mdz))
+        cig = int(cigar_score(cigar))
+        if cig > 0:
+            score = ((mz)/(cig))*100
+        else:
+            score = 'NA'
+        return ginum,taxnum,score,start_pos
     else:
-        start_pos = info[3]
-        cigar = info[4]
-        tax = str(info[2]).split("|")
-        taxnum = tax[1]
-    #print "raw",ginum,taxnum,cigar,mdz,start_pos
-    mz = int(mdz_score(mdz))
-    cig = int(cigar_score(cigar))
-    score = float(mz/float(cig))*100
-    return ginum,taxnum,score,start_pos
+        pass
 
 def mdz_score(score):
     code = re.findall(r'(\D+|\d+)',score)
@@ -265,22 +260,23 @@ def mdz_score(score):
 
 def cigar_score(score):
     code = re.findall(r'(\D+|\d+)',score)
-    score = 0
-    #print code
+    score = 0.01
+    print code
     for i in xrange(len(code)-1):
         if i < len(code)-1:
             if code[i+1]=='M':
                 #print i,code[i]
                 score+=int(code[i])
-    #print "Score",score
-    return int(score)
+
+    print "Score",score
+    return (score)
 
 
 
 
 print "START"
 print "Check for merged bowtie files"
-if file[-8:] in os.listdir(str(os.getcwd()+"/")) != 'CSMA.sam':
+if file in os.listdir(str(os.getcwd()+"/")) and file[-8:] != 'CSMA.sam':
     Genetics = B2_PLAN(Source,Results_to,Source_Index1,Source_Index2)
     Genetics.bowtie_OPS(Source_Index1)
     Genetics.SAM_OPS()
