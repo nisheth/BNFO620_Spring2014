@@ -81,6 +81,7 @@ class OTU:
         #TODO: rename read_id in OTU object to deflines for consistency in nomenclature
         self.seed_seq = seq
         self.words = {}
+        self.word_tally = 0
         self.add_words(words)
         self.read_ids = []
         # upon creation, the OTU will have an average score of 100% (it's totally identical to itself)
@@ -89,6 +90,7 @@ class OTU:
         # this assigns them 100% identity
         self.scores = [1] * len(read_id)
         self.add_id(read_id, None)
+        self.word_tally = sum(self.words.values())
 
     def __str__(self):
         return '{}\n'.format(self.read_ids)
@@ -105,8 +107,10 @@ class OTU:
         for word in words:
             if word in self.words:
                 self.words[word] += int(words[word])
+                # self.word_tally += int(words[word])
             else:
                 self.words[word] = 1
+            self.word_tally += int(words[word])
 
     def add_score(self, score):
         self.avg_score += score
@@ -115,7 +119,8 @@ class OTU:
         # self.scores[read_id] = score
 
     def tally_words(self):
-        return sum(self.words.values())
+        return self.word_tally
+        # return sum(self.words.values())
 
     def get_seed_seq(self):
         return self.seed_seq
