@@ -1,7 +1,5 @@
 #Melissa Prestosa
 
-
-
 import sys
 import re
 import os
@@ -13,10 +11,8 @@ seqNames = {}
 screenSplit = '---------------------------------------------------\n'
 
 def makeWordList(sequence, wordLen):
-	#assuming word size 8
 	list = []
 	for pos in xrange(len(sequence) - (wordLen + 1)):
-		#print pos , len(sequence)
 		word = sequence[pos:pos + wordLen]
 		list.append(word)	
 	return list
@@ -32,7 +28,6 @@ def makeNewOtu(sequence, abund, wordList):
 	wordDict = {}
 	for word in wordList:
 		if word in wordDict:
-			#print 'word exists:' , word
 			wordDict[word] += abund
 		else: 
 			wordDict[word] = abund
@@ -64,25 +59,20 @@ def scoreOTUs(seqSequence, wordList):
 		sumScoreforOTU = float(0)
 		
 		totalWordsinCurrentOTU = sum(otu[1].itervalues()) 
-		#print totalWordsinCurrentOTU		
 		
 		for seqWord in wordList:
 			if seqWord in otu[1]:
 				freqofWi = otu[1][seqWord]
 				currentScoreforWi = (float(freqofWi)/float(totalWordsinCurrentOTU)) 
-				#print currentScoreforWi				
 				sumScoreforOTU += currentScoreforWi			
 				
 			else:
 				#word does not exist in OTU
 				pass
 
-		#print screenSplit
-		#print 'OTU', index, 'Score', sumScoreforOTU , 'seed', len(otu[0]),'currSeq', len(seqSequence)
 
 		sumScoreforOTU = sumScoreforOTU * (float(len(otu[0]))/float(len(seqSequence)))
 		if sumScoreforOTU >= bestScore[1]:
-			#print 'replacing best score', bestScore[1], 'with new score', sumScoreforOTU
 			bestScore[0] = index
 			bestScore[1] = sumScoreforOTU
 			
@@ -102,22 +92,21 @@ def main ():
 	threshold = args.threshold
 	wordLen = args.wordLen
 	trimlen = args.trimlen
-	
-	
+		
 	outSeed = 'MAP_OTU_seed.txt'
 	outFreq = 'MAP_OTU_frequency.txt'
 	outAssign = 'MAP_OTU_assignment.txt'
 	outWord = 'MAP_OTU_word.txt'
 	
 	lenAbunD = {}
-
 	readInCounter = 0
-	
-	fastafile = open(infile)	
 	header = ''
 	subseqList = []
-	wholeSeq = ''
+	wholeSeq = ''	
+	
+	fastafile = open(infile)	
 	line = fastafile.readline().strip()
+	
 	while line != '':
 		readInCounter += 1
 		match = re.search(r'^\>.',line)
@@ -173,34 +162,27 @@ def main ():
 		seqNames[wholeSeq] = [header]
 		
 		
-		#if readInCounter%1000 == 0:
-			#print 'read %s lines from file %s' %(readInCounter, infile)
-			
-		
 	fastafile.close()
-
-	totalSeq=0
-	totalReads = 0
 	
+	
+
+	totalReads = 0
+	totalSeq = 0	
 	
 	for lenn in sorted(lenAbunD.keys(), reverse=True):
-		#outfile.write(outline)		
 		items = sorted([(v, k) for k, v in lenAbunD[lenn].items()], reverse=True)
 		##makes dict into tuples NOW THE TUPLES ARE IN THE ORDER (abun, seq)!!!
 		
 		for x in items:
-			#outstring = ''.join(['SEQ NUM: ', str(i), '\t\tLEN:', str(lenn),'\t\tABUNDANCE: ', str(x[0]), '\n']) #x[1] would give you the sequence 
 			#x[0] give you abund
 			#x[1] gives you the seq
 			currSeqWordL = makeWordList(x[1],wordLen)
 							
 			if otuList == []:
-				#print 'yes otuList is empty'
 				#first seq
 				makeNewOtu(x[1], x[0], currSeqWordL)				
 			
-			else:				
-				#print '\n\nSeq #', totalSeq
+			else:	
 				best = scoreOTUs(x[1], currSeqWordL) 
 				#scoreOTUs returns a list of length two with best[0] being pos of best otu best[1] being best score
 				#print "best =", best
@@ -208,7 +190,6 @@ def main ():
 				#print threshold
 
 				if best[1] >= threshold:
-					#print "updating"
 					updateExistingOtu(best[0], best[1], x[0], x[1], currSeqWordL)
 				else:
 					makeNewOtu(x[1], x[0], currSeqWordL)	
@@ -217,49 +198,38 @@ def main ():
 			totalSeq += 1
 				
 				
-	otusum = 0
 	
-	outS = open(outSeed, 'w')
-	outF = open(outFreq, 'w')
-	outA = open(outAssign, 'w')
-	outW = open(outWord, 'w')
-	#print '\n\nOTU\tFirst 8 nt \t Number of Reads in OTU'
-	#outfile.write('OTU\tFirst 8 nt \t Number of Reads in OTU\n\n')
+	outSeedFH = open(outSeed, 'w')
+	outFreqFH = open(outFreq, 'w')
+	outAssignFH = open(outAssign, 'w')
+	outWordFH = open(outWord, 'w')
+
 	
 	for index, otu in enumerate(otuList):		
 		
 		sumOfScores = 0
 		seedSeq = otu[0]		
-		outS.write(''.join(['OTU', str(index+1),'\t', seedSeq, '\n'])) #for OTU_seed.txt
+		outSeedFH.write(''.join(['OTU', str(index+1),'\t', seedSeq, '\n'])) #for OTU_seed.txt
 				
 		for read in otu[3]:
-			#print read , otu[3][read]
 			sumOfScores += otu[3][read]
-			outA.write(''.join([read, '\t', 'OTU', str(index+1),'\t', str(otu[3][read]),'\n'])) #for OTU_assignment.txt
+			outAssignFH.write(''.join([read, '\t', 'OTU', str(index+1),'\t', str(otu[3][read]),'\n'])) #for OTU_assignment.txt
 		
-		#print 'sum ', sumOfScores
 		avgScore = sumOfScores / otu[2]
-		outF.write(''.join(['OTU', str(index+1),'\t', str(otu[2]), '\t', str(avgScore), '\n'])) #for OTU_frequency.txt
+		outFreqFH.write(''.join(['OTU', str(index+1),'\t', str(otu[2]), '\t', str(avgScore), '\n'])) #for OTU_frequency.txt
 	
-		for word in otu[1]:
-			outW.write(''.join(['OTU', str(index+1), '\t', word, '\t', str(otu[1][word]), '\n']))
-	
+		words = sorted([(v, k) for k, v in otu[1].items()], reverse=True)
+		for word in words:
+			outWordFH.write(''.join(['OTU', str(index+1), '\t', word[1], '\t', str(word[0]), '\n']))	
 		
 		totalWordsinCurrentOTU = sum(otu[1].itervalues()) 
-		outW.write(''.join(['OTU', str(index+1),' total\t', str(totalWordsinCurrentOTU), '\n']))
+		outWordFH.write(''.join(['OTU', str(index+1),' total\t', str(totalWordsinCurrentOTU), '\n']))
 	
-	outS.close()
-	outA.close()
-	outF.close()
-	outW.close()
-	#print 'totalReads', totalReads, '\ttotalSeq', totalSeq, '\tsum of OTUs', otusum
-	#outfile.write(''.join(['\n','totalReads  ', str(totalReads), '\ttotalSeq  ', str(totalSeq), '\tSum of reads in OTUs  ', str(otusum)]))
-	# print '\n\n'
-	# for seq in seqNames:
-		# print seqNames[seq]
-		# print '\n'
-	
-	
+	outSeedFH.close()
+	outAssignFH.close()
+	outFreqFH.close()
+	outWordFH.close()
+
 if __name__ == '__main__':
 	main()		
 	
