@@ -27,6 +27,8 @@ try:
         #GenSource = 'C:/Users/bccl_user/Desktop/Bnfo691_602/testgenome.txt'
         #Dump = 'C:/Users/bccl_user/Desktop/Bnfo691_602/dump.txt'
         #Results_to = ''
+        #GenSource = "/home/bnfo620/M-CAT/All_Bacteria_clean_test.fna"
+        #Dump = "/home/bnfo620/M-CAT/gi_taxid_nucl.dmp"
         GenSource = "/home/bnfo620/M-CAT/test/All_Bacteria_clean_test.fna"
         Dump = "/home/bnfo620/M-CAT/test/gi_taxid_nucl_test.dmp"
     else:
@@ -47,7 +49,7 @@ def TaxID_to_GI(Dump):
     count = 0
     for line in f:
         gi, tax_id = line.split()
-        print gi,tax_id,count,count%10000
+        #print gi,tax_id,count,count%10000
         if int(tax_id) not in dump_hash.keys():
             dump_hash[int(tax_id)] = {}
             dump_hash[int(tax_id)][int(gi)]={}
@@ -170,9 +172,9 @@ def refined_hash(hash_source=""):
             #print 'line',line
             seg = line.split('\t')
             #print seg[0],seg[1],seg[2]
-            taxID = seg[0]
-            giID = seg[1]
-            binNum = seg[2]
+            taxID = str(seg[0])
+            giID = str(seg[1])
+            binNum = str(seg[2])
             if str(taxID) not in tax_list:
                 tax_list.append(str(taxID))
                 tax_hash[taxID]={}
@@ -186,32 +188,51 @@ def refined_hash(hash_source=""):
 
 
 def SAMREADER(Hash,thresh=3):
-    for filename in os.listdir(Results_to):
+    for filename in os.listdir(str(os.getcwd()+"/")):
         name_end = filename[len(filename)-8:]
         list = []
+        #print filename
         if name_end == 'CSAM.sam':
             f = open(os.getcwd()+"/"+filename)
+            print "SAMREADER READS:",filename
             i = 0
             cline = ""
             for line in f:
+                #print line
                 if line[:2] == 'gi':
                     cline=line+cline
-                    if len(cline) > 250:
+                    if len(cline) > 125:
                         try:
                             ginum,taxnum,score,start_pos = giRead(cline)
+                            #print ginum
+                            #if ginum == str(164421336) and str(240016) in Hash.keys():
+                            #    temp = int(int(start_pos)/1000)
+                            #    print ginum,score,start_pos,temp
+                                #print ginum,score,start_pos,int(start_pos/1000)
+                                #return
                             for key in Hash.keys():
-                                if ginum in Hash[key].keys():
-                                    bins=int(start_pos/Bin_Size)
-                                    Hash[key][ginum][bins].append([score,taxnum])
+                                #print "Present",key,ginum,Hash[key]
+                                if str(ginum) in Hash[str(key)].keys():
+                                    #print "Present",key,ginum,len(Hash[key][ginum]),Hash[key][ginum]
+                                    bins=int(int(start_pos)/Bin_Size)
+                                    #print "Present",key,ginum,bins,Hash[key]
+                                    #bins=int(start_pos/Bin_Size)
+                                    #Hash[key][str(ginum)][bins].append([score,taxnum])
+                                    Hash[key][str(ginum)][bins] += 1
+                                    #print "Test",Hash[key][str(ginum)]
+                                else:
+                                    pass
+                                    #print "Lost:", ginum
                         except TypeError:
-                            print 'end\n'
-                            return Hash
-
+                            pass
+                            #print 'end\n'
+                            #return Hash
                         cline = ""
                 else:
                     cline+=line
                 i+=1
-    print cline
+    #print cline
+    return Hash
 
 
 def giRead(line):
@@ -224,7 +245,7 @@ def giRead(line):
             #print len(lok),lok
             info.append(lok)
     if len(info)>7:
-        print '\n',"info",info[0],info[1],info[2],info[3],info[4],info[len(info)-2] #,info
+        #print '\n',"info",info[0],info[1],info[2],info[3],info[4],info[len(info)-2] #,info
         raw_mdz = str(info[len(info)-2]).split(':')
         mdz = raw_mdz[2]
         gi = str(info[0]).split("|")
@@ -233,15 +254,17 @@ def giRead(line):
             cigar = info[3]
             tax = str(info[1]).split("|")
             taxnum = tax[1]
+            ginum = taxnum
             start_pos = info[2]
-            print "XXX"
+            #print "A:"
         else:
             start_pos = info[3]
             cigar = info[4]
             tax = str(info[2]).split("|")
             taxnum = tax[1]
-            print 'xxx'
-        print "raw",len(info),'gi:',ginum,'tax:',taxnum,'cig:',cigar,'md:',mdz,'SP:',start_pos
+            ginum = taxnum
+            #print 'B:'
+        #print "raw",len(info),'gi:',ginum,'tax:',taxnum,'cig:',cigar,'md:',mdz,'SP:',start_pos
         mz = int(mdz_score(mdz))
         cig = int(cigar_score(cigar))
         if cig > 0:
@@ -267,14 +290,13 @@ def mdz_score(score):
 def cigar_score(score):
     code = re.findall(r'(\D+|\d+)',score)
     score = 0
-    print code
+    #print code
     for i in xrange(len(code)-1):
         if i < len(code)-1:
             if code[i+1]=='M':
                 #print i,code[i]
                 score+=int(code[i])
-
-    print "Score",score
+    #print "Score",score
     return (score)
 
 def Endprint(Hash): #Test by printing created outfile
@@ -287,7 +309,7 @@ def Endprint(Hash): #Test by printing created outfile
             #for key2 in sorted(Hash[key][key1]):
                 toString += str(key)+"\t"+str(key1)+"\t"+str(i)+"\t"+"\t"+str(Hash[key][key1][i])+"\t"+"\t"+"\n"
 
-            print 'T:',key,"G",key1,'#Bins',len(Hash[key][key1]),"Max-filled",max(Hash[key][key1])
+            print 'T:',key,"G",key1,'#Bins',len(Hash[key][key1]),"Max-filled",max(Hash[key][key1]),Hash[key][key1][i]
     print "Write...",
     outFile.write(toString)
     print "Close", outFile
