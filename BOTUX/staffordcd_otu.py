@@ -4,7 +4,7 @@ import argparse
 import os.path
 import sys
 import re
-
+from collections import OrderedDict
 
 SEED_FILE = 'OTU_seed.txt'
 FREQ_FILE = 'OTU_frequency.txt'
@@ -358,13 +358,31 @@ def print_freqs(outfile, OTUs):
     ofh.close()
 
 
-def print_words(outfile, OTUs):
+# def print_words(outfile, OTUs):
+#     ofh = open(outfile, 'w')
+#     i = 1
+#     # print "Simulate writing to {}".format(outfile)
+#     for o in OTUs:
+#         total = 0
+#         for w in o.words:
+#             # print 'OTU{}\t{}\t{}'.format(i, w, o.words[w])
+#             ofh.write('OTU{}\t{}\t{}\n'.format(i, w, o.words[w]))
+#             total += o.words[w]
+#         # print 'OTU{} total words\t{}'.format(i, total)
+#         ofh.write('OTU{} total words\t{}\n'.format(i, total))
+#         i += 1
+#     ofh.close()
+
+
+def print_sorted_words(outfile, OTUs):
     ofh = open(outfile, 'w')
     i = 1
     # print "Simulate writing to {}".format(outfile)
     for o in OTUs:
         total = 0
-        for w in o.words:
+        sorted_words = OrderedDict(sorted(o.words.items(), key = lambda t: t[1], reverse = True))
+        # for w in o.words:
+        for w in sorted_words:
             # print 'OTU{}\t{}\t{}'.format(i, w, o.words[w])
             ofh.write('OTU{}\t{}\t{}\n'.format(i, w, o.words[w]))
             total += o.words[w]
@@ -424,7 +442,8 @@ def main():
     seed_out, freq_out, ass_out, word_out = fully_qualify_output_files(outdir)
     print_seeds(seed_out, OTUs)
     print_freqs(freq_out, OTUs)
-    print_words(word_out, OTUs)
+    # print_words(word_out, OTUs)
+    print_sorted_words(word_out, OTUs)
     print_assignment(ass_out, OTUs)
 
 
