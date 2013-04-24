@@ -87,10 +87,10 @@ def percentRule(hitsPerRead):
 #Ex:	 Tax	   Bin	 count
 #		57650036	6492	1
 ##########################################################################
-def FinalOutput(taxAcc,binDic,hitsPerRead,o):
+def binHitCounter(taxAcc,binDic,hitsPerRead,tax_Bin_count):
 	#print binDic
-	count=0
-	taxInBin=0
+	#count=0
+	taxInBin=0 
 	accessionNo=None
 	#print hitsPerRead
 	for key, value in hitsPerRead.items(): 
@@ -101,24 +101,38 @@ def FinalOutput(taxAcc,binDic,hitsPerRead,o):
 		#print taxInBin, "=taxInBin"
 		#print "hitStart=", hitStart
 		#for key1, value1 in binDic.items(): 
+		#for key2 in value1.iterkeys():
 		#for value1 in binDic.iterkeys():
 		#for value1 in binDic.itervalues():
 		for key1, value1 in binDic.items():
 			if (accessionNo==key1):
-				for key2 in value1.iterkeys():
-					#print "key1=",key1," value1=",value1," key2=",key2
+				for key2, value2 in value1.items(): 
+					#print "key1=",key1," value1=",value1," key2=",key2," value2=",value2
 					m2= re.search('(\d+)_(\d+)', key2)
 					s=m2.group(1)
 					e=m2.group(2)
 					#print "start= ",s,"end= ",e
 					#print "hitStart=", hitStart
 					if int(hitStart)>= int(s) and int(hitStart)<int(e):
+						tax_bin_key=str(taxInBin)+"_"+str(value2)
+						if tax_bin_key in tax_Bin_count:
+							tax_Bin_count[tax_bin_key]+=1
+						else:
+							tax_Bin_count[tax_bin_key]=1
 						#print "start= ",s,"end= ",e
 						#print "hitStart=", hitStart
-						count+=1
+						#count+=1
 						break
 						#print count,"hit"
-	print >>o, str(taxInBin)+"\t"+str(accessionNo)+"\t"+str(count)
+def finalOutput(tax_Bin_count,output):
+	o=open(output,'w')
+	print >> o, "Tax"+"\t"+"Bin"+"\t"+"count"
+	for key, value1 in tax_Bin_count.items():
+		m2= re.search('(\d+)_(\d+)', key)
+		tax=m2.group(1)
+		bin=m2.group(2)
+		print >>o,  str(tax)+"\t"+str(bin)+"\t"+str(value1)
+
 ############################################################################################################################################
 #This method  Read  the sam file and call the other methods to anlyze it
 #Ex: gi|57650036|ref|NC_002951.2|_571308_571841_2:0:0_2:0:0_2bb6/2	16	gi|297207379|ref|NZ_ADVP01000001.1|	1915	1	100M	*	
@@ -126,10 +140,8 @@ def FinalOutput(taxAcc,binDic,hitsPerRead,o):
 #2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222	AS:i:190	
 #XS:i:190	XN:i:0	XM:i:2	XO:i:0	XG:i:0	NM:i:2	MD:Z:31C11G56	YT:Z:UU
 ############################################################################################################################################
-def read(taxAcc,binDic,inSAM,output):
+def read(taxAcc,binDic,inSAM,tax_Bin_count):
 	f=open(inSAM, 'rU')
-	o=open(output,'w')
-	print >> o, "Tax"+"\t"+"Bin"+"\t"+"count"
 	hitsPerRead={}
 	hashCount=1
 	b=0
@@ -161,7 +173,7 @@ def read(taxAcc,binDic,inSAM,output):
 		if tax != tempTax and b==1:
 			hitsPerRead=percentRule(hitsPerRead) 
 			#print hitsPerRead
-			FinalOutput(taxAcc,binDic,hitsPerRead,o)
+			binHitCounter(taxAcc,binDic,hitsPerRead,tax_Bin_count)
 			hitsPerRead={}
 			hashCount=1
 			tempTax = tax
@@ -176,7 +188,7 @@ def read(taxAcc,binDic,inSAM,output):
 			hashCount+=1
 			b=1
 			#percentRule(hitsPerRead) 
-	FinalOutput(taxAcc,binDic,hitsPerRead,o)
+	binHitCounter(taxAcc,binDic,hitsPerRead,tax_Bin_count)
 
 
 
@@ -189,8 +201,10 @@ def main():
 	output = sys.argv[3]
 	binDic={}
 	taxAcc={}
+	tax_Bin_count={}
 	storeThebin(bin,binDic,taxAcc)
-	read(taxAcc,binDic,inSAM,output)
+	read(taxAcc,binDic,inSAM,tax_Bin_count)
+	finalOutput(tax_Bin_count,output)
 
 if __name__ == '__main__':
 	main()
