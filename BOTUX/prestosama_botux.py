@@ -198,8 +198,10 @@ class OTU:
 		for word in wordList:
 			if word in self.wordDict:
 				self.wordDict[word] += seqObj.abundance
+				self.totalWords += 1
 			else:
 				self.wordDict[word] = seqObj.abundance
+				self.totalWords += 1
 		
 		self.noOfReads += seqObj.abundance
 		
