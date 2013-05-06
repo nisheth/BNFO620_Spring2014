@@ -41,6 +41,15 @@ def sortBams(bamFile, sortedFile):
     if not isFileThere(sortedFile):
         cmd = "/home/bnfo620/bin/samtools sort " + bamFile + " " + sortedFile
         runSystemCMD(cmd)
+def bin():
+    cmd = "/home/seydouxmib/bnfo620/group4/python binner.py"
+    runSystemCMD(cmd)
+def filter():
+    cmd = "/home/seydouxmib/bnfo620/group4/python filter.py"
+    runSystemCMD(cmd)
+def sw():
+    cmd = "/home/seydouxmib/bnfo620/group4/python sw.py"
+    runSystemCMD(cmd)
 
 def main(): 
 
