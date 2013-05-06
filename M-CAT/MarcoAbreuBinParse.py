@@ -8,7 +8,7 @@ from MCATpipline import B2_PLAN
 #import argparse
 
 
-Source = '/home/bnfo620/M-CAT/sampledata/simulatddata/'
+Source = '/home/bnfo620/M-CAT/sampledata/simulatddata/1x/'
 Source_Index1 = '/home/bnfo620/M-CAT/All_Bacteria_1'
 Source_Index2 = '/home/bnfo620/M-CAT/All_Bacteria_2'
 Results_to = os.getcwd()+"/"
@@ -20,7 +20,7 @@ Bin_Size = 1000
 ### program as arguments accepts the directory with flagstat files and a filename to be written to
 try:
     if len(sys.argv)<2:
-        print "USAGE: python sys.argv[0] directory/RefGenome directory/Dump_file \n",
+        print "USAGE: python sys.argv[0] [location and RefGenome] [location and Dump_file] [location refgenome] [location of index1] [location if index2]\n",
         print "Attempting default value test parameters...."
         #GenSource = 'C:/Users/Owner/PycharmProjects/Homework/mcattest.txt'
         #Dump = 'C:/Users/Owner/PycharmProjects/Homework/dump.txt'
@@ -30,10 +30,14 @@ try:
         #GenSource = "/home/bnfo620/M-CAT/All_Bacteria_clean_test.fna"
         #Dump = "/home/bnfo620/M-CAT/gi_taxid_nucl.dmp"
         GenSource = "/home/bnfo620/M-CAT/test/All_Bacteria_clean_test.fna"
-        Dump = "/home/bnfo620/M-CAT/test/gi_taxid_nucl_test.dmp"
+        #Dump = "/home/bnfo620/M-CAT/test/gi_taxid_nucl_test.dmp"
+        Dump = "/home/abreuma/dump.txt"
     else:
         GenSource = sys.argv[1]
         Dump = sys.argv[2]
+        Source = sys.argv[3]
+        Source_Index1 = sys.argv[4]
+        Source_Index2 = sys.argv[5]
         #Results_to = sys.argv[2]
 except IOError:
     print "Error in input"
@@ -45,11 +49,12 @@ def TaxID_to_GI(Dump):
     print "TaxIN to gi...START",
     f =open(Dump)
     dump_hash = {}
-    print "process lines"
+    #print "process lines"
     count = 0
     for line in f:
+        #print 'x',line
         gi, tax_id = line.split()
-        #print gi,tax_id,count,count%10000
+        #print 'g',gi,tax_id,count,count%10000
         if int(tax_id) not in dump_hash.keys():
             dump_hash[int(tax_id)] = {}
             dump_hash[int(tax_id)][int(gi)]={}
@@ -129,14 +134,13 @@ def Scount_bin(counts, size):
 
 def TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000):
     print "TaxID_gi_bin_Hasher... START\n",
-    if 'MarcoAbreuResult.txt' in os.listdir(str(os.getcwd()+"/")):
+    if 'MarcoAbreuResult.txt' not in os.listdir(str(os.getcwd()+"/")):
         Hash = TaxID_to_GI(Dump) #hash[gi]=tax id
         taxID_bins = Genome_Binner(Hash,GenSource) #gi_num, sequence length
-
         outfileprint(taxID_bins)
     else:
         print "Results already exist:", 'MarcoAbreuResult.txt'
-        return
+
 
 def fileProcess(Source):
     for filename in os.listdir(Source):
@@ -172,8 +176,8 @@ def refined_hash(hash_source=""):
             #print 'line',line
             seg = line.split('\t')
             #print seg[0],seg[1],seg[2]
-            taxID = str(seg[0])
-            giID = str(seg[1])
+            taxID = int(seg[0])
+            giID = int(seg[1])
             binNum = str(seg[2])
             if str(taxID) not in tax_list:
                 tax_list.append(str(taxID))
@@ -202,29 +206,35 @@ def SAMREADER(Hash,thresh=3):
                 if line[:2] == 'gi':
                     cline=line+cline
                     if len(cline) > 125:
+                        #try:
+                        #print cline
                         try:
                             ginum,taxnum,score,start_pos = giRead(cline)
-                            #print ginum
-                            #if ginum == str(164421336) and str(240016) in Hash.keys():
-                            #    temp = int(int(start_pos)/1000)
-                            #    print ginum,score,start_pos,temp
-                                #print ginum,score,start_pos,int(start_pos/1000)
-                                #return
-                            for key in Hash.keys():
-                                #print "Present",key,ginum,Hash[key]
-                                if str(ginum) in Hash[str(key)].keys():
-                                    #print "Present",key,ginum,len(Hash[key][ginum]),Hash[key][ginum]
-                                    bins=int(int(start_pos)/Bin_Size)
-                                    #print "Present",key,ginum,bins,Hash[key]
-                                    #bins=int(start_pos/Bin_Size)
-                                    #Hash[key][str(ginum)][bins].append([score,taxnum])
-                                    Hash[key][str(ginum)][bins] += 1
-                                    #print "Test",Hash[key][str(ginum)]
-                                else:
-                                    pass
-                                    #print "Lost:", ginum
                         except TypeError:
-                            pass
+                            ginum,taxnum,score,start_pos=0,0,0,0
+                        #print ginum
+                        #if ginum == str(164421336) and str(240016) in Hash.keys():
+                        #    temp = int(int(start_pos)/1000)
+                        #    print ginum,score,start_pos,temp
+                            #print ginum,score,start_pos,int(start_pos/1000)
+                            #return
+
+                        for key in Hash.keys():
+                            #print "Present",key,ginum
+                            if int(ginum) in Hash[int(key)].keys():
+                                print "Present",key,ginum,len(Hash[key][ginum]),Hash[key][ginum]
+                                bins=int(int(start_pos)/Bin_Size)
+                                #print "Present",key,ginum,bins,Hash[key]
+                                #bins=int(start_pos/Bin_Size)
+                                #Hash[key][int(ginum)][bins].append([score,taxnum])
+                                #Hash[key][int(ginum)][bins].update
+                                Hash[key][int(ginum)][bins]+=1
+                                print "Test",Hash[key][int(ginum)]
+                            else:
+                                pass
+                                #print "Lost:", ginum
+                        #except TypeError:
+                        #    pass
                             #print 'end\n'
                             #return Hash
                         cline = ""
@@ -245,33 +255,36 @@ def giRead(line):
             #print len(lok),lok
             info.append(lok)
     if len(info)>7:
-        #print '\n',"info",info[0],info[1],info[2],info[3],info[4],info[len(info)-2] #,info
-        raw_mdz = str(info[len(info)-2]).split(':')
-        mdz = raw_mdz[2]
-        gi = str(info[0]).split("|")
-        ginum = gi[1]
-        if len(info[1])>5:
-            cigar = info[3]
-            tax = str(info[1]).split("|")
-            taxnum = tax[1]
-            ginum = taxnum
-            start_pos = info[2]
-            #print "A:"
-        else:
-            start_pos = info[3]
-            cigar = info[4]
-            tax = str(info[2]).split("|")
-            taxnum = tax[1]
-            ginum = taxnum
-            #print 'B:'
-        #print "raw",len(info),'gi:',ginum,'tax:',taxnum,'cig:',cigar,'md:',mdz,'SP:',start_pos
-        mz = int(mdz_score(mdz))
-        cig = int(cigar_score(cigar))
-        if cig > 0:
-            score = ((mz)/(cig))*100
-        else:
-            score = 'NA'
-        return ginum,taxnum,score,start_pos
+        try:
+            #print '\n',"info",info[0],info[1],info[2],info[3],info[4],info[len(info)-2] #,info
+            raw_mdz = str(info[len(info)-2]).split(':')
+            mdz = raw_mdz[2]
+            gi = str(info[0]).split("|")
+            ginum = gi[1]
+            if len(info[1])>5:
+                cigar = info[3]
+                tax = str(info[1]).split("|")
+                taxnum = tax[1]
+                ginum = taxnum
+                start_pos = info[2]
+                #print "A:"
+            else:
+                start_pos = info[3]
+                cigar = info[4]
+                tax = str(info[2]).split("|")
+                taxnum = tax[1]
+                ginum = taxnum
+                #print 'B:'
+            #print "raw",len(info),'gi:',ginum,'tax:',taxnum,'cig:',cigar,'md:',mdz,'SP:',start_pos
+            mz = int(mdz_score(mdz))
+            cig = int(cigar_score(cigar))
+            if cig > 0:
+                score = ((mz)/(cig))*100
+            else:
+                score = 'NA'
+            return ginum,taxnum,score,start_pos
+        except IndexError:
+            pass
     else:
         pass
 
@@ -319,14 +332,15 @@ def Endprint(Hash): #Test by printing created outfile
 
 print "START"
 print "Check for merged bowtie files"
-if file in os.listdir(str(os.getcwd()+"/")) and file[-8:] != 'CSMA.sam':
-    Genetics = B2_PLAN(Source,Results_to,Source_Index1,Source_Index2)
-    Genetics.bowtie_OPS(Source_Index1)
-    Genetics.SAM_OPS()
-    Genetics.BAMMERGE_OPS()
-    Genetics.B2S_OPS()
-    #SAMREADER(hashX)
-    #print TaxID_gi_bin_hasher(Dump,GenSource)
+if file in os.listdir(str(os.getcwd()+"/")):
+    look = file.split(".")
+    if look[len(look)-1].endswith("_CSAM.sam"):
+        print file, 'Pass'
+    else:
+        Genetics = B2_PLAN(Source,Results_to,Source_Index1,Source_Index2)
+        Genetics.master_run()
+        #SAMREADER(hashX)
+        #print TaxID_gi_bin_hasher(Dump,GenSource)
 print "Check for results"
 TaxID_gi_bin_hasher(Dump,GenSource, Bin_Size=1000)
 print "Run bins"
