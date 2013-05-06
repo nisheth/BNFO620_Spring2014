@@ -77,7 +77,7 @@ class binner(object):
                     start += binlength
                     end += binlength
                 i += 1
-    #
+        #
     # for taxID in lengths:
     #     bincount = 1
     #     for gis in lengths[taxID]:
