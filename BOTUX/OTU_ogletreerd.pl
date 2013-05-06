@@ -18,7 +18,8 @@ my $currSeqW_List;
 my $tempBestScore;
 my $tempBestOTU;
 my $abundance;
-
+my $totalRead =0; 
+ 
 if (!defined ($threshold)) {
 die "USAGE: Please provide an input file, output file, trimlength, and a threshold.";
 }
@@ -31,10 +32,10 @@ my $FREQUENCY_FILE = 'OTU_FREQUENCY.txt';
 my $ASSIGNMENT_FILE = 'OTU_ASSIGNMENT.txt';
 my $WORD_FILE = 'OTU_WORD.txt';
 
-open (my $FH1, '>', $SEED_FILE) or die "Could not open file '$FREQUENCY_FILE' !";
-open (my $FH2, '>', $FREQUENCY_FILE) or die "Could not open file '$FREQUENCY_FILE' !";
-open (my $FH3, '>', $ASSIGNMENT_FILE) or die "Could not open file '$ASSIGNMENT_FILE' !";
-open (my $FH4, '>', $WORD_FILE) or die "Could not open file '$WORD_FILE' !";
+open (my $outSEED, '>', $SEED_FILE) or die "Could not open file '$FREQUENCY_FILE' !";
+open (my $outFREQ, '>', $FREQUENCY_FILE) or die "Could not open file '$FREQUENCY_FILE' !";
+open (my $outASSIGN, '>', $ASSIGNMENT_FILE) or die "Could not open file '$ASSIGNMENT_FILE' !";
+open (my $outWORD, '>', $WORD_FILE) or die "Could not open file '$WORD_FILE' !";
 
 readFasta();
 
@@ -44,50 +45,46 @@ readFasta();
 foreach my $seq (@sort) {
   my $len = length($seq);
   
-  if(exists $seqHash{$seq}{freqofWi}) {   
-    $abundance = $seqHash{$seq}{freqofWi};  
-  } else { 
-    $abundance = 0;
-    print "$seq not found in hash.\n";
-  }  
-  # print "Abudance = $abundance\n";
-  
-  $currSeqW_List = WordList ($seq, $wordSize);
+  if($len > 10 ) { 
+    if(exists $seqHash{$seq}{freqofWi}) {   
+      $abundance = $seqHash{$seq}{freqofWi};  
+    } else { 
+      $abundance = 0;
+      print "$seq not found in hash.\n";
+    }  
+    
+    $currSeqW_List = WordList ($seq, $wordSize);
 
-  if ($otucount == 1) {
-	  makeOTU($seq, $abundance, $currSeqW_List);
-	 } else {
-	 ($tempBestScore,$tempBestOTU) = scoreOTU ($seq, $currSeqW_List);
-   #print "$tempBestScore,$tempBestOTU,\n $seq\n";
-    if ($tempBestScore >= $threshold){
-	       updateOTU($seq, $abundance, $currSeqW_List);
-	   } else {
-	       makeOTU($seq, $abundance, $currSeqW_List);
-		  }
-	}
+    if ($otucount == 1) {
+  	  makeOTU($seq, $abundance, $currSeqW_List);
+  	 } else {
+  	 ($tempBestScore,$tempBestOTU) = scoreOTU ($seq, $currSeqW_List);
+      if ($tempBestScore >= $threshold){
+  	       updateOTU($seq, $abundance, $currSeqW_List);
+  	   } else {
+  	       makeOTU($seq, $abundance, $currSeqW_List);
+  		  }
+  	}
+  }
 }
 
-# foreach my $otu (%otuHash){
-#   my $sumScores =0;
-#   my $otuName = "";
-#   my $header;
-#   foreach my $read (%otuHash){
-#     $sumScores +=  $otuHash{$otuName}{read}, $header;
-#     print "$read\t$otuName\n";
-
-#   }
-# }
-
-print OUTFILE Dumper (%otuHash);
-print "or\n";
-print OUTFILE Dumper (\%otuHash);
+printFrequency();
 
 exit;
 
-####### SUBROUTINES ############
+########## SUBROUTINES ############
+sub printFrequency{
+  my @headerArray;
+  my ($count,$percentage);
+  foreach my $otuName (keys %otuHash){
+    @headerArray = @{$otuHash{$otuName}{read}};
+    $count = @headerArray;
+    $percentage = ($count/ $totalRead);
+    print $outFREQ "$otuName\t$count\t$percentage\n"; #### WORKS FOR FREQ DONE
+  }
+}
 
 sub readFasta { 
-
    my $line;
    my $header;
    my $sequence = "";
@@ -107,28 +104,27 @@ if ($length > $trim) {
     }
     if (!exists $seqHash{$sequence}){
     $seqHash{$sequence}{freqofWi} = 1;
-$unique++;
+	$unique++;
     } else {
     $seqHash{$sequence}{freqofWi}++;
+   }
+    push @{$seqHash{$sequence}{read}}, $header;
     }
-    # print $FH3 "$header\n";
-    # push @{$seqHash{$sequence}{read}}, $header;
-    }
-$sequence = "";
+	$sequence = "";
     $firstline = 0;
     $header = $1;
+	
     } else {
     $sequence .= $_;
     }
-}
 
-if (! exists $seqHash{$sequence}){
+	if (!exists $seqHash{$sequence}){
     $seqHash{$sequence}{freqofWi} = 1;
 } else {
     $seqHash{$sequence}{freqofWi}++;
 }
 push @{$seqHash{$sequence}{read}}, $header;
-
+}
 return;
 }
 
@@ -156,34 +152,30 @@ my ($sequence,$wordListRef) = @_;
  my $CurrScoreforWord;
  my $freqofWi;
  my $avgScore = 0;
+ my $otuName;
 
- 
  foreach my $otuName (keys %otuHash) {
- # print "OTU name = $otuName in otu score method\n"; 
+
  $sumScoreforOTU = 0;
-  $totalwordCount = $otuHash{$otuName}{totalCount};
-  #print $FH4 "$otuName,$totalwordCount\n";
+ $totalwordCount = $otuHash{$otuName}{totalCount};
+
  foreach my $word (@$wordListRef){
-  
    if (exists $otuHash{$otuName}{word}{$word}){
       $freqofWi = $otuHash{$otuName}{word}{$word};
-     
       $CurrScoreforWord = ($freqofWi /$totalwordCount) ;
       $sumScoreforOTU += $CurrScoreforWord;
-      #print $FH4 "$otuName, $word,$freqofWi\n";
     }
   } # for loop end for wordlist
  
-  
   $sedSeq = $otuHash{$otuName}{seedSeq};
   $sumScoreforOTU *= (length($sedSeq)/length($sequence));
-  #print "$otuName,$sumScoreforOTU\n";
-
+  
   if ($sumScoreforOTU >= $bestScore) {
   $bestScore = $sumScoreforOTU;
   $bestOTU = $otuName;
   }
 
+print $outASSIGN "@{$seqHash{$sequence}{read}}, $otuName, $bestScore\n"; #####WORKS ASSIGN FILE DONE
  }
 return ($bestScore, $bestOTU);
 }
@@ -197,23 +189,21 @@ my $i = 1;
 $otucount++;
 
 $otuHash{$otuName}{totalCount} = 0;
-#print ", $sequence, $abundance\t$otuName\n";
-
 $otuHash{$otuName}{seedSeq} = $sequence;
 
  foreach my $word (@$wordListRef) {
  $otuHash{$otuName}{totalCount} += $abundance;
  $otuHash{$otuName}{word}{$word} = $abundance;
 
- print $FH4 "$otuName, $word, $abundance\n";
+print $outWORD "$otuName, $word, $abundance\n"; ###WORKS WORD FILE DONE
  }
  
  foreach $header (@{$seqHash{$sequence}{read}}) {
   push @{$otuHash{$otuName}{read}}, $header;
-  print $FH3 "$header\t$otuName\t";
+  $totalRead++;
  }
 
-print $FH1 "$otuName\t$otuHash{$otuName}{seedSeq}\n\n";
+print $outSEED "\t", $otuHash{$otuName}{seedSeq}, "\n"; ###WORKS SEED FILE DONE
 }
 
 sub updateOTU {
@@ -230,17 +220,12 @@ if(exists $otuHash{$otuName}{word}{$word}) {
      $otuHash{$otuName}{word}{$word} += $abundance;
 } else {
 $otuHash{$otuName}{word}{$word} = $abundance;
-}
+	}
 }
  foreach $header (@{$seqHash{$sequence}{read}}) {
   push @{$otuHash{$otuName}{read}}, $header;
- }
-
+  }
 }
 
-close SEED_FILE;
-close ASSIGNMENT_FILE;
-close WORD_FILE;
-close FREQUENCY_FILE; 
 close SEQUENCE_FILE;
 close OUTFILE;
