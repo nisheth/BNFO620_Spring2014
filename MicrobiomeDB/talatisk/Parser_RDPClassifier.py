@@ -66,7 +66,7 @@ for line in RDP_results:
 
 for taxis in ReadAssignment:
     percent_total = float(ReadAssignment[taxis])/float(total_reads)*100.00
-    average_score = float(ReadAssignment[taxis])/float(ReadAssignment2[taxis])
+    average_score = float(ReadAssignment2[taxis])/float(ReadAssignment[taxis])
 
     print >> RDP_Results_Summary, taxis, '\t', ReadAssignment[taxis], '\t' ,"%.2f" % percent_total, '\t',"%.2f" % average_score
 
