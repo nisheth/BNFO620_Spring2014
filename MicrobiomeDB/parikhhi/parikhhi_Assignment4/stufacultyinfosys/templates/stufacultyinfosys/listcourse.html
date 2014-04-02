@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br />
+<h3>All Courses Offered:</h3>
+
+<table style="width:1250px">
+
+	<tr>
+	<td><b>Major</b></td>
+	<td></td>
+	<td><b>Course Number</b></td>
+	<td></td>
+	<td><b>Course Name</b></td>
+	<td></td>
+	<td><b>Offered By</b></td>
+	<td></td>
+	<td><b>Students Registered</b></td>
+	</tr>
+
+{% for crs in course_list %}
+	<tr>
+	<td>{{crs.major}}</td>
+	<td></td>
+	<td>{{crs.coursenum}}</td>
+	<td></td>
+	<td>{{crs.coursename}}</td>
+	<td></td>
+	<td>{{crs.faculty.firstname}} {{crs.faculty.lastname}}</td>
+	<td></td>
+	<td>{% for stu in crs.student.all %}{{stu.firstname}} {{stu.lastname}}<br />{% endfor %}</td>
+	</tr>
+{% endfor %}
+
+</table>
+
+<br />
+<a href="/listhome"><b>Back</b></a>
+<br />
+
+
+{% endblock %}

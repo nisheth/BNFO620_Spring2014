@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br />
+<h3>All Registered Faculty:</h3>
+
+<table style="width:1250px">
+
+	<tr>
+	<td><b>First Name</b></td>
+	<td><b>Last Name</b></td>
+	<td><b>Email</b></td>
+	<td><b>User Name</b></td>
+	<td><b>Major</b></td>
+	<td><b>Courses Offered</b></td>
+	</tr>
+
+
+{% for fac in faculty_list %}
+	<tr>
+	<td>{{fac.firstname}}</td>
+	<td>{{fac.lastname}}</td>
+	<td>{{fac.useremail}}</td>
+	<td>{{fac.username}}</td>
+	<td>{{fac.major}}</td>
+	<td>{% for crs in course_list %}
+		{% if crs.faculty.username == fac.username%}{{crs.coursenum}}<br />{% endif %}
+	{% endfor %}
+	</td>
+	</tr>
+{% endfor %}
+
+
+</table>
+<br />
+<a href="/listhome"><b>Back</b></a>
+<br />
+
+{% endblock %}

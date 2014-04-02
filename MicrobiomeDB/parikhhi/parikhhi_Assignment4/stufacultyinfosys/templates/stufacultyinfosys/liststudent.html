@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br />
+<h3>All Registered Students:</h3>
+
+<table style="width:1250px">
+
+	<tr>
+	<td><b>First Name</b></td>
+	<td><b>Last Name</b></td>
+	<td><b>Email</b></td>
+	<td><b>User Name</b></td>
+	<td><b>Major</b></td>
+	<td><b>Courses Registered For</b></td>
+	</tr>
+
+
+{% for stu in student_list %}
+	<tr>
+	<td>{{stu.firstname}}</td>
+	<td>{{stu.lastname}}</td>
+	<td>{{stu.useremail}}</td>
+	<td>{{stu.username}}</td>
+	<td>{{stu.major}}</td>
+	<td>{% for crs in course_list %}
+		{% for stu2 in crs.student.all %}
+			{% if stu2.username == stu.username%}{{crs.coursenum}}<br />{% endif %}
+		{% endfor %}
+	{% endfor %}
+	</td>
+	</tr>
+{% endfor %}
+
+</table>
+
+<br />
+<a href="/listhome"><b>Back</b></a>
+<br />
+
+{% endblock %}

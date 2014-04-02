@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<br />
+	<h3>User Registration Page: </h3>
+	<form id= "register_form" action="" method="post">
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+	
+	{% if message %}
+		<p>{{ message }}</p>	
+	{% endif %}	
+
+	First Name: {{ form.firstname }}<br />
+	Last Name: {{ form.lastname }}<br />
+	Major: {{form.majorcode}}<br />
+	Faculty/Student: {{ form.usertype }}<br />
+	Email: {{ form.useremail }}<br />
+	Username: {{ form.username }}<br />
+	Password: {{ form.password1 }}<br />
+	Re-Enter Password: {{ form.password2 }}<br />
+	<input type="submit" Value="Submit" />
+	</form>
+
+	<br />
+	<a href="/register"><b>Register Another User</b></a>
+	<br />
+{% endblock %}

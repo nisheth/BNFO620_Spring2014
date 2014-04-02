@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'stufacultyinfosys/styles.css' %}" />
+	<title>{% block title %}Parikhhi Site{% endblock %}</title>
+</head>
+
+<body>
+
+	<br />
+	<h1>Student Information System</h1>
+	<br />
+
+	<div class="menubar">
+		{% block sidebar %}
+		<ul>
+			<li><a href="/">Home</a></li>	
+			<li><a href="/register">Register</a></li>	
+			<li><a href="/facultyhome">Faculty</a></li>	
+			<li><a href="/studenthome">Student</a></li>	
+			<li><a href="/listhome">List</a></li>	
+	
+		</ul>
+		<br />
+		<br />
+		<hr />
+		{% endblock %}
+	</div>
+
+	<div id="content">
+		{% block content %}
+		{% endblock %}
+	</div>
+
+</body>
+</html>

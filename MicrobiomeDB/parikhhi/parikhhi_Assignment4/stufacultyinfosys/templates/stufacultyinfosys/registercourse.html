@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<br />
+	<h3>Course Registration Page: </h3>
+	
+	<form id= "register_form" action="" method="post">
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+	Major Code: {{ form.majorcode }}<br />
+	Course Number: {{ form.coursenum }}<br />
+	<input type="submit" Value="Submit" />
+	</form>
+	<br />
+	{% if message %}
+		{{message}}
+	{% endif %}	
+	<br />
+	{% if course %}
+		<b>Registration Complete !</b>
+		<p>Student Username: {{student.username}}</p>	
+		<p>Course Major: {{course.major}}</p>	
+		<p>Course Number: {{course.coursenum}}</p>	
+		<p>Course Name: {{course.coursename}}</p>	
+
+	{% endif %}
+
+	<br />
+	<a href="/registercourse"><b>Register Another Course</b></a>
+	<br />
+{% endblock %}

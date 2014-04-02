@@ -57,21 +57,24 @@ for line in args.infile:
 		if score >= args.threshold_score:
 
 			# store data for read assignment dictionary	
-			RA_Dict.setdefault(read_id,{}).setdefault(level,{})['level_ct'] = level_ct	
-			RA_Dict.setdefault(read_id,{}).setdefault(level,{})['name'] = name	
-			RA_Dict.setdefault(read_id,{}).setdefault(level,{})['score'] = score	
+			RA_Dict.setdefault(read_id,{}).setdefault(level,{})
+			RA_Dict[read_id][level]['level_ct'] = level_ct
+			RA_Dict[read_id][level]['name'] = name
+			RA_Dict[read_id][level]['score'] = score
 		
 			# store data for profile summary dictionary
+			PS_Dict.setdefault(level,{}).setdefault(level_ct,{})
 			if name in PS_Dict.get(level,{}).get(level_ct,{}):
 				new_ps_count = PS_Dict[level][level_ct][name]['count'] + 1
-				PS_Dict.setdefault(level,{}).setdefault(level_ct,{}).setdefault(name,{})['count'] = new_ps_count
+				PS_Dict[level][level_ct][name]['count'] = new_ps_count
 				new_ps_tot_score = PS_Dict[level][level_ct][name]['tot_score'] + score
-				PS_Dict.setdefault(level,{}).setdefault(level_ct,{}).setdefault(name,{})['tot_score'] = new_ps_tot_score
+				PS_Dict[level][level_ct][name]['tot_score'] = new_ps_tot_score
 			else:
+				PS_Dict.setdefault(level,{}).setdefault(level_ct,{}).setdefault(name,{})
 				ps_count = 1
-				PS_Dict.setdefault(level,{}).setdefault(level_ct,{}).setdefault(name,{})['count'] = ps_count
+				PS_Dict[level][level_ct][name]['count'] = ps_count
 				ps_tot_score = score
-				PS_Dict.setdefault(level,{}).setdefault(level_ct,{}).setdefault(name,{})['tot_score'] = ps_tot_score
+				PS_Dict[level][level_ct][name]['tot_score'] = ps_tot_score
 		
 		else:
 			break	
