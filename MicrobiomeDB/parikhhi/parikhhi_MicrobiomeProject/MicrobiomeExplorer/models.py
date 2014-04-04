@@ -5,15 +5,17 @@ import sys
 
 class Project(models.Model):
 	id = models.AutoField(primary_key=True)
-	projectID = models.CharField(max_length=10)
-	projectDescription = models.CharField(max_length=100)
+	name = models.CharField(max_length=50)
+	description = models.CharField(max_length=200)
+	contactname = models.CharField(max_length=50)
+	contactemail = models.EmailField()
 
 	def __unicode__(self):
-		return self.projectID
+		return self.name
 
 	@classmethod
-	def createProject(cls, projectID, projectDescription):
-		project = Project(projectID=projectID, projectDescription=projectDescription)
+	def createProject(cls, name, description, contactname, contactemail):
+		project = Project(name=name, description=description, contactname=contactname, contactemail=contactemail)
 		project.save()
 		return project
 
@@ -21,14 +23,14 @@ class Project(models.Model):
 class Sample(models.Model):
 	id = models.AutoField(primary_key=True)
 	project = models.ForeignKey(Project)
-	sampleID = models.CharField(max_length=50)
+	name = models.CharField(max_length=50)
 
 	def __unicode__(self):
-		return self.sampleID
+		return self.name
 	
 	@classmethod
-	def createSample(cls, project, sampleID):
-		sample = Sample(project=project, sampleID=sampleID)
+	def createSample(cls, project, name):
+		sample = Sample(project=project, name=name)
 		sample.save()
 		return sample
 
@@ -36,15 +38,15 @@ class Sample(models.Model):
 class SampleVariables(models.Model):
 	id = models.AutoField(primary_key=True)
 	sample = models.ForeignKey(Sample)
-	date = models.CharField(max_length=10)
-	barcode = models.CharField(max_length=6)
+	attribute = models.CharField(max_length=50)
+	value = models.CharField(max_length=50)
 	
 	def __unicode__(self):
 		return self.sample
 
 	@classmethod
-	def createSampleVariables(cls, sample, date, barcode):
-		samplevariables = SampleVariables(sample=sample, date=date, barcode=barcode)
+	def createSampleVariables(cls, sample, attribute, value):
+		samplevariables = SampleVariables(sample=sample, attribute=attribute, value=value)
 		samplevariables.save()
 		return samplevariables
 
@@ -52,65 +54,71 @@ class SampleVariables(models.Model):
 class Read(models.Model):
 	id = models.AutoField(primary_key=True)
 	sample = models.ForeignKey(Sample)
-	readID = models.CharField(max_length=20)
+	name = models.CharField(max_length=50)
+	length = models.IntegerField()
+	qualityscore = models.FloatField()
+	seq = models.TextField(null=True)
 	
 	def __unicode__(self):
-		return self.readID
+		return self.name
 
 	@classmethod
-	def createRead(cls, sample, readID):
-		read = Read(sample=sample, readID=readID)
+	# Seq can be null. Not included in following create function. Add separately
+	def createRead(cls, sample, name, length, qualityscore):
+		read = Read(sample=sample, name=name, length=length, qualityscore=qualityscore)
 		read.save()
 		return read
 
 
 class ClassificationMethod(models.Model):
 	id = models.AutoField(primary_key=True)
-	methodID = models.IntegerField()
-	methodDescription = models.CharField(max_length=100)
-	methodcontactname = models.CharField(max_length=50)
-	methodcontactemail = models.EmailFiled()
+	key = models.IntegerField()
+	description = models.CharField(max_length=100)
+	contactname = models.CharField(max_length=50)
+	contactemail = models.EmailFiled()
 	
 	def __unicode__(self):
 		return self.methodID
 
 	@classmethod
-	def createClassificationMethod(cls, methodID, methodDescription, methodcontactname, methodcontactemail)
-		classificationmethod = ClassificationMethod(methodID=methodID, methodDescription=methodDescription, methodcontactname=methodcontactname, methodcontactemail=methodcontactemail)
+	def createClassificationMethod(cls, key, description, contactname, contactemail)
+		classificationmethod = ClassificationMethod(key=key, description=description, contactname=contactname, contactemail=contactemail)
 		classificationmethod.save()
 		return classificationmethod
 
 
-class TaxaCode(models.Model):
+class TaxaID(models.Model):
 	id = models.AutoField(primary_key=True)
-	level = models.CharField(max_length=20)
-	code = models.CharField(max_length=20)
+	name = models.CharField(max_length=50)
+	level = models.CharField(max_length=50)
+	taxa_id = models.CharField(max_length=50, unique=True)
+	parent_taxa_id = models.CharField(max_length=50, unique=True)
 	
 	def __unicode__(self):
-		return self.level
+		return_str = self.name + " - " + self.taxa_id
+		return return_str
 	
 	@classmethod
-	def createTaxaCode(cls, level, code):
-		taxacode = TaxaCode(level=level, code=code)
-		taxacode.save()
-		return taxacode
+	def createTaxaID(cls, name, level, taxa_id, parent_taxa_id):
+		taxaID = TaxaID(name=name, level=level, taxa_id=taxa_id, parent_taxa_id=parent_taxa_id)
+		taxaID.save()
+		return taxaID
 
 
 class ReadAssignment(models.Model):
 	id = models.AutoField(primary_key=True)
 	read = models.ForeignKey(Read)
 	classificationmethod = models.ForeignKey(ClassificationMethod)
-	taxa = models.ManytoManyField(TaxaCode)
-	taxaname = models.CharField(max_length=50)
-	taxascore = models.FloatField()
+	taxaID = models.ManytoManyField(TaxaID)
+	score = models.FloatField()
 	
 	def __unicode__(self):
-		return_str = self.read + " - " + self.taxa
+		return_str = self.read + " - " + self.taxaID
 		return return_str
 
 	@classmethod
-	def createReadAssignment(cls, read, classificationmethod, taxa, taxaname, taxascore):
-		readassignment = ReadAssignment(read=read, classificationmethod=classificationmethod, taxa=taxa, taxaname=taxaname, taxascore=taxascore)
+	def createReadAssignment(cls, read, classificationmethod, taxaID, score):
+		readassignment = ReadAssignment(read=read, classificationmethod=classificationmethod, taxaID=taxaID, score=score)
 		readassignment.save()
 		return readassignment
 
@@ -119,19 +127,18 @@ class ProfileSummary(models.Model):
 	id = models.AutoField(primary_key=True)
 	sample = models.ForeignKey(Sample)
 	classificationmethod = models.ForeignKey(ClassificationMethod)
-	taxa = models.ManytoManyField(TaxaCode)
-	taxaname = models.CharField(max_length=50)
+	taxaID = models.ManytoManyField(TaxaID)
 	numreads = models.IntegerField()
 	perctotal = models.FloatField()
 	avgscore = models.FloatField()
 
 	def __unicode__(self):
-		return_str = self.sample + " - " + self.taxa
+		return_str = self.sample + " - " + self.taxaID
 		return return_str
 
 	@classmethod
-	def createProfileSummary(cls, sample, classificationmethod, taxa, taxaname, numreads, perctotal, avgscore):
-		profilesummary = ProfileSummary(sample=sample, classificationmethod=classificationmethod, taxa=taxa, taxaname=taxaname, numreads=numreads, perctotal=perctotal, avgscore=avgscore)
+	def createProfileSummary(cls, sample, classificationmethod, taxaID, numreads, perctotal, avgscore):
+		profilesummary = ProfileSummary(sample=sample, classificationmethod=classificationmethod, taxaID=taxaID, numreads=numreads, perctotal=perctotal, avgscore=avgscore)
 		profilesummary.save()
 		return profilesummary
 	
