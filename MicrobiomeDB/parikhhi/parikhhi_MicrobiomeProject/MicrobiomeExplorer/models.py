@@ -5,7 +5,7 @@ import sys
 
 class Project(models.Model):
 	id = models.AutoField(primary_key=True)
-	name = models.CharField(max_length=50)
+	name = models.CharField(max_length=50, unique=True)
 	description = models.CharField(max_length=200)
 	contactname = models.CharField(max_length=50)
 	contactemail = models.EmailField()
@@ -23,7 +23,7 @@ class Project(models.Model):
 class Sample(models.Model):
 	id = models.AutoField(primary_key=True)
 	project = models.ForeignKey(Project)
-	name = models.CharField(max_length=50)
+	name = models.CharField(max_length=50, unique=True)
 
 	def __unicode__(self):
 		return self.name
@@ -35,7 +35,7 @@ class Sample(models.Model):
 		return sample
 
 
-class SampleVariables(models.Model):
+class SampleVariable(models.Model):
 	id = models.AutoField(primary_key=True)
 	sample = models.ForeignKey(Sample)
 	attribute = models.CharField(max_length=50)
@@ -45,10 +45,10 @@ class SampleVariables(models.Model):
 		return self.sample
 
 	@classmethod
-	def createSampleVariables(cls, sample, attribute, value):
-		samplevariables = SampleVariables(sample=sample, attribute=attribute, value=value)
-		samplevariables.save()
-		return samplevariables
+	def createSampleVariable(cls, sample, attribute, value):
+		samplevariable = SampleVariable(sample=sample, attribute=attribute, value=value)
+		samplevariable.save()
+		return samplevariable
 
 
 class Read(models.Model):
@@ -75,13 +75,13 @@ class ClassificationMethod(models.Model):
 	key = models.IntegerField()
 	description = models.CharField(max_length=100)
 	contactname = models.CharField(max_length=50)
-	contactemail = models.EmailFiled()
+	contactemail = models.EmailField()
 	
 	def __unicode__(self):
 		return self.methodID
 
 	@classmethod
-	def createClassificationMethod(cls, key, description, contactname, contactemail)
+	def createClassificationMethod(cls, key, description, contactname, contactemail):
 		classificationmethod = ClassificationMethod(key=key, description=description, contactname=contactname, contactemail=contactemail)
 		classificationmethod.save()
 		return classificationmethod
@@ -109,7 +109,7 @@ class ReadAssignment(models.Model):
 	id = models.AutoField(primary_key=True)
 	read = models.ForeignKey(Read)
 	classificationmethod = models.ForeignKey(ClassificationMethod)
-	taxaID = models.ManytoManyField(TaxaID)
+	taxaID = models.ManyToManyField(TaxaID)
 	score = models.FloatField()
 	
 	def __unicode__(self):
@@ -127,7 +127,7 @@ class ProfileSummary(models.Model):
 	id = models.AutoField(primary_key=True)
 	sample = models.ForeignKey(Sample)
 	classificationmethod = models.ForeignKey(ClassificationMethod)
-	taxaID = models.ManytoManyField(TaxaID)
+	taxaID = models.ManyToManyField(TaxaID)
 	numreads = models.IntegerField()
 	perctotal = models.FloatField()
 	avgscore = models.FloatField()
@@ -142,8 +142,5 @@ class ProfileSummary(models.Model):
 		profilesummary.save()
 		return profilesummary
 	
-
-
-
 
 
