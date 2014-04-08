@@ -78,7 +78,7 @@ class ClassificationMethod(models.Model):
 	contactemail = models.EmailField()
 	
 	def __unicode__(self):
-		return self.methodID
+		return self.key
 
 	@classmethod
 	def createClassificationMethod(cls, key, description, contactname, contactemail):
