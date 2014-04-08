@@ -107,6 +107,7 @@ class TaxaID(models.Model):
 
 class ReadAssignment(models.Model):
 	id = models.AutoField(primary_key=True)
+	## Sample = models.ForeignKey(Sample) <-- From our read Assignment File we also have the Sample ID??
 	read = models.ForeignKey(Read)
 	classificationmethod = models.ForeignKey(ClassificationMethod)
 	taxaID = models.ManyToManyField(TaxaID)
