@@ -107,6 +107,7 @@ class TaxaID(models.Model):
 
 class ReadAssignment(models.Model):
 	id = models.AutoField(primary_key=True)
+	sample = models.ForeignKey(Sample)
 	read = models.ForeignKey(Read)
 	classificationmethod = models.ForeignKey(ClassificationMethod)
 	taxaID = models.ManyToManyField(TaxaID)
@@ -117,8 +118,8 @@ class ReadAssignment(models.Model):
 		return return_str
 
 	@classmethod
-	def createReadAssignment(cls, read, classificationmethod, taxaID, score):
-		readassignment = ReadAssignment(read=read, classificationmethod=classificationmethod, taxaID=taxaID, score=score)
+	def createReadAssignment(cls, sample, read, classificationmethod, taxaID, score):
+		readassignment = ReadAssignment(sample=sample, read=read, classificationmethod=classificationmethod, taxaID=taxaID, score=score)
 		readassignment.save()
 		return readassignment
 
