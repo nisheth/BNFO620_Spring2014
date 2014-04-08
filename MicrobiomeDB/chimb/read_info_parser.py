@@ -5,14 +5,13 @@ import os
 
 read_dict = {}
 
-#construct ArgumentParser and add arguments for file in and file out
-parser = argparse.ArgumentParser(description='Get reads and read info')
-parser.add_argument('dir_of_fasta_files', type=str, help="directory to input fasta file")
-parser.add_argument('output_file', type=argparse.FileType('w'), help="directory to input fasta file")
 
-path_to_current_fasta = ''
-# get arguments from parser
+parser = argparse.ArgumentParser(description='Get reads and read info')
+parser.add_argument('dir_of_fasta_files', type=str, help="directory to input fasta files")
+parser.add_argument('output_file', type=argparse.FileType('w'), help="output file of read data")
+
 args = parser.parse_args()
+
 fasta_files = os.listdir(args.dir_of_fasta_files)
 
 for file in fasta_files:
