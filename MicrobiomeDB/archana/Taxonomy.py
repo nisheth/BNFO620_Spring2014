@@ -45,7 +45,7 @@ for line in fileHandle_1:
     #print line
     columns = line.split("|")
     tax_id = columns[0]
-    unique_name = columns[2]
+    unique_name = columns[1]
     fileOut_1.write(tax_id + "\t" + unique_name + "\n")
 
 
