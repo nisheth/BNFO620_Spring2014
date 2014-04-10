@@ -1,0 +1,2761 @@
+Patient_id	Variable	Value
+1	ID #	1
+1	Date	12/3/2009
+1	Location	VCU
+1	ASA	II
+1	Gender	M
+1	Age	35
+1	Race	Ca
+1	Smoke/Pk Yrs	19
+1	DM	n
+1	DM-type	NA
+1	BS	NA
+1	HbA1C	NA
+1	Periodontol Dz DX	GMLSCP
+1	Caries Risk	hi
+1	Tooth-D	5
+1	Surf-D	D
+1	PD-D	6
+1	AL-D	5
+1	BOP-D	1
+1	Mobility-D	NA
+1	GI-D	2
+1	PI-D	1
+1	Tooth-S	12
+1	Surf-S	B
+1	PD-S	3
+1	AL-S	3
+1	BOP-S	1
+1	Mobility-S	NA
+1	GI-S	2
+1	PI-S	1
+2	ID #	2
+2	Date	1/4/2010
+2	Location	VCU
+2	ASA	II
+2	Gender	M
+2	Age	25
+2	Race	Ca
+2	Smoke/Pk Yrs	4.5
+2	DM	n
+2	DM-type	NA
+2	BS	NA
+2	HbA1C	NA
+2	Periodontol Dz DX	GMCP
+2	Caries Risk	Hi
+2	Tooth-D	13
+2	Surf-D	M
+2	PD-D	6
+2	AL-D	3
+2	BOP-D	1
+2	Mobility-D	0
+2	GI-D	3
+2	PI-D	3
+2	Tooth-S	5
+2	Surf-S	M
+2	PD-S	3
+2	AL-S	1
+2	BOP-S	1
+2	Mobility-S	0
+2	GI-S	3
+2	PI-S	3
+3	ID #	3
+3	Date	1/5/2010
+3	Location	VCU
+3	ASA	II
+3	Gender	F
+3	Age	58
+3	Race	Ca
+3	Smoke/Pk Yrs	0
+3	DM	n
+3	DM-type	NA
+3	BS	NA
+3	HbA1C	NA
+3	Periodontol Dz DX	GSCP
+3	Caries Risk	hi
+3	Tooth-D	5
+3	Surf-D	D
+3	PD-D	9
+3	AL-D	8
+3	BOP-D	1
+3	Mobility-D	2
+3	GI-D	2
+3	PI-D	3
+3	Tooth-S	6
+3	Surf-S	M
+3	PD-S	3
+3	AL-S	1
+3	BOP-S	1
+3	Mobility-S	0
+3	GI-S	2
+3	PI-S	2
+4	ID #	4
+4	Date	1/26/2010
+4	Location	VCU
+4	ASA	II
+4	Gender	M
+4	Age	63
+4	Race	Ca
+4	Smoke/Pk Yrs	0
+4	DM	n
+4	DM-type	NA
+4	BS	NA
+4	HbA1C	NA
+4	Periodontol Dz DX	GMLSCP
+4	Caries Risk	hi
+4	Tooth-D	6
+4	Surf-D	D
+4	PD-D	5
+4	AL-D	3
+4	BOP-D	0
+4	Mobility-D	0
+4	GI-D	1
+4	PI-D	2
+4	Tooth-S	11
+4	Surf-S	M
+4	PD-S	3
+4	AL-S	2
+4	BOP-S	0
+4	Mobility-S	0
+4	GI-S	1
+4	PI-S	2
+5	ID #	5
+5	Date	2/18/2010
+5	Location	VCU
+5	ASA	II
+5	Gender	F
+5	Age	64
+5	Race	Ca
+5	Smoke/Pk Yrs	48
+5	DM	n
+5	DM-type	NA
+5	BS	NA
+5	HbA1C	NA
+5	Periodontol Dz DX	GMCP
+5	Caries Risk	hi
+5	Tooth-D	15
+5	Surf-D	M
+5	PD-D	5
+5	AL-D	6
+5	BOP-D	0
+5	Mobility-D	0
+5	GI-D	1
+5	PI-D	1
+5	Tooth-S	13
+5	Surf-S	M
+5	PD-S	3
+5	AL-S	3
+5	BOP-S	0
+5	Mobility-S	0
+5	GI-S	0
+5	PI-S	1
+6	ID #	6
+6	Date	2/18/2010
+6	Location	VCU
+6	ASA	I
+6	Gender	M
+6	Age	36
+6	Race	AA
+6	Smoke/Pk Yrs	1
+6	DM	n
+6	DM-type	NA
+6	BS	NA
+6	HbA1C	NA
+6	Periodontol Dz DX	GSCP
+6	Caries Risk	hi
+6	Tooth-D	14
+6	Surf-D	M
+6	PD-D	12
+6	AL-D	11
+6	BOP-D	1
+6	Mobility-D	2
+6	GI-D	3
+6	PI-D	2
+6	Tooth-S	6
+6	Surf-S	M
+6	PD-S	3
+6	AL-S	1
+6	BOP-S	0
+6	Mobility-S	0
+6	GI-S	1
+6	PI-S	1
+7	ID #	7
+7	Date	2/25/2010
+7	Location	VCU
+7	ASA	II
+7	Gender	F
+7	Age	60
+7	Race	Ca
+7	Smoke/Pk Yrs	17
+7	DM	n
+7	DM-type	NA
+7	BS	NA
+7	HbA1C	NA
+7	Periodontol Dz DX	GMLSCP
+7	Caries Risk	hi
+7	Tooth-D	15
+7	Surf-D	M
+7	PD-D	7
+7	AL-D	7
+7	BOP-D	1
+7	Mobility-D	0
+7	GI-D	2
+7	PI-D	2
+7	Tooth-S	11
+7	Surf-S	M
+7	PD-S	3
+7	AL-S	1
+7	BOP-S	0
+7	Mobility-S	0
+7	GI-S	0
+7	PI-S	1
+8	ID #	8
+8	Date	2/26/2010
+8	Location	VCU
+8	ASA	II
+8	Gender	M
+8	Age	54
+8	Race	Ca
+8	Smoke/Pk Yrs	30
+8	DM	n
+8	DM-type	NA
+8	BS	NA
+8	HbA1C	NA
+8	Periodontol Dz DX	GMCP
+8	Caries Risk	hi
+8	Tooth-D	1
+8	Surf-D	M
+8	PD-D	5
+8	AL-D	3
+8	BOP-D	1
+8	Mobility-D	0
+8	GI-D	2
+8	PI-D	1
+8	Tooth-S	5
+8	Surf-S	M
+8	PD-S	3
+8	AL-S	1
+8	BOP-S	1
+8	Mobility-S	0
+8	GI-S	2
+8	PI-S	1
+9	ID #	9
+9	Date	2/26/2010
+9	Location	VCU
+9	ASA	II
+9	Gender	F
+9	Age	53
+9	Race	Ca
+9	Smoke/Pk Yrs	25
+9	DM	n
+9	DM-type	NA
+9	BS	NA
+9	HbA1C	NA
+9	Periodontol Dz DX	GMLSCP
+9	Caries Risk	lo
+9	Tooth-D	18
+9	Surf-D	M
+9	PD-D	5
+9	AL-D	5
+9	BOP-D	1
+9	Mobility-D	0
+9	GI-D	2
+9	PI-D	2
+9	Tooth-S	22
+9	Surf-S	D
+9	PD-S	3
+9	AL-S	2
+9	BOP-S	0
+9	Mobility-S	0
+9	GI-S	0
+9	PI-S	1
+10	ID #	10
+10	Date	3/30/2010
+10	Location	VCU
+10	ASA	I
+10	Gender	F
+10	Age	42
+10	Race	AA
+10	Smoke/Pk Yrs	0
+10	DM	n
+10	DM-type	NA
+10	BS	NA
+10	HbA1C	NA
+10	Periodontol Dz DX	GSCP
+10	Caries Risk	hi
+10	Tooth-D	31
+10	Surf-D	D
+10	PD-D	10
+10	AL-D	8
+10	BOP-D	1
+10	Mobility-D	1
+10	GI-D	3
+10	PI-D	2
+10	Tooth-S	28
+10	Surf-S	M
+10	PD-S	3
+10	AL-S	1
+10	BOP-S	0
+10	Mobility-S	0
+10	GI-S	1
+10	PI-S	1
+11	ID #	11
+11	Date	4/1/2010
+11	Location	VCU
+11	ASA	II
+11	Gender	M
+11	Age	71
+11	Race	AA
+11	Smoke/Pk Yrs	0
+11	DM	n
+11	DM-type	NA
+11	BS	NA
+11	HbA1C	NA
+11	Periodontol Dz DX	GMLSCP
+11	Caries Risk	lo
+11	Tooth-D	32
+11	Surf-D	D
+11	PD-D	7
+11	AL-D	4
+11	BOP-D	1
+11	Mobility-D	0
+11	GI-D	1
+11	PI-D	2
+11	Tooth-S	17
+11	Surf-S	M
+11	PD-S	3
+11	AL-S	2
+11	BOP-S	0
+11	Mobility-S	0
+11	GI-S	1
+11	PI-S	2
+12	ID #	12
+12	Date	4/5/2010
+12	Location	VCU
+12	ASA	II
+12	Gender	M
+12	Age	45
+12	Race	Ca
+12	Smoke/Pk Yrs	32
+12	DM	n
+12	DM-type	NA
+12	BS	NA
+12	HbA1C	NA
+12	Periodontol Dz DX	GSCP
+12	Caries Risk	lo
+12	Tooth-D	19
+12	Surf-D	M
+12	PD-D	6
+12	AL-D	8
+12	BOP-D	1
+12	Mobility-D	1
+12	GI-D	2
+12	PI-D	3
+12	Tooth-S	21
+12	Surf-S	D
+12	PD-S	3
+12	AL-S	4
+12	BOP-S	0
+12	Mobility-S	1
+12	GI-S	1
+12	PI-S	2
+13	ID #	13
+13	Date	4/13/2010
+13	Location	VCU
+13	ASA	II
+13	Gender	F
+13	Age	51
+13	Race	Ca
+13	Smoke/Pk Yrs	17
+13	DM	n
+13	DM-type	NA
+13	BS	NA
+13	HbA1C	NA
+13	Periodontol Dz DX	GSCP
+13	Caries Risk	Hi
+13	Tooth-D	18
+13	Surf-D	M
+13	PD-D	8
+13	AL-D	7
+13	BOP-D	1
+13	Mobility-D	3
+13	GI-D	2
+13	PI-D	3
+13	Tooth-S	29
+13	Surf-S	M
+13	PD-S	3
+13	AL-S	3
+13	BOP-S	0
+13	Mobility-S	2
+13	GI-S	1
+13	PI-S	2
+14	ID #	14
+14	Date	4/15/2010
+14	Location	VCU
+14	ASA	I
+14	Gender	F
+14	Age	44
+14	Race	Ca
+14	Smoke/Pk Yrs	0
+14	DM	n
+14	DM-type	NA
+14	BS	NA
+14	HbA1C	NA
+14	Periodontol Dz DX	GMCP
+14	Caries Risk	hi
+14	Tooth-D	30
+14	Surf-D	M
+14	PD-D	6
+14	AL-D	4
+14	BOP-D	1
+14	Mobility-D	0
+14	GI-D	2
+14	PI-D	1
+14	Tooth-S	6
+14	Surf-S	D
+14	PD-S	3
+14	AL-S	1
+14	BOP-S	0
+14	Mobility-S	0
+14	GI-S	1
+14	PI-S	1
+15	ID #	15
+15	Date	5/3/2010
+15	Location	VCU
+15	ASA	I
+15	Gender	M
+15	Age	39
+15	Race	Ca
+15	Smoke/Pk Yrs	0
+15	DM	n
+15	DM-type	NA
+15	BS	NA
+15	HbA1C	NA
+15	Periodontol Dz DX	GMLSCP
+15	Caries Risk	hi
+15	Tooth-D	3
+15	Surf-D	M
+15	PD-D	7
+15	AL-D	5
+15	BOP-D	1
+15	Mobility-D	0
+15	GI-D	2
+15	PI-D	2
+15	Tooth-S	6
+15	Surf-S	M
+15	PD-S	3
+15	AL-S	2
+15	BOP-S	0
+15	Mobility-S	0
+15	GI-S	1
+15	PI-S	1
+16	ID #	16
+16	Date	5/4/2010
+16	Location	VCU
+16	ASA	II
+16	Gender	M
+16	Age	67
+16	Race	AA
+16	Smoke/Pk Yrs	0
+16	DM	y
+16	DM-type	II
+16	BS	NA
+16	HbA1C	6
+16	Periodontol Dz DX	GSCP
+16	Caries Risk	hi
+16	Tooth-D	18
+16	Surf-D	M
+16	PD-D	8
+16	AL-D	10
+16	BOP-D	1
+16	Mobility-D	1
+16	GI-D	2
+16	PI-D	2
+16	Tooth-S	27
+16	Surf-S	M
+16	PD-S	3
+16	AL-S	5
+16	BOP-S	0
+16	Mobility-S	0
+16	GI-S	1
+16	PI-S	1
+17	ID #	17
+17	Date	5/26/2010
+17	Location	VCU
+17	ASA	I
+17	Gender	F
+17	Age	48
+17	Race	AA
+17	Smoke/Pk Yrs	0
+17	DM	n
+17	DM-type	NA
+17	BS	NA
+17	HbA1C	NA
+17	Periodontol Dz DX	GMLSCP
+17	Caries Risk	hi
+17	Tooth-D	3
+17	Surf-D	D
+17	PD-D	8
+17	AL-D	7
+17	BOP-D	1
+17	Mobility-D	1
+17	GI-D	2
+17	PI-D	2
+17	Tooth-S	5
+17	Surf-S	M
+17	PD-S	3
+17	AL-S	2
+17	BOP-S	0
+17	Mobility-S	0
+17	GI-S	1
+17	PI-S	1
+18	ID #	18
+18	Date	6/11/2010
+18	Location	VCU
+18	ASA	II
+18	Gender	F
+18	Age	52
+18	Race	AA
+18	Smoke/Pk Yrs	0
+18	DM	n
+18	DM-type	NA
+18	BS	NA
+18	HbA1C	NA
+18	Periodontol Dz DX	GSCP
+18	Caries Risk	lo
+18	Tooth-D	14
+18	Surf-D	M
+18	PD-D	7
+18	AL-D	8
+18	BOP-D	0
+18	Mobility-D	1
+18	GI-D	1
+18	PI-D	1
+18	Tooth-S	9
+18	Surf-S	M
+18	PD-S	3
+18	AL-S	3
+18	BOP-S	0
+18	Mobility-S	0
+18	GI-S	1
+18	PI-S	1
+19	ID #	19
+19	Date	6/16/2010
+19	Location	VCU
+19	ASA	I
+19	Gender	F
+19	Age	32
+19	Race	Ca
+19	Smoke/Pk Yrs	0
+19	DM	n
+19	DM-type	NA
+19	BS	NA
+19	HbA1C	NA
+19	Periodontol Dz DX	GMCP
+19	Caries Risk	hi
+19	Tooth-D	14
+19	Surf-D	M
+19	PD-D	5
+19	AL-D	3
+19	BOP-D	1
+19	Mobility-D	0
+19	GI-D	2
+19	PI-D	1
+19	Tooth-S	7
+19	Surf-S	D
+19	PD-S	2
+19	AL-S	1
+19	BOP-S	0
+19	Mobility-S	0
+19	GI-S	0
+19	PI-S	1
+20	ID #	20
+20	Date	6/16/2010
+20	Location	VCU
+20	ASA	II
+20	Gender	F
+20	Age	63
+20	Race	AA
+20	Smoke/Pk Yrs	0
+20	DM	n
+20	DM-type	NA
+20	BS	NA
+20	HbA1C	NA
+20	Periodontol Dz DX	GMCP
+20	Caries Risk	hi
+20	Tooth-D	9
+20	Surf-D	M
+20	PD-D	7
+20	AL-D	5
+20	BOP-D	1
+20	Mobility-D	0
+20	GI-D	2
+20	PI-D	1
+20	Tooth-S	6
+20	Surf-S	D
+20	PD-S	3
+20	AL-S	1
+20	BOP-S	1
+20	Mobility-S	0
+20	GI-S	2
+20	PI-S	1
+21	ID #	21
+21	Date	6/21/2010
+21	Location	VCU
+21	ASA	II
+21	Gender	F
+21	Age	47
+21	Race	AA
+21	Smoke/Pk Yrs	15
+21	DM	n
+21	DM-type	NA
+21	BS	NA
+21	HbA1C	NA
+21	Periodontol Dz DX	GMLSCP
+21	Caries Risk	hi
+21	Tooth-D	3
+21	Surf-D	M
+21	PD-D	6
+21	AL-D	6
+21	BOP-D	1
+21	Mobility-D	0
+21	GI-D	2
+21	PI-D	3
+21	Tooth-S	6
+21	Surf-S	M
+21	PD-S	2
+21	AL-S	2
+21	BOP-S	0
+21	Mobility-S	0
+21	GI-S	1
+21	PI-S	2
+22	ID #	22
+22	Date	6/21/2010
+22	Location	VCU
+22	ASA	II
+22	Gender	F
+22	Age	42
+22	Race	AA
+22	Smoke/Pk Yrs	0
+22	DM	n
+22	DM-type	NA
+22	BS	NA
+22	HbA1C	NA
+22	Periodontol Dz DX	GSCP
+22	Caries Risk	lo
+22	Tooth-D	3
+22	Surf-D	M
+22	PD-D	7
+22	AL-D	6
+22	BOP-D	1
+22	Mobility-D	1
+22	GI-D	2
+22	PI-D	2
+22	Tooth-S	5
+22	Surf-S	M
+22	PD-S	3
+22	AL-S	2
+22	BOP-S	0
+22	Mobility-S	0
+22	GI-S	1
+22	PI-S	1
+23	ID #	23
+23	Date	6/21/2010
+23	Location	VCU
+23	ASA	II
+23	Gender	F
+23	Age	49
+23	Race	Ca
+23	Smoke/Pk Yrs	0
+23	DM	n
+23	DM-type	NA
+23	BS	NA
+23	HbA1C	NA
+23	Periodontol Dz DX	GMLSCP
+23	Caries Risk	hi
+23	Tooth-D	21
+23	Surf-D	M
+23	PD-D	6
+23	AL-D	6
+23	BOP-D	1
+23	Mobility-D	3
+23	GI-D	3
+23	PI-D	2
+23	Tooth-S	27
+23	Surf-S	M
+23	PD-S	3
+23	AL-S	1
+23	BOP-S	0
+23	Mobility-S	0
+23	GI-S	1
+23	PI-S	1
+24	ID #	24
+24	Date	6/21/2010
+24	Location	VCU
+24	ASA	II
+24	Gender	F
+24	Age	65
+24	Race	AA
+24	Smoke/Pk Yrs	0
+24	DM	n
+24	DM-type	NA
+24	BS	NA
+24	HbA1C	NA
+24	Periodontol Dz DX	GMLSCP
+24	Caries Risk	hi
+24	Tooth-D	3
+24	Surf-D	D
+24	PD-D	5
+24	AL-D	3
+24	BOP-D	1
+24	Mobility-D	0
+24	GI-D	2
+24	PI-D	2
+24	Tooth-S	6
+24	Surf-S	M
+24	PD-S	3
+24	AL-S	3
+24	BOP-S	0
+24	Mobility-S	0
+24	GI-S	1
+24	PI-S	1
+25	ID #	25
+25	Date	6/22/2010
+25	Location	VCU
+25	ASA	II
+25	Gender	F
+25	Age	47
+25	Race	AA
+25	Smoke/Pk Yrs	0
+25	DM	n
+25	DM-type	NA
+25	BS	NA
+25	HbA1C	NA
+25	Periodontol Dz DX	GMLSCP
+25	Caries Risk	hi
+25	Tooth-D	15
+25	Surf-D	M
+25	PD-D	6
+25	AL-D	7
+25	BOP-D	1
+25	Mobility-D	0
+25	GI-D	3
+25	PI-D	3
+25	Tooth-S	22
+25	Surf-S	M
+25	PD-S	2
+25	AL-S	1
+25	BOP-S	0
+25	Mobility-S	0
+25	GI-S	1
+25	PI-S	2
+26	ID #	26
+26	Date	7/23/2010
+26	Location	Wise
+26	ASA	II
+26	Gender	F
+26	Age	68
+26	Race	Ca
+26	Smoke/Pk Yrs	0
+26	DM	n
+26	DM-type	NA
+26	BS	NA
+26	HbA1C	NA
+26	Periodontol Dz DX	GMCP
+26	Caries Risk	lo
+26	Tooth-D	26
+26	Surf-D	D
+26	PD-D	5
+26	AL-D	4
+26	BOP-D	1
+26	Mobility-D	0
+26	GI-D	2
+26	PI-D	3
+26	Tooth-S	27
+26	Surf-S	F
+26	PD-S	2
+26	AL-S	3
+26	BOP-S	0
+26	Mobility-S	0
+26	GI-S	1
+26	PI-S	2
+27	ID #	27
+27	Date	7/23/2010
+27	Location	Wise
+27	ASA	II
+27	Gender	M
+27	Age	52
+27	Race	Ca
+27	Smoke/Pk Yrs	40
+27	DM	n
+27	DM-type	NA
+27	BS	NA
+27	HbA1C	NA
+27	Periodontol Dz DX	GMCP
+27	Caries Risk	lo
+27	Tooth-D	12
+27	Surf-D	M
+27	PD-D	5
+27	AL-D	5
+27	BOP-D	0
+27	Mobility-D	0
+27	GI-D	1
+27	PI-D	2
+27	Tooth-S	23
+27	Surf-S	M
+27	PD-S	2
+27	AL-S	1
+27	BOP-S	0
+27	Mobility-S	0
+27	GI-S	1
+27	PI-S	1
+28	ID #	28
+28	Date	7/23/2010
+28	Location	Wise
+28	ASA	II
+28	Gender	F
+28	Age	44
+28	Race	Ca
+28	Smoke/Pk Yrs	31
+28	DM	n
+28	DM-type	NA
+28	BS	NA
+28	HbA1C	NA
+28	Periodontol Dz DX	GMCP
+28	Caries Risk	Hi
+28	Tooth-D	2
+28	Surf-D	M
+28	PD-D	5
+28	AL-D	3
+28	BOP-D	0
+28	Mobility-D	0
+28	GI-D	1
+28	PI-D	2
+28	Tooth-S	7
+28	Surf-S	D
+28	PD-S	2
+28	AL-S	1
+28	BOP-S	0
+28	Mobility-S	0
+28	GI-S	1
+28	PI-S	1
+29	ID #	29
+29	Date	7/23/2010
+29	Location	Wise
+29	ASA	II
+29	Gender	M
+29	Age	29
+29	Race	Ca
+29	Smoke/Pk Yrs	28
+29	DM	n
+29	DM-type	NA
+29	BS	NA
+29	HbA1C	NA
+29	Periodontol Dz DX	GMCP
+29	Caries Risk	hi
+29	Tooth-D	4
+29	Surf-D	M
+29	PD-D	5
+29	AL-D	2
+29	BOP-D	1
+29	Mobility-D	0
+29	GI-D	2
+29	PI-D	2
+29	Tooth-S	22
+29	Surf-S	M
+29	PD-S	3
+29	AL-S	2
+29	BOP-S	0
+29	Mobility-S	0
+29	GI-S	1
+29	PI-S	2
+30	ID #	30
+30	Date	7/23/2010
+30	Location	Wise
+30	ASA	II
+30	Gender	M
+30	Age	35
+30	Race	Ca
+30	Smoke/Pk Yrs	25
+30	DM	n
+30	DM-type	NA
+30	BS	NA
+30	HbA1C	NA
+30	Periodontol Dz DX	GSCP
+30	Caries Risk	hi
+30	Tooth-D	27
+30	Surf-D	M
+30	PD-D	9
+30	AL-D	7
+30	BOP-D	1
+30	Mobility-D	1
+30	GI-D	2
+30	PI-D	3
+30	Tooth-S	8
+30	Surf-S	F
+30	PD-S	2
+30	AL-S	4
+30	BOP-S	0
+30	Mobility-S	2
+30	GI-S	1
+30	PI-S	2
+31	ID #	31
+31	Date	7/23/2010
+31	Location	Wise
+31	ASA	II
+31	Gender	F
+31	Age	33
+31	Race	Ca
+31	Smoke/Pk Yrs	8
+31	DM	n
+31	DM-type	NA
+31	BS	NA
+31	HbA1C	NA
+31	Periodontol Dz DX	GMLSCP
+31	Caries Risk	hi
+31	Tooth-D	27
+31	Surf-D	M
+31	PD-D	5
+31	AL-D	7
+31	BOP-D	1
+31	Mobility-D	0
+31	GI-D	2
+31	PI-D	3
+31	Tooth-S	6
+31	Surf-S	F
+31	PD-S	1
+31	AL-S	2
+31	BOP-S	1
+31	Mobility-S	0
+31	GI-S	2
+31	PI-S	2
+32	ID #	32
+32	Date	7/23/2010
+32	Location	Wise
+32	ASA	II
+32	Gender	F
+32	Age	42
+32	Race	Ca
+32	Smoke/Pk Yrs	20
+32	DM	n
+32	DM-type	NA
+32	BS	NA
+32	HbA1C	NA
+32	Periodontol Dz DX	GSCP
+32	Caries Risk	hi
+32	Tooth-D	28
+32	Surf-D	M
+32	PD-D	8
+32	AL-D	9
+32	BOP-D	1
+32	Mobility-D	2
+32	GI-D	3
+32	PI-D	3
+32	Tooth-S	8
+32	Surf-S	F
+32	PD-S	2
+32	AL-S	3
+32	BOP-S	0
+32	Mobility-S	1
+32	GI-S	1
+32	PI-S	2
+33	ID #	33
+33	Date	7/23/2010
+33	Location	Wise
+33	ASA	II
+33	Gender	M
+33	Age	51
+33	Race	Ca
+33	Smoke/Pk Yrs	14
+33	DM	n
+33	DM-type	NA
+33	BS	NA
+33	HbA1C	NA
+33	Periodontol Dz DX	GSCP
+33	Caries Risk	hi
+33	Tooth-D	3
+33	Surf-D	M
+33	PD-D	5
+33	AL-D	8
+33	BOP-D	1
+33	Mobility-D	1
+33	GI-D	3
+33	PI-D	3
+33	Tooth-S	27
+33	Surf-S	D
+33	PD-S	3
+33	AL-S	1
+33	BOP-S	0
+33	Mobility-S	0
+33	GI-S	1
+33	PI-S	2
+34	ID #	34
+34	Date	7/23/2010
+34	Location	Wise
+34	ASA	II
+34	Gender	F
+34	Age	32
+34	Race	Ca
+34	Smoke/Pk Yrs	24
+34	DM	n
+34	DM-type	NA
+34	BS	NA
+34	HbA1C	NA
+34	Periodontol Dz DX	GMLSCP
+34	Caries Risk	hi
+34	Tooth-D	12
+34	Surf-D	D
+34	PD-D	5
+34	AL-D	3
+34	BOP-D	1
+34	Mobility-D	0
+34	GI-D	2
+34	PI-D	3
+34	Tooth-S	28
+34	Surf-S	D
+34	PD-S	3
+34	AL-S	1
+34	BOP-S	1
+34	Mobility-S	0
+34	GI-S	2
+34	PI-S	2
+35	ID #	35
+35	Date	7/23/2010
+35	Location	Wise
+35	ASA	II
+35	Gender	M
+35	Age	54
+35	Race	Ca
+35	Smoke/Pk Yrs	40
+35	DM	n
+35	DM-type	NA
+35	BS	NA
+35	HbA1C	NA
+35	Periodontol Dz DX	GMLSCP
+35	Caries Risk	Hi
+35	Tooth-D	2
+35	Surf-D	M
+35	PD-D	5
+35	AL-D	7
+35	BOP-D	1
+35	Mobility-D	0
+35	GI-D	3
+35	PI-D	3
+35	Tooth-S	28
+35	Surf-S	M
+35	PD-S	3
+35	AL-S	2
+35	BOP-S	0
+35	Mobility-S	0
+35	GI-S	1
+35	PI-S	2
+36	ID #	36
+36	Date	7/23/2010
+36	Location	Wise
+36	ASA	II
+36	Gender	M
+36	Age	41
+36	Race	Ca
+36	Smoke/Pk Yrs	6
+36	DM	n
+36	DM-type	NA
+36	BS	NA
+36	HbA1C	NA
+36	Periodontol Dz DX	GMLSCP
+36	Caries Risk	hi
+36	Tooth-D	25
+36	Surf-D	D
+36	PD-D	5
+36	AL-D	6
+36	BOP-D	1
+36	Mobility-D	1
+36	GI-D	3
+36	PI-D	3
+36	Tooth-S	21
+36	Surf-S	M
+36	PD-S	3
+36	AL-S	2
+36	BOP-S	0
+36	Mobility-S	0
+36	GI-S	1
+36	PI-S	1
+37	ID #	37
+37	Date	7/23/2010
+37	Location	Wise
+37	ASA	II
+37	Gender	F
+37	Age	41
+37	Race	Ca/AI
+37	Smoke/Pk Yrs	45
+37	DM	n
+37	DM-type	NA
+37	BS	NA
+37	HbA1C	NA
+37	Periodontol Dz DX	GMCP
+37	Caries Risk	hi
+37	Tooth-D	5
+37	Surf-D	M
+37	PD-D	5
+37	AL-D	3
+37	BOP-D	1
+37	Mobility-D	0
+37	GI-D	2
+37	PI-D	2
+37	Tooth-S	25
+37	Surf-S	F
+37	PD-S	1
+37	AL-S	3
+37	BOP-S	1
+37	Mobility-S	0
+37	GI-S	2
+37	PI-S	3
+38	ID #	38
+38	Date	7/23/2010
+38	Location	Wise
+38	ASA	II
+38	Gender	M
+38	Age	37
+38	Race	AA
+38	Smoke/Pk Yrs	0
+38	DM	y
+38	DM-type	II
+38	BS	418
+38	HbA1C	NA
+38	Periodontol Dz DX	GMLSCP
+38	Caries Risk	lo
+38	Tooth-D	18
+38	Surf-D	M
+38	PD-D	6
+38	AL-D	5
+38	BOP-D	1
+38	Mobility-D	0
+38	GI-D	2
+38	PI-D	3
+38	Tooth-S	12
+38	Surf-S	M
+38	PD-S	3
+38	AL-S	2
+38	BOP-S	1
+38	Mobility-S	0
+38	GI-S	2
+38	PI-S	3
+39	ID #	39
+39	Date	7/23/2010
+39	Location	Wise
+39	ASA	II
+39	Gender	M
+39	Age	36
+39	Race	Ca
+39	Smoke/Pk Yrs	0
+39	DM	n
+39	DM-type	NA
+39	BS	NA
+39	HbA1C	NA
+39	Periodontol Dz DX	GMLSCP
+39	Caries Risk	hi
+39	Tooth-D	22
+39	Surf-D	M
+39	PD-D	6
+39	AL-D	7
+39	BOP-D	1
+39	Mobility-D	0
+39	GI-D	3
+39	PI-D	3
+39	Tooth-S	20
+39	Surf-S	D
+39	PD-S	3
+39	AL-S	5
+39	BOP-S	0
+39	Mobility-S	0
+39	GI-S	1
+39	PI-S	2
+40	ID #	40
+40	Date	7/23/2010
+40	Location	Wise
+40	ASA	II
+40	Gender	F
+40	Age	39
+40	Race	Ca
+40	Smoke/Pk Yrs	23
+40	DM	n
+40	DM-type	NA
+40	BS	NA
+40	HbA1C	NA
+40	Periodontol Dz DX	GMLSCP
+40	Caries Risk	hi
+40	Tooth-D	27
+40	Surf-D	M
+40	PD-D	6
+40	AL-D	5
+40	BOP-D	1
+40	Mobility-D	0
+40	GI-D	3
+40	PI-D	3
+40	Tooth-S	20
+40	Surf-S	D
+40	PD-S	3
+40	AL-S	3
+40	BOP-S	1
+40	Mobility-S	0
+40	GI-S	2
+40	PI-S	3
+41	ID #	41
+41	Date	7/23/2010
+41	Location	Wise
+41	ASA	II
+41	Gender	M
+41	Age	50
+41	Race	Ca
+41	Smoke/Pk Yrs	30
+41	DM	n
+41	DM-type	NA
+41	BS	NA
+41	HbA1C	NA
+41	Periodontol Dz DX	GSCP
+41	Caries Risk	hi
+41	Tooth-D	26
+41	Surf-D	D
+41	PD-D	6
+41	AL-D	8
+41	BOP-D	1
+41	Mobility-D	1
+41	GI-D	3
+41	PI-D	3
+41	Tooth-S	28
+41	Surf-S	M
+41	PD-S	3
+41	AL-S	3
+41	BOP-S	0
+41	Mobility-S	0
+41	GI-S	1
+41	PI-S	1
+42	ID #	42
+42	Date	7/23/2010
+42	Location	Wise
+42	ASA	I
+42	Gender	M
+42	Age	45
+42	Race	Ca
+42	Smoke/Pk Yrs	0
+42	DM	n
+42	DM-type	NA
+42	BS	NA
+42	HbA1C	NA
+42	Periodontol Dz DX	GSCP
+42	Caries Risk	hi
+42	Tooth-D	24
+42	Surf-D	M
+42	PD-D	6
+42	AL-D	7
+42	BOP-D	1
+42	Mobility-D	1
+42	GI-D	3
+42	PI-D	3
+42	Tooth-S	12
+42	Surf-S	M
+42	PD-S	3
+42	AL-S	3
+42	BOP-S	1
+42	Mobility-S	0
+42	GI-S	2
+42	PI-S	2
+43	ID #	43
+43	Date	7/23/2010
+43	Location	Wise
+43	ASA	II
+43	Gender	M
+43	Age	57
+43	Race	Ca
+43	Smoke/Pk Yrs	10
+43	DM	n
+43	DM-type	NA
+43	BS	NA
+43	HbA1C	NA
+43	Periodontol Dz DX	GMCP
+43	Caries Risk	hi
+43	Tooth-D	19
+43	Surf-D	M
+43	PD-D	5
+43	AL-D	4
+43	BOP-D	0
+43	Mobility-D	0
+43	GI-D	1
+43	PI-D	2
+43	Tooth-S	22
+43	Surf-S	M
+43	PD-S	3
+43	AL-S	1
+43	BOP-S	0
+43	Mobility-S	0
+43	GI-S	1
+43	PI-S	1
+44	ID #	44
+44	Date	7/23/2010
+44	Location	Wise
+44	ASA	II
+44	Gender	M
+44	Age	44
+44	Race	Ca
+44	Smoke/Pk Yrs	(chew tob. 1-3c/d)
+44	DM	n
+44	DM-type	NA
+44	BS	NA
+44	HbA1C	NA
+44	Periodontol Dz DX	GMLSCP
+44	Caries Risk	hi
+44	Tooth-D	2
+44	Surf-D	M
+44	PD-D	5
+44	AL-D	6
+44	BOP-D	1
+44	Mobility-D	0
+44	GI-D	2
+44	PI-D	3
+44	Tooth-S	28
+44	Surf-S	M
+44	PD-S	2
+44	AL-S	0
+44	BOP-S	0
+44	Mobility-S	0
+44	GI-S	0
+44	PI-S	1
+45	ID #	45
+45	Date	7/23/2010
+45	Location	Wise
+45	ASA	II
+45	Gender	M
+45	Age	54
+45	Race	Ca
+45	Smoke/Pk Yrs	57
+45	DM	n
+45	DM-type	NA
+45	BS	NA
+45	HbA1C	NA
+45	Periodontol Dz DX	GSCP
+45	Caries Risk	lo
+45	Tooth-D	25
+45	Surf-D	M
+45	PD-D	7
+45	AL-D	10
+45	BOP-D	1
+45	Mobility-D	2
+45	GI-D	2
+45	PI-D	3
+45	Tooth-S	7
+45	Surf-S	D
+45	PD-S	3
+45	AL-S	2
+45	BOP-S	0
+45	Mobility-S	0
+45	GI-S	1
+45	PI-S	2
+46	ID #	46
+46	Date	7/23/2010
+46	Location	Wise
+46	ASA	II
+46	Gender	M
+46	Age	47
+46	Race	Ca
+46	Smoke/Pk Yrs	60
+46	DM	n
+46	DM-type	NA
+46	BS	NA
+46	HbA1C	NA
+46	Periodontol Dz DX	GSCP
+46	Caries Risk	Hi
+46	Tooth-D	2
+46	Surf-D	M
+46	PD-D	6
+46	AL-D	5
+46	BOP-D	1
+46	Mobility-D	0
+46	GI-D	3
+46	PI-D	3
+46	Tooth-S	20
+46	Surf-S	M
+46	PD-S	3
+46	AL-S	2
+46	BOP-S	0
+46	Mobility-S	0
+46	GI-S	1
+46	PI-S	3
+47	ID #	47
+47	Date	7/23/2010
+47	Location	Wise
+47	ASA	II
+47	Gender	M
+47	Age	43
+47	Race	Ca
+47	Smoke/Pk Yrs	45
+47	DM	y
+47	DM-type	II
+47	BS	144
+47	HbA1C	6.1
+47	Periodontol Dz DX	GSCP
+47	Caries Risk	hi
+47	Tooth-D	25
+47	Surf-D	M
+47	PD-D	6
+47	AL-D	7
+47	BOP-D	1
+47	Mobility-D	1
+47	GI-D	3
+47	PI-D	3
+47	Tooth-S	21
+47	Surf-S	M
+47	PD-S	3
+47	AL-S	5
+47	BOP-S	1
+47	Mobility-S	0
+47	GI-S	2
+47	PI-S	3
+48	ID #	48
+48	Date	7/23/2010
+48	Location	Wise
+48	ASA	II
+48	Gender	M
+48	Age	41
+48	Race	Ca
+48	Smoke/Pk Yrs	(chew tob 1c/d)
+48	DM	n
+48	DM-type	NA
+48	BS	NA
+48	HbA1C	NA
+48	Periodontol Dz DX	GMLSCP
+48	Caries Risk	hi
+48	Tooth-D	19
+48	Surf-D	M
+48	PD-D	6
+48	AL-D	7
+48	BOP-D	1
+48	Mobility-D	0
+48	GI-D	2
+48	PI-D	3
+48	Tooth-S	28
+48	Surf-S	M
+48	PD-S	3
+48	AL-S	6
+48	BOP-S	0
+48	Mobility-S	0
+48	GI-S	1
+48	PI-S	3
+49	ID #	49
+49	Date	7/24/2010
+49	Location	Wise
+49	ASA	II
+49	Gender	F
+49	Age	54
+49	Race	Ca
+49	Smoke/Pk Yrs	0
+49	DM	n
+49	DM-type	NA
+49	BS	NA
+49	HbA1C	NA
+49	Periodontol Dz DX	GMCP
+49	Caries Risk	hi
+49	Tooth-D	18
+49	Surf-D	M
+49	PD-D	6
+49	AL-D	4
+49	BOP-D	1
+49	Mobility-D	0
+49	GI-D	2
+49	PI-D	3
+49	Tooth-S	27
+49	Surf-S	D
+49	PD-S	2
+49	AL-S	3
+49	BOP-S	0
+49	Mobility-S	0
+49	GI-S	1
+49	PI-S	1
+50	ID #	50
+50	Date	7/24/2010
+50	Location	Wise
+50	ASA	II
+50	Gender	M
+50	Age	42
+50	Race	Ca
+50	Smoke/Pk Yrs	15
+50	DM	n
+50	DM-type	NA
+50	BS	NA
+50	HbA1C	NA
+50	Periodontol Dz DX	GSCP
+50	Caries Risk	Hi
+50	Tooth-D	12
+50	Surf-D	M
+50	PD-D	5
+50	AL-D	5
+50	BOP-D	1
+50	Mobility-D	0
+50	GI-D	3
+50	PI-D	3
+50	Tooth-S	23
+50	Surf-S	M
+50	PD-S	3
+50	AL-S	4
+50	BOP-S	1
+50	Mobility-S	1
+50	GI-S	2
+50	PI-S	3
+51	ID #	51
+51	Date	7/24/2010
+51	Location	Wise
+51	ASA	II
+51	Gender	F
+51	Age	66
+51	Race	Ca
+51	Smoke/Pk Yrs	0
+51	DM	n
+51	DM-type	NA
+51	BS	NA
+51	HbA1C	NA
+51	Periodontol Dz DX	GMCP
+51	Caries Risk	lo
+51	Tooth-D	13
+51	Surf-D	M
+51	PD-D	5
+51	AL-D	4
+51	BOP-D	0
+51	Mobility-D	0
+51	GI-D	1
+51	PI-D	2
+51	Tooth-S	22
+51	Surf-S	M
+51	PD-S	2
+51	AL-S	3
+51	BOP-S	0
+51	Mobility-S	0
+51	GI-S	1
+51	PI-S	2
+52	ID #	52
+52	Date	7/24/2010
+52	Location	Wise
+52	ASA	II
+52	Gender	F
+52	Age	45
+52	Race	Ca
+52	Smoke/Pk Yrs	22
+52	DM	n
+52	DM-type	NA
+52	BS	NA
+52	HbA1C	NA
+52	Periodontol Dz DX	GMLSCP
+52	Caries Risk	Hi
+52	Tooth-D	15
+52	Surf-D	M
+52	PD-D	5
+52	AL-D	5
+52	BOP-D	1
+52	Mobility-D	0
+52	GI-D	2
+52	PI-D	3
+52	Tooth-S	27
+52	Surf-S	D
+52	PD-S	1
+52	AL-S	1
+52	BOP-S	0
+52	Mobility-S	0
+52	GI-S	1
+52	PI-S	1
+53	ID #	53
+53	Date	7/24/2010
+53	Location	Wise
+53	ASA	II
+53	Gender	M
+53	Age	62
+53	Race	Ca
+53	Smoke/Pk Yrs	45
+53	DM	n
+53	DM-type	NA
+53	BS	NA
+53	HbA1C	NA
+53	Periodontol Dz DX	GSCP
+53	Caries Risk	Hi
+53	Tooth-D	20
+53	Surf-D	M
+53	PD-D	6
+53	AL-D	8
+53	BOP-D	1
+53	Mobility-D	2
+53	GI-D	3
+53	PI-D	3
+53	Tooth-S	28
+53	Surf-S	F
+53	PD-S	3
+53	AL-S	6
+53	BOP-S	1
+53	Mobility-S	1
+53	GI-S	3
+53	PI-S	3
+54	ID #	54
+54	Date	7/24/2010
+54	Location	Wise
+54	ASA	II
+54	Gender	M
+54	Age	42
+54	Race	Ca
+54	Smoke/Pk Yrs	30
+54	DM	n
+54	DM-type	NA
+54	BS	NA
+54	HbA1C	NA
+54	Periodontol Dz DX	GSCP
+54	Caries Risk	Hi
+54	Tooth-D	24
+54	Surf-D	M
+54	PD-D	5
+54	AL-D	7
+54	BOP-D	1
+54	Mobility-D	2
+54	GI-D	3
+54	PI-D	3
+54	Tooth-S	27
+54	Surf-S	M
+54	PD-S	3
+54	AL-S	5
+54	BOP-S	0
+54	Mobility-S	0
+54	GI-S	1
+54	PI-S	2
+55	ID #	55
+55	Date	7/24/2010
+55	Location	Wise
+55	ASA	II
+55	Gender	F
+55	Age	56
+55	Race	Ca
+55	Smoke/Pk Yrs	0
+55	DM	n
+55	DM-type	NA
+55	BS	NA
+55	HbA1C	NA
+55	Periodontol Dz DX	GSCP
+55	Caries Risk	Hi
+55	Tooth-D	28
+55	Surf-D	M
+55	PD-D	6
+55	AL-D	9
+55	BOP-D	1
+55	Mobility-D	2
+55	GI-D	2
+55	PI-D	3
+55	Tooth-S	22
+55	Surf-S	F
+55	PD-S	3
+55	AL-S	6
+55	BOP-S	1
+55	Mobility-S	1
+55	GI-S	2
+55	PI-S	3
+56	ID #	56
+56	Date	7/24/2010
+56	Location	Wise
+56	ASA	II
+56	Gender	M
+56	Age	51
+56	Race	Ca
+56	Smoke/Pk Yrs	90
+56	DM	y
+56	DM-type	II
+56	BS	194
+56	HbA1C	NA
+56	Periodontol Dz DX	GSCP
+56	Caries Risk	Hi
+56	Tooth-D	6
+56	Surf-D	M
+56	PD-D	6
+56	AL-D	9
+56	BOP-D	1
+56	Mobility-D	0
+56	GI-D	3
+56	PI-D	3
+56	Tooth-S	12
+56	Surf-S	F
+56	PD-S	2
+56	AL-S	6
+56	BOP-S	1
+56	Mobility-S	1
+56	GI-S	2
+56	PI-S	3
+57	ID #	57
+57	Date	7/24/2010
+57	Location	Wise
+57	ASA	II
+57	Gender	M
+57	Age	37
+57	Race	Ca
+57	Smoke/Pk Yrs	20
+57	DM	y
+57	DM-type	II
+57	BS	184
+57	HbA1C	NA
+57	Periodontol Dz DX	GSCP
+57	Caries Risk	hi
+57	Tooth-D	20
+57	Surf-D	M
+57	PD-D	7
+57	AL-D	5
+57	BOP-D	1
+57	Mobility-D	1
+57	GI-D	3
+57	PI-D	3
+57	Tooth-S	28
+57	Surf-S	M
+57	PD-S	2
+57	AL-S	5
+57	BOP-S	1
+57	Mobility-S	1
+57	GI-S	2
+57	PI-S	3
+58	ID #	58
+58	Date	7/24/2010
+58	Location	Wise
+58	ASA	II
+58	Gender	F
+58	Age	46
+58	Race	Ca
+58	Smoke/Pk Yrs	45
+58	DM	n
+58	DM-type	NA
+58	BS	NA
+58	HbA1C	NA
+58	Periodontol Dz DX	GSCP
+58	Caries Risk	hi
+58	Tooth-D	20
+58	Surf-D	M
+58	PD-D	5
+58	AL-D	4
+58	BOP-D	0
+58	Mobility-D	0
+58	GI-D	1
+58	PI-D	3
+58	Tooth-S	11
+58	Surf-S	M
+58	PD-S	3
+58	AL-S	3
+58	BOP-S	0
+58	Mobility-S	0
+58	GI-S	1
+58	PI-S	3
+59	ID #	59
+59	Date	7/24/2010
+59	Location	Wise
+59	ASA	II
+59	Gender	M
+59	Age	55
+59	Race	Ca
+59	Smoke/Pk Yrs	0
+59	DM	n
+59	DM-type	NA
+59	BS	NA
+59	HbA1C	NA
+59	Periodontol Dz DX	GMLSCP
+59	Caries Risk	hi
+59	Tooth-D	22
+59	Surf-D	M
+59	PD-D	5
+59	AL-D	4
+59	BOP-D	0
+59	Mobility-D	0
+59	GI-D	1
+59	PI-D	3
+59	Tooth-S	28
+59	Surf-S	M
+59	PD-S	3
+59	AL-S	4
+59	BOP-S	0
+59	Mobility-S	0
+59	GI-S	1
+59	PI-S	3
+60	ID #	60
+60	Date	7/24/2010
+60	Location	Wise
+60	ASA	II
+60	Gender	F
+60	Age	62
+60	Race	Ca
+60	Smoke/Pk Yrs	0
+60	DM	n
+60	DM-type	NA
+60	BS	NA
+60	HbA1C	NA
+60	Periodontol Dz DX	GSCP
+60	Caries Risk	hi
+60	Tooth-D	6
+60	Surf-D	M
+60	PD-D	9
+60	AL-D	8
+60	BOP-D	1
+60	Mobility-D	1
+60	GI-D	3
+60	PI-D	3
+60	Tooth-S	28
+60	Surf-S	F
+60	PD-S	2
+60	AL-S	5
+60	BOP-S	1
+60	Mobility-S	1
+60	GI-S	2
+60	PI-S	3
+61	ID #	61
+61	Date	7/24/2010
+61	Location	Wise
+61	ASA	II
+61	Gender	M
+61	Age	48
+61	Race	Ca
+61	Smoke/Pk Yrs	0
+61	DM	n
+61	DM-type	NA
+61	BS	NA
+61	HbA1C	NA
+61	Periodontol Dz DX	GMLSCP
+61	Caries Risk	Hi
+61	Tooth-D	27
+61	Surf-D	M
+61	PD-D	5
+61	AL-D	4
+61	BOP-D	0
+61	Mobility-D	0
+61	GI-D	1
+61	PI-D	3
+61	Tooth-S	9
+61	Surf-S	F
+61	PD-S	2
+61	AL-S	5
+61	BOP-S	0
+61	Mobility-S	0
+61	GI-S	1
+61	PI-S	3
+62	ID #	62
+62	Date	7/24/2010
+62	Location	Wise
+62	ASA	II
+62	Gender	M
+62	Age	63
+62	Race	Ca
+62	Smoke/Pk Yrs	0
+62	DM	n
+62	DM-type	NA
+62	BS	NA
+62	HbA1C	NA
+62	Periodontol Dz DX	GSCP
+62	Caries Risk	hi
+62	Tooth-D	20
+62	Surf-D	M
+62	PD-D	5
+62	AL-D	8
+62	BOP-D	1
+62	Mobility-D	0
+62	GI-D	2
+62	PI-D	3
+62	Tooth-S	29
+62	Surf-S	F
+62	PD-S	2
+62	AL-S	6
+62	BOP-S	1
+62	Mobility-S	0
+62	GI-S	2
+62	PI-S	3
+63	ID #	63
+63	Date	7/24/2010
+63	Location	Wise
+63	ASA	II
+63	Gender	F
+63	Age	55
+63	Race	Ca
+63	Smoke/Pk Yrs	0
+63	DM	y
+63	DM-type	II
+63	BS	240
+63	HbA1C	NA
+63	Periodontol Dz DX	GSCP
+63	Caries Risk	Hi
+63	Tooth-D	29
+63	Surf-D	M
+63	PD-D	5
+63	AL-D	6
+63	BOP-D	1
+63	Mobility-D	1
+63	GI-D	2
+63	PI-D	3
+63	Tooth-S	7
+63	Surf-S	F
+63	PD-S	2
+63	AL-S	6
+63	BOP-S	0
+63	Mobility-S	1
+63	GI-S	1
+63	PI-S	3
+64	ID #	64
+64	Date	7/24/2010
+64	Location	Wise
+64	ASA	II
+64	Gender	M
+64	Age	53
+64	Race	Ca
+64	Smoke/Pk Yrs	30
+64	DM	n
+64	DM-type	NA
+64	BS	NA
+64	HbA1C	NA
+64	Periodontol Dz DX	GSCP
+64	Caries Risk	Hi
+64	Tooth-D	27
+64	Surf-D	M
+64	PD-D	5
+64	AL-D	5
+64	BOP-D	1
+64	Mobility-D	1
+64	GI-D	2
+64	PI-D	3
+64	Tooth-S	29
+64	Surf-S	D
+64	PD-S	2
+64	AL-S	5
+64	BOP-S	0
+64	Mobility-S	0
+64	GI-S	1
+64	PI-S	1
+65	ID #	65
+65	Date	7/24/2010
+65	Location	Wise
+65	ASA	II
+65	Gender	F
+65	Age	48
+65	Race	Ca
+65	Smoke/Pk Yrs	78
+65	DM	n
+65	DM-type	NA
+65	BS	NA
+65	HbA1C	NA
+65	Periodontol Dz DX	GSCP
+65	Caries Risk	hi
+65	Tooth-D	14
+65	Surf-D	M
+65	PD-D	6
+65	AL-D	7
+65	BOP-D	1
+65	Mobility-D	0
+65	GI-D	2
+65	PI-D	2
+65	Tooth-S	27
+65	Surf-S	M
+65	PD-S	2
+65	AL-S	6
+65	BOP-S	0
+65	Mobility-S	0
+65	GI-S	1
+65	PI-S	2
+66	ID #	66
+66	Date	7/24/2010
+66	Location	Wise
+66	ASA	II
+66	Gender	M
+66	Age	43
+66	Race	Ca
+66	Smoke/Pk Yrs	20
+66	DM	n
+66	DM-type	NA
+66	BS	NA
+66	HbA1C	NA
+66	Periodontol Dz DX	GSCP
+66	Caries Risk	hi
+66	Tooth-D	15
+66	Surf-D	M
+66	PD-D	6
+66	AL-D	8
+66	BOP-D	1
+66	Mobility-D	1
+66	GI-D	2
+66	PI-D	3
+66	Tooth-S	12
+66	Surf-S	M
+66	PD-S	3
+66	AL-S	4
+66	BOP-S	0
+66	Mobility-S	1
+66	GI-S	1
+66	PI-S	3
+67	ID #	67
+67	Date	7/24/2010
+67	Location	Wise
+67	ASA	II
+67	Gender	F
+67	Age	32
+67	Race	Ca
+67	Smoke/Pk Yrs	15
+67	DM	n
+67	DM-type	NA
+67	BS	NA
+67	HbA1C	NA
+67	Periodontol Dz DX	GSCP
+67	Caries Risk	hi
+67	Tooth-D	22
+67	Surf-D	M
+67	PD-D	5
+67	AL-D	6
+67	BOP-D	1
+67	Mobility-D	1
+67	GI-D	3
+67	PI-D	3
+67	Tooth-S	26
+67	Surf-S	F
+67	PD-S	2
+67	AL-S	4
+67	BOP-S	0
+67	Mobility-S	2
+67	GI-S	2
+67	PI-S	3
+68	ID #	68
+68	Date	7/24/2010
+68	Location	Wise
+68	ASA	II
+68	Gender	M
+68	Age	35
+68	Race	Ca
+68	Smoke/Pk Yrs	15
+68	DM	n
+68	DM-type	NA
+68	BS	NA
+68	HbA1C	NA
+68	Periodontol Dz DX	GSCP
+68	Caries Risk	Hi
+68	Tooth-D	4
+68	Surf-D	M
+68	PD-D	6
+68	AL-D	7
+68	BOP-D	1
+68	Mobility-D	1
+68	GI-D	2
+68	PI-D	3
+68	Tooth-S	5
+68	Surf-S	F
+68	PD-S	2
+68	AL-S	5
+68	BOP-S	1
+68	Mobility-S	1
+68	GI-S	2
+68	PI-S	3
+69	ID #	69
+69	Date	7/24/2010
+69	Location	Wise
+69	ASA	II
+69	Gender	M
+69	Age	55
+69	Race	Ca
+69	Smoke/Pk Yrs	135
+69	DM	n
+69	DM-type	NA
+69	BS	NA
+69	HbA1C	NA
+69	Periodontol Dz DX	GSCP
+69	Caries Risk	Hi
+69	Tooth-D	18
+69	Surf-D	M
+69	PD-D	6
+69	AL-D	9
+69	BOP-D	1
+69	Mobility-D	1
+69	GI-D	3
+69	PI-D	3
+69	Tooth-S	27
+69	Surf-S	F
+69	PD-S	2
+69	AL-S	6
+69	BOP-S	0
+69	Mobility-S	0
+69	GI-S	1
+69	PI-S	2
+70	ID #	70
+70	Date	7/24/2010
+70	Location	Wise
+70	ASA	II
+70	Gender	M
+70	Age	33
+70	Race	Ca
+70	Smoke/Pk Yrs	15
+70	DM	n
+70	DM-type	NA
+70	BS	NA
+70	HbA1C	NA
+70	Periodontol Dz DX	GSCP
+70	Caries Risk	Hi
+70	Tooth-D	12
+70	Surf-D	M
+70	PD-D	9
+70	AL-D	8
+70	BOP-D	1
+70	Mobility-D	2
+70	GI-D	3
+70	PI-D	3
+70	Tooth-S	13
+70	Surf-S	F
+70	PD-S	2
+70	AL-S	3
+70	BOP-S	1
+70	Mobility-S	1
+70	GI-S	2
+70	PI-S	3
+71	ID #	71
+71	Date	7/24/2010
+71	Location	Wise
+71	ASA	II
+71	Gender	M
+71	Age	38
+71	Race	Ca
+71	Smoke/Pk Yrs	30
+71	DM	n
+71	DM-type	NA
+71	BS	NA
+71	HbA1C	NA
+71	Periodontol Dz DX	GSCP
+71	Caries Risk	Hi
+71	Tooth-D	22
+71	Surf-D	M
+71	PD-D	10
+71	AL-D	9
+71	BOP-D	1
+71	Mobility-D	1
+71	GI-D	3
+71	PI-D	3
+71	Tooth-S	20
+71	Surf-S	F
+71	PD-S	2
+71	AL-S	1
+71	BOP-S	1
+71	Mobility-S	1
+71	GI-S	2
+71	PI-S	3
+72	ID #	72
+72	Date	7/24/2010
+72	Location	Wise
+72	ASA	II
+72	Gender	F
+72	Age	53
+72	Race	Ca
+72	Smoke/Pk Yrs	0
+72	DM	n
+72	DM-type	NA
+72	BS	NA
+72	HbA1C	NA
+72	Periodontol Dz DX	GSCP
+72	Caries Risk	hi
+72	Tooth-D	14
+72	Surf-D	M
+72	PD-D	5
+72	AL-D	5
+72	BOP-D	1
+72	Mobility-D	0
+72	GI-D	2
+72	PI-D	3
+72	Tooth-S	27
+72	Surf-S	F
+72	PD-S	2
+72	AL-S	1
+72	BOP-S	0
+72	Mobility-S	0
+72	GI-S	1
+72	PI-S	3
+73	ID #	73
+73	Date	7/24/2010
+73	Location	Wise
+73	ASA	II
+73	Gender	M
+73	Age	39
+73	Race	Ca
+73	Smoke/Pk Yrs	25
+73	DM	n
+73	DM-type	NA
+73	BS	NA
+73	HbA1C	NA
+73	Periodontol Dz DX	GMCP
+73	Caries Risk	Hi
+73	Tooth-D	19
+73	Surf-D	D
+73	PD-D	5
+73	AL-D	4
+73	BOP-D	1
+73	Mobility-D	0
+73	GI-D	2
+73	PI-D	3
+73	Tooth-S	21
+73	Surf-S	M
+73	PD-S	2
+73	AL-S	2
+73	BOP-S	0
+73	Mobility-S	0
+73	GI-S	1
+73	PI-S	2
+74	ID #	74
+74	Date	7/24/2010
+74	Location	Wise
+74	ASA	II
+74	Gender	M
+74	Age	45
+74	Race	Ca
+74	Smoke/Pk Yrs	25
+74	DM	n
+74	DM-type	NA
+74	BS	NA
+74	HbA1C	NA
+74	Periodontol Dz DX	GMCP
+74	Caries Risk	hi
+74	Tooth-D	30
+74	Surf-D	D
+74	PD-D	5
+74	AL-D	3
+74	BOP-D	0
+74	Mobility-D	0
+74	GI-D	1
+74	PI-D	3
+74	Tooth-S	28
+74	Surf-S	M
+74	PD-S	3
+74	AL-S	1
+74	BOP-S	1
+74	Mobility-S	0
+74	GI-S	1
+74	PI-S	2
+75	ID #	75
+75	Date	7/24/2010
+75	Location	Wise
+75	ASA	II
+75	Gender	F
+75	Age	51
+75	Race	Ca
+75	Smoke/Pk Yrs	0
+75	DM	n
+75	DM-type	NA
+75	BS	NA
+75	HbA1C	NA
+75	Periodontol Dz DX	GMCP
+75	Caries Risk	hi
+75	Tooth-D	30
+75	Surf-D	M
+75	PD-D	5
+75	AL-D	3
+75	BOP-D	0
+75	Mobility-D	0
+75	GI-D	1
+75	PI-D	1
+75	Tooth-S	28
+75	Surf-S	M
+75	PD-S	3
+75	AL-S	1
+75	BOP-S	0
+75	Mobility-S	0
+75	GI-S	1
+75	PI-S	1
+76	ID #	76
+76	Date	7/24/2010
+76	Location	Wise
+76	ASA	II
+76	Gender	M
+76	Age	55
+76	Race	Ca
+76	Smoke/Pk Yrs	0
+76	DM	n
+76	DM-type	NA
+76	BS	NA
+76	HbA1C	NA
+76	Periodontol Dz DX	GSCP
+76	Caries Risk	hi
+76	Tooth-D	27
+76	Surf-D	M
+76	PD-D	7
+76	AL-D	6
+76	BOP-D	1
+76	Mobility-D	1
+76	GI-D	3
+76	PI-D	3
+76	Tooth-S	7
+76	Surf-S	D
+76	PD-S	3
+76	AL-S	2
+76	BOP-S	0
+76	Mobility-S	1
+76	GI-S	1
+76	PI-S	3
+77	ID #	77
+77	Date	7/24/2010
+77	Location	Wise
+77	ASA	II
+77	Gender	M
+77	Age	50
+77	Race	Ca
+77	Smoke/Pk Yrs	36
+77	DM	n
+77	DM-type	NA
+77	BS	NA
+77	HbA1C	NA
+77	Periodontol Dz DX	GSCP
+77	Caries Risk	hi
+77	Tooth-D	18
+77	Surf-D	M
+77	PD-D	5
+77	AL-D	5
+77	BOP-D	1
+77	Mobility-D	1
+77	GI-D	3
+77	PI-D	3
+77	Tooth-S	29
+77	Surf-S	D
+77	PD-S	3
+77	AL-S	2
+77	BOP-S	1
+77	Mobility-S	1
+77	GI-S	3
+77	PI-S	3
+78	ID #	78
+78	Date	7/24/2010
+78	Location	Wise
+78	ASA	II
+78	Gender	M
+78	Age	42
+78	Race	Ca
+78	Smoke/Pk Yrs	15
+78	DM	n
+78	DM-type	NA
+78	BS	NA
+78	HbA1C	NA
+78	Periodontol Dz DX	GSCP
+78	Caries Risk	hi
+78	Tooth-D	5
+78	Surf-D	D
+78	PD-D	5
+78	AL-D	8
+78	BOP-D	1
+78	Mobility-D	2
+78	GI-D	2
+78	PI-D	3
+78	Tooth-S	27
+78	Surf-S	F
+78	PD-S	2
+78	AL-S	3
+78	BOP-S	0
+78	Mobility-S	0
+78	GI-S	1
+78	PI-S	1
+79	ID #	79
+79	Date	7/24/2010
+79	Location	Wise
+79	ASA	II
+79	Gender	M
+79	Age	48
+79	Race	Ca
+79	Smoke/Pk Yrs	135
+79	DM	n
+79	DM-type	NA
+79	BS	NA
+79	HbA1C	NA
+79	Periodontol Dz DX	GSCP
+79	Caries Risk	hi
+79	Tooth-D	27
+79	Surf-D	M
+79	PD-D	5
+79	AL-D	6
+79	BOP-D	1
+79	Mobility-D	1
+79	GI-D	3
+79	PI-D	3
+79	Tooth-S	8
+79	Surf-S	D
+79	PD-S	3
+79	AL-S	1
+79	BOP-S	0
+79	Mobility-S	1
+79	GI-S	1
+79	PI-S	2
+80	ID #	80
+80	Date	7/24/2010
+80	Location	Wise
+80	ASA	II
+80	Gender	M
+80	Age	40
+80	Race	Ca
+80	Smoke/Pk Yrs	14
+80	DM	n
+80	DM-type	NA
+80	BS	NA
+80	HbA1C	NA
+80	Periodontol Dz DX	GSCP
+80	Caries Risk	hi
+80	Tooth-D	28
+80	Surf-D	M
+80	PD-D	5
+80	AL-D	6
+80	BOP-D	1
+80	Mobility-D	0
+80	GI-D	2
+80	PI-D	3
+80	Tooth-S	9
+80	Surf-S	D
+80	PD-S	2
+80	AL-S	3
+80	BOP-S	0
+80	Mobility-S	0
+80	GI-S	1
+80	PI-S	2
+81	ID #	81
+81	Date	7/25/2010
+81	Location	Wise
+81	ASA	II
+81	Gender	M
+81	Age	34
+81	Race	Ca
+81	Smoke/Pk Yrs	20
+81	DM	n
+81	DM-type	NA
+81	BS	NA
+81	HbA1C	NA
+81	Periodontol Dz DX	GSCP
+81	Caries Risk	Hi
+81	Tooth-D	2
+81	Surf-D	M
+81	PD-D	6
+81	AL-D	5
+81	BOP-D	1
+81	Mobility-D	2
+81	GI-D	2
+81	PI-D	3
+81	Tooth-S	27
+81	Surf-S	F
+81	PD-S	2
+81	AL-S	5
+81	BOP-S	1
+81	Mobility-S	1
+81	GI-S	2
+81	PI-S	3
+82	ID #	82
+82	Date	7/25/2010
+82	Location	Wise
+82	ASA	II
+82	Gender	M
+82	Age	46
+82	Race	Ca
+82	Smoke/Pk Yrs	0
+82	DM	n
+82	DM-type	NA
+82	BS	NA
+82	HbA1C	NA
+82	Periodontol Dz DX	GSCP
+82	Caries Risk	lo
+82	Tooth-D	22
+82	Surf-D	D
+82	PD-D	5
+82	AL-D	7
+82	BOP-D	1
+82	Mobility-D	0
+82	GI-D	3
+82	PI-D	3
+82	Tooth-S	28
+82	Surf-S	D
+82	PD-S	3
+82	AL-S	6
+82	BOP-S	1
+82	Mobility-S	0
+82	GI-S	2
+82	PI-S	3
+83	ID #	83
+83	Date	7/25/2010
+83	Location	Wise
+83	ASA	II
+83	Gender	M
+83	Age	47
+83	Race	Ca
+83	Smoke/Pk Yrs	60
+83	DM	n
+83	DM-type	NA
+83	BS	NA
+83	HbA1C	NA
+83	Periodontol Dz DX	GSCP
+83	Caries Risk	hi
+83	Tooth-D	21
+83	Surf-D	M
+83	PD-D	9
+83	AL-D	8
+83	BOP-D	1
+83	Mobility-D	1
+83	GI-D	3
+83	PI-D	3
+83	Tooth-S	27
+83	Surf-S	M
+83	PD-S	3
+83	AL-S	5
+83	BOP-S	1
+83	Mobility-S	0
+83	GI-S	2
+83	PI-S	3
+84	ID #	84
+84	Date	7/25/2010
+84	Location	Wise
+84	ASA	II
+84	Gender	F
+84	Age	57
+84	Race	Ca
+84	Smoke/Pk Yrs	0
+84	DM	n
+84	DM-type	NA
+84	BS	NA
+84	HbA1C	NA
+84	Periodontol Dz DX	GSCP
+84	Caries Risk	lo
+84	Tooth-D	17
+84	Surf-D	M
+84	PD-D	9
+84	AL-D	8
+84	BOP-D	1
+84	Mobility-D	3
+84	GI-D	3
+84	PI-D	3
+84	Tooth-S	5
+84	Surf-S	M
+84	PD-S	3
+84	AL-S	4
+84	BOP-S	0
+84	Mobility-S	0
+84	GI-S	1
+84	PI-S	2
+85	ID #	85
+85	Date	7/25/2010
+85	Location	Wise
+85	ASA	II
+85	Gender	M
+85	Age	44
+85	Race	Ca
+85	Smoke/Pk Yrs	(chew tob 1c/d)
+85	DM	n
+85	DM-type	NA
+85	BS	NA
+85	HbA1C	NA
+85	Periodontol Dz DX	GMCP
+85	Caries Risk	hi
+85	Tooth-D	2
+85	Surf-D	M
+85	PD-D	5
+85	AL-D	2
+85	BOP-D	0
+85	Mobility-D	0
+85	GI-D	1
+85	PI-D	1
+85	Tooth-S	27
+85	Surf-S	D
+85	PD-S	2
+85	AL-S	1
+85	BOP-S	0
+85	Mobility-S	0
+85	GI-S	0
+85	PI-S	1
+86	ID #	86
+86	Date	7/25/2010
+86	Location	Wise
+86	ASA	II
+86	Gender	M
+86	Age	43
+86	Race	Ca
+86	Smoke/Pk Yrs	0
+86	DM	n
+86	DM-type	NA
+86	BS	NA
+86	HbA1C	NA
+86	Periodontol Dz DX	GSCP
+86	Caries Risk	hi
+86	Tooth-D	21
+86	Surf-D	M
+86	PD-D	6
+86	AL-D	5
+86	BOP-D	1
+86	Mobility-D	1
+86	GI-D	2
+86	PI-D	3
+86	Tooth-S	22
+86	Surf-S	F
+86	PD-S	2
+86	AL-S	1
+86	BOP-S	0
+86	Mobility-S	0
+86	GI-S	1
+86	PI-S	1
+87	ID #	87
+87	Date	7/25/2010
+87	Location	Wise
+87	ASA	II
+87	Gender	F
+87	Age	55
+87	Race	Ca
+87	Smoke/Pk Yrs	19
+87	DM	n
+87	DM-type	NA
+87	BS	NA
+87	HbA1C	NA
+87	Periodontol Dz DX	GSCP
+87	Caries Risk	hi
+87	Tooth-D	21
+87	Surf-D	D
+87	PD-D	7
+87	AL-D	7
+87	BOP-D	1
+87	Mobility-D	1
+87	GI-D	2
+87	PI-D	3
+87	Tooth-S	29
+87	Surf-S	M
+87	PD-S	2
+87	AL-S	1
+87	BOP-S	0
+87	Mobility-S	0
+87	GI-S	1
+87	PI-S	1
+88	ID #	88
+88	Date	7/25/2010
+88	Location	Wise
+88	ASA	II
+88	Gender	M
+88	Age	37
+88	Race	Ca
+88	Smoke/Pk Yrs	12
+88	DM	n
+88	DM-type	NA
+88	BS	NA
+88	HbA1C	NA
+88	Periodontol Dz DX	GMCP
+88	Caries Risk	hi
+88	Tooth-D	31
+88	Surf-D	D
+88	PD-D	5
+88	AL-D	3
+88	BOP-D	0
+88	Mobility-D	0
+88	GI-D	1
+88	PI-D	3
+88	Tooth-S	20
+88	Surf-S	D
+88	PD-S	3
+88	AL-S	1
+88	BOP-S	0
+88	Mobility-S	0
+88	GI-S	1
+88	PI-S	1
+89	ID #	89
+89	Date	7/25/2010
+89	Location	Wise
+89	ASA	II
+89	Gender	M
+89	Age	50
+89	Race	Ca
+89	Smoke/Pk Yrs	22
+89	DM	n
+89	DM-type	NA
+89	BS	NA
+89	HbA1C	NA
+89	Periodontol Dz DX	GSCP
+89	Caries Risk	Hi
+89	Tooth-D	21
+89	Surf-D	M
+89	PD-D	6
+89	AL-D	8
+89	BOP-D	1
+89	Mobility-D	1
+89	GI-D	3
+89	PI-D	3
+89	Tooth-S	27
+89	Surf-S	F
+89	PD-S	2
+89	AL-S	5
+89	BOP-S	1
+89	Mobility-S	1
+89	GI-S	2
+89	PI-S	3
+90	ID #	90
+90	Date	7/25/2010
+90	Location	Wise
+90	ASA	II
+90	Gender	M
+90	Age	56
+90	Race	Ca
+90	Smoke/Pk Yrs	40
+90	DM	n
+90	DM-type	NA
+90	BS	NA
+90	HbA1C	NA
+90	Periodontol Dz DX	GSCP
+90	Caries Risk	hi
+90	Tooth-D	31
+90	Surf-D	D
+90	PD-D	6
+90	AL-D	5
+90	BOP-D	1
+90	Mobility-D	1
+90	GI-D	2
+90	PI-D	3
+90	Tooth-S	28
+90	Surf-S	M
+90	PD-S	3
+90	AL-S	2
+90	BOP-S	0
+90	Mobility-S	0
+90	GI-S	1
+90	PI-S	3
+91	ID #	91
+91	Date	7/25/2010
+91	Location	Wise
+91	ASA	II
+91	Gender	M
+91	Age	46
+91	Race	Ca
+91	Smoke/Pk Yrs	60
+91	DM	n
+91	DM-type	NA
+91	BS	NA
+91	HbA1C	NA
+91	Periodontol Dz DX	GMLSCP
+91	Caries Risk	hi
+91	Tooth-D	7
+91	Surf-D	D
+91	PD-D	5
+91	AL-D	4
+91	BOP-D	1
+91	Mobility-D	2
+91	GI-D	3
+91	PI-D	3
+91	Tooth-S	28
+91	Surf-S	F
+91	PD-S	2
+91	AL-S	3
+91	BOP-S	1
+91	Mobility-S	0
+91	GI-S	2
+91	PI-S	3
+92	ID #	92
+92	Date	7/25/2010
+92	Location	Wise
+92	ASA	II
+92	Gender	M
+92	Age	55
+92	Race	Ca
+92	Smoke/Pk Yrs	45
+92	DM	n
+92	DM-type	NA
+92	BS	NA
+92	HbA1C	NA
+92	Periodontol Dz DX	GSCP
+92	Caries Risk	hi
+92	Tooth-D	12
+92	Surf-D	D
+92	PD-D	6
+92	AL-D	9
+92	BOP-D	1
+92	Mobility-D	3
+92	GI-D	3
+92	PI-D	3
+92	Tooth-S	6
+92	Surf-S	D
+92	PD-S	3
+92	AL-S	5
+92	BOP-S	0
+92	Mobility-S	1
+92	GI-S	1
+92	PI-S	2
