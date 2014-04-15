@@ -27,10 +27,10 @@ for line in infile:
 		for i in range(3, len(line_lst), 1):
 			print header_infile_lst[i]
 			if re.search("-S", header_infile_lst[i]):
-				print "TRUE"
+				print "Variable: From Shallow Site: Ignore"
 			else:
-				header_infile_lst[i] = re.sub("-D", "", header_infile_lst[i])
-				print_lst = [str(line_lst[1]), str(header_infile_lst[i]), str(line_lst[i])]
+				header_new = re.sub("-D", "", header_infile_lst[i])
+				print_lst = [str(line_lst[1]), str(header_new), str(line_lst[i])]
 				print_str = "\t".join(print_lst)
 				print print_str
 				print >> outfile, print_str
@@ -38,10 +38,10 @@ for line in infile:
 		for i in range(3, len(line_lst), 1):
 			print header_infile_lst[i]
 			if re.search("-D", header_infile_lst[i]):
-				print "TRUE"
+				print "Varaible: From Deep Site: Ignore"
 			else:
-				header_infile_lst[i] = re.sub("-S", "", header_infile_lst[i])
-				print_lst = [str(line_lst[1]), str(header_infile_lst[i]), str(line_lst[i])]
+				header_new = re.sub("-S", "", header_infile_lst[i])
+				print_lst = [str(line_lst[1]), str(header_new), str(line_lst[i])]
 				print_str = "\t".join(print_lst)
 				print print_str
 				print >> outfile, print_str
