@@ -54,7 +54,8 @@ class SampleVariable(models.Model):
 	value = models.CharField(max_length=100)
 	
 	def __unicode__(self):
-		return self.sample
+		rep = self.sample.name + " - " + self.variable
+		return rep
 
 	class Meta:
 		unique_together = ('sample', 'variable')
@@ -119,13 +120,13 @@ class ClassificationMethod(models.Model):
 class TaxaID(models.Model):
 	id = models.AutoField(primary_key=True)
 	taxa_id = models.CharField(max_length=50, unique=True)
-	parent_taxa_id = models.CharField(max_length=50, unique=True)
-	name = models.CharField(max_length=50)
+	parent_taxa_id = models.CharField(max_length=50)
+	name = models.CharField(max_length=200)
 	level = models.CharField(max_length=50)
 	
 	def __unicode__(self):
-		return_str = self.name + " - " + self.taxa_id
-		return return_str
+		rep = self.name + " - " + self.taxa_id
+		return rep
 	
 	@classmethod
 	def createTaxaID(cls, taxa_id, parent_taxa_id, name, level):
@@ -146,8 +147,8 @@ class ReadAssignment(models.Model):
 	score = models.FloatField()
 	
 	def __unicode__(self):
-		return_str = self.read + " - " + self.taxaID
-		return return_str
+		rep = self.read.name + self.taxaID.level
+		return rep
 
 	class Meta:
 		unique_together = ('read', 'classificationmethod', 'taxaID')
@@ -173,7 +174,7 @@ class ProfileSummary(models.Model):
 	avgscore = models.FloatField()
 
 	def __unicode__(self):
-		return_str = self.sample + " - " + self.taxaID
+		rep = self.sample.name + " - " + self.taxaID.name
 		return return_str
 
 	class Meta:
@@ -184,6 +185,5 @@ class ProfileSummary(models.Model):
 		profilesummary = ProfileSummary(sample=sample, classificationmethod=classificationmethod, taxaID=taxaID, numreads=numreads, perctotal=perctotal, avgscore=avgscore)
 		profilesummary.save()
 		return profilesummary
-
 
 
