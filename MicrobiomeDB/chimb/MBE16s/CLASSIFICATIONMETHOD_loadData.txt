@@ -1,0 +1,3 @@
+key	description	contactname	contactemail
+1	RDP CLASSIFIER - 0.5 THRESHOLD	Nihar Sheth	nsheth@vcu.edu
+2	RDP CLASSIFIER - 0.8 THRESHOLD	Nihar Sheth	nsheth@vcu.edu

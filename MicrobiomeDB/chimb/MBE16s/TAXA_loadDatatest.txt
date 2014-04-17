@@ -1,0 +1,5 @@
+taxa_id	name	level	parent_taxa_id
+508459 	Cloacibacillus 	genus 	649777
+146813 	Dendrosporobacter 	genus 	31977
+43994 	Johnsonella 	genus 	186803
+303379 	Herminiimonas 	genus 	75682
