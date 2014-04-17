@@ -19,6 +19,10 @@ class Command(BaseCommand):
 
 	    for profile in profileList:     #for each row in the file (row is a dict using the header row as the keys and the values in the following rows as the values)
                 print >> sys.stderr, profile
-		prof = ProfileSummary.createProfileSummary(profile['SampleID'], profile['Method-id'], profile['Taxa-name'], profile['#_of_reads'], profile['%_of_total'], profile['Avg_Score'])
+
+                sample = Sample.objects.get(name = profile['SampleID'])
+                method = Method.objects.get(name = profile['Method-id'])
+                taxa = Taxonomy.objects.get(name = profile['Taxa-name'])
+		prof = ProfileSummary.createProfileSummary(sample, method, taxa, profile['#_of_reads'], profile['%_of_total'], profile['Avg_Score'])
 	
 	    self.stdout.write("Loaded all profiles from file")
