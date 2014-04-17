@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br />
+<h3>Projects:</h3>
+
+<table style="width:1250px">
+
+	<tr>
+	<td><b>Project Name</b></td>
+	<td><b>Project Description</b></td>
+	<td><b>Contact Name</b></td>
+	<td><b>Contact Email</b></td>
+	</tr>
+
+
+{% for proj in project_list %}
+	<tr>
+	<td>{{proj.name}}</td>
+	<td>{{proj.description}}</td>
+	<td>{{proj.contactName}}</td>
+	<td>{{proj.contactEmail}}</td>
+	</tr>
+{% endfor %}
+
+
+</table>
+<br />
+<a href="/"><b>Back</b></a>
+<br />
+
+{% endblock %}
