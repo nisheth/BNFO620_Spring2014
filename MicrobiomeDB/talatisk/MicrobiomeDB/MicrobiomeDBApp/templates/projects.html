@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block header_title %}
+    <div class="title">
+    <title>Welcome to the Faculty HomePage!</title>
+    </div>
+{% endblock %}
+
+{% block content %}
+{% for c in project %}
+<p>{{c.name}}</p>
+{% endfor %}
+{% endblock %}

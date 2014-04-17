@@ -1,0 +1,12 @@
+table, td, th
+{
+border:1px solid blue;
+background-color:black;
+color:white;
+text-align:center;
+}
+th
+{
+background-color: orange;
+color:white;
+}

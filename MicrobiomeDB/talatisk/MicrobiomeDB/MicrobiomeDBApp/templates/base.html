@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{% block title%}Microbiome Explorer{% endblock %}</title>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css_style.css' %}" />
+</head>
+
+
+<div id="container">
+
+<div id="content">
+{% block content %}
+
+
+{% endblock %}
+    </div>
+</div>
+</body>
+		<div id="footer">
+		<p>Snehal K. Talati BNFO 620</p>
+		<p>Date: 2/16/2014</p>
+        <p>Version: Uses Models and DB</p>
+		</div>
+
+
+</html>

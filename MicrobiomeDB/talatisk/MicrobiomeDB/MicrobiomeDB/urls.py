@@ -9,4 +9,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$','MicrobiomeDBApp.views.home'),
+    url(r'^projects','MicrobiomeDBApp.views.projects', name='projects'),
+    url(r'^samples','MicrobiomeDBApp.views.samples', name='samples'),
 )
