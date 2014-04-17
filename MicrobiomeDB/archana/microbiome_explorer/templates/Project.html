@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p><b>Name&nbsp;&nbsp;Description&nbsp;&nbsp;Contact_Name&nbsp;&nbsp;Contact_email</b></p> 
+{% if project_list %}
+	{% for project in project_list %}
+		<p>{{project.name}}</a>&nbsp;&nbsp;{{project.description}}&nbsp;&nbsp;{{project.contact_name}}&nbsp;&nbsp;{{project.contact_email}}</p>
+	{% endfor %}	
+{% endif %}	
+{% endblock %}

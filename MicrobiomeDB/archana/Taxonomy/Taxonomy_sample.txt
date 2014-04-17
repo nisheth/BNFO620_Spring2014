@@ -1,0 +1,40 @@
+Tax_id	Unique_name	Parent_tax_id	Rank
+1	root	1	no rank
+2	Bacteria	131567	superkingdom
+6	Azorhizobium	335928	genus
+7	Azorhizobium caulinodans	6	species
+9	Buchnera aphidicola	32199	species
+10	Cellvibrio	135621	genus
+11	[Cellvibrio] gilvus	1707	species
+13	Dictyoglomus	203488	genus
+14	Dictyoglomus thermophilum	13	species
+16	Methylophilus	32011	genus
+17	Methylophilus methylotrophus	16	species
+18	Pelobacter	213423	genus
+19	Pelobacter carbinolicus	18	species
+20	Phenylobacterium	76892	genus
+21	Phenylobacterium immobile	20	species
+22	Shewanella	267890	genus
+23	Shewanella colwelliana	22	species
+24	Shewanella putrefaciens	22	species
+25	Shewanella hanedai	22	species
+27	halophilic eubacterium NRCC 41227	49928	species
+28	halophilic eubacterium	49928	species
+29	Myxococcales	28221	order
+31	Myxococcaceae	80811	family
+32	Myxococcus	31	genus
+33	Myxococcus fulvus	32	species
+34	Myxococcus xanthus	32	species
+35	Corallococcus macrosporus	83461	species
+38	Angiococcus disciformis	42	species
+39	Cystobacteraceae	80811	family
+40	Stigmatella	39	genus
+41	Stigmatella aurantiaca	40	species
+42	Cystobacter	39	genus
+43	Cystobacter fuscus	42	species
+44	Melittangium	39	genus
+45	Melittangium lichenicola	44	species
+47	Archangium	39	genus
+48	Archangium gephyra	47	species
+49	Polyangiaceae	80812	family
+50	Chondromyces	49	genus

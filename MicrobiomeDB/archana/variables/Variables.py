@@ -7,21 +7,13 @@ import csv
 
 # Construct ArgumentParser and add the arguments
 parser = argparse.ArgumentParser(description= "Extracts informations from clinical data.")
-parser.add_argument("file_mapping", type=str, help= "Input mapping file")
 parser.add_argument("file_variables", type=str, help= "Input variables file")
 
 args = parser.parse_args()
 
 # Creating a file handle to read the information from clinics file, myTrinh_Rename tab.
 try:
-    fileHandle_1 = open(str(args.file_mapping), "r")
-except:
-    print "File cannot be opened for reading."
-
-
-# Creating a file handle to read the information from clinics file, patients tab.
-try:
-    fileHandle_2 = open(str(args.file_variables), "r")
+    fileHandle_1 = open(str(args.file_variables), "r")
 except:
     print "File cannot be opened for reading."
 
@@ -32,35 +24,12 @@ try:
 except:
     print "File cannot be opened for writing."
 
-header = "Patient_id" + "\t" + "Variable" + "\t" + "Value" + "\n"
+header = "Sample_id" + "\t" + "Variable" + "\t" + "Value" + "\n"
 fileOut.write(header)
-
-# Extracting the required information
-final = []
-for line in fileHandle_1:
-    #print line
-    columns = line.split("\t")
-    
-    patient_id = columns[1]
-    pat_id = re.sub("_", "", patient_id)
-    final.append(pat_id)
-    
-    patient_id2 = columns[4]
-    final.append(patient_id2)
-    
-    patient_id3 = columns[8]
-    final.append(patient_id3)
-    
-    for i, n in enumerate(final):
-        #print n
-        if n == "" or n == "patient ID" or n == "PatientID":
-            del final[i]
-#print final
-
             
 
 # Parsing data from the variables file
-reader = csv.reader(fileHandle_2, delimiter = "\t", skipinitialspace = True)
+reader = csv.reader(fileHandle_1, delimiter = "\t", skipinitialspace = True)
 line_data = list()
 columns = next(reader)
 #print(columns)
@@ -75,8 +44,8 @@ for line in reader:
     for i in xrange(0, len(line_data)):
         # Copy the data from the line into the correct columns.
         line_data[i].append(line[i])
-#print line_data        
-
+#print line_data
+        
 data = dict()
 
 for i in xrange(0, len(columns)):
@@ -92,3 +61,7 @@ for i, n in enumerate(data[columns[0]]):
             fileOut.write("NA" + "\n")
         else:    
             fileOut.write(str(data[columns[j]][i]) + "\n")
+
+
+fileHandle_1.close()
+fileOut.close()

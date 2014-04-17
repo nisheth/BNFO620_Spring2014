@@ -59,7 +59,10 @@ for line in fileHandle_2:
     rank = columns[2]
     fileOut_2.write(tax_id + "\t" + parent + "\t" + rank + "\n")
     
-
+fileHandle_1.close()
+fileHandle_2.close()
+fileOut_1.close()
+fileOut_2.close()
     
     
 

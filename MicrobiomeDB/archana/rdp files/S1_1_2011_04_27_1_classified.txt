@@ -1,0 +1,36 @@
+S1_1|0|G1OLV2J01EXWZX|205|36		Root	rootrank	1.0	Bacteria	domain	0.83	"Bacteroidetes"	phylum	0.13	"Sphingobacteria"	class	0.08	"Sphingobacteriales"	order	0.08	"Saprospiraceae"	family	0.02	Haliscomenobacter	genus	0.02
+S1_1|1|G1OLV2J01ECGJY|327|29	-	Root	rootrank	1.0	Bacteria	domain	1.0	Firmicutes	phylum	0.98	Clostridia	class	0.95	Clostridiales	order	0.95	Clostridiales_Incertae Sedis XIII	family	0.39	Anaerovorax	genus	0.36
+S1_1|2|G1OLV2J01BVL9S|323|39	-	Root	rootrank	1.0	Bacteria	domain	0.95	"Proteobacteria"	phylum	0.23	Gammaproteobacteria	class	0.12	Aeromonadales	order	0.07	Succinivibrionaceae	family	0.07	Succinimonas	genus	0.07
+S1_1|3|G1OLV2J01C9HB9|512|36	-	Root	rootrank	1.0	Bacteria	domain	1.0	Firmicutes	phylum	1.0	Clostridia	class	1.0	Clostridiales	order	1.0	Lachnospiraceae	family	1.0	Shuttleworthia	genus	1.0
+S1_1|4|G1OLV2J01A5DLA|490|34	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Spirochaetes"	phylum	1.0	Spirochaetes	class	1.0	Spirochaetales	order	1.0	Spirochaetaceae	family	1.0	Treponema	genus	1.0
+S1_1|5|G1OLV2J01EHBA9|263|38	-	Root	rootrank	1.0	Bacteria	domain	0.92	"Bacteroidetes"	phylum	0.25	Flavobacteria	class	0.17	"Flavobacteriales"	order	0.17	Flavobacteriaceae	family	0.13	Zunongwangia	genus	0.04
+S1_1|6|G1OLV2J01DKS1D|504|35	-	Root	rootrank	1.0	Bacteria	domain	1.0	Firmicutes	phylum	1.0	Bacilli	class	1.0	Lactobacillales	order	1.0	Streptococcaceae	family	1.0	Streptococcus	genus	1.0
+S1_1|7|G1OLV2J01EFCWV|530|34	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Actinobacteria"	phylum	1.0	Actinobacteria	class	1.0	Coriobacteridae	subclass	1.0	Coriobacteriales	order	1.0	"Coriobacterineae"	suborder	1.0	Coriobacteriaceae	family	1.0	Atopobium	genus	1.0
+S1_1|8|G1OLV2J01ATI39|322|37	-	Root	rootrank	1.0	Bacteria	domain	0.93	"Proteobacteria"	phylum	0.36	Gammaproteobacteria	class	0.17	Aeromonadales	order	0.14	Succinivibrionaceae	family	0.14	Succinimonas	genus	0.14
+S1_1|9|G1OLV2J01CHZ4Z|491|36	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Porphyromonadaceae"	family	1.0	Porphyromonas	genus	1.0
+S1_1|10|G1OLV2J01B8C6T|489|36	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Porphyromonadaceae"	family	0.95	Porphyromonas	genus	0.92
+S1_1|11|G1OLV2J01DIIUE|475|36	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Prevotellaceae"	family	1.0	Prevotella	genus	0.99
+S1_1|12|G1OLV2J01D1RWS|481|36	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Porphyromonadaceae"	family	1.0	Porphyromonas	genus	1.0
+S1_1|13|G1OLV2J01COUQG|511|35	-	Root	rootrank	1.0	Bacteria	domain	1.0	Firmicutes	phylum	1.0	Bacilli	class	1.0	Lactobacillales	order	1.0	Streptococcaceae	family	1.0	Streptococcus	genus	1.0
+S1_1|14|G1OLV2J01DAPK0|499|37	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Spirochaetes"	phylum	0.45	Spirochaetes	class	0.45	Spirochaetales	order	0.45	Spirochaetaceae	family	0.44	Treponema	genus	0.44
+S1_1|15|G1OLV2J01BKAOR|490|34	-	Root	rootrank	1.0	Bacteria	domain	1.0	Firmicutes	phylum	1.0	Bacilli	class	1.0	Lactobacillales	order	1.0	Streptococcaceae	family	1.0	Streptococcus	genus	1.0
+S1_1|16|G1OLV2J01CQLSW|500|36	-	Root	rootrank	1.0	Bacteria	domain	1.0	Firmicutes	phylum	1.0	Clostridia	class	1.0	Clostridiales	order	1.0	Eubacteriaceae	family	1.0	Eubacterium	genus	1.0
+S1_1|17|G1OLV2J01BZXS1|484|36	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Prevotellaceae"	family	1.0	Prevotella	genus	1.0
+S1_1|18|G1OLV2J01A5DNS|484|35	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Prevotellaceae"	family	1.0	Prevotella	genus	1.0
+S1_1|19|G1OLV2J01CZTOF|487|31	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Fusobacteria"	phylum	1.0	"Fusobacteria"	class	1.0	"Fusobacteriales"	order	1.0	"Fusobacteriaceae"	family	1.0	Fusobacterium	genus	1.0
+S1_1|20|G1OLV2J01ECJPY|486|35	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Prevotellaceae"	family	1.0	Prevotella	genus	1.0
+S1_1|21|G1OLV2J01C5VP9|344|25	-	Root	rootrank	1.0	Bacteria	domain	0.86	"Bacteroidetes"	phylum	0.1	Flavobacteria	class	0.07	"Flavobacteriales"	order	0.07	Flavobacteriaceae	family	0.07	Persicivirga	genus	0.04
+S1_1|22|G1OLV2J01AYLET|323|37	-	Root	rootrank	1.0	Bacteria	domain	0.95	"Proteobacteria"	phylum	0.23	Gammaproteobacteria	class	0.12	Aeromonadales	order	0.07	Succinivibrionaceae	family	0.07	Succinimonas	genus	0.07
+S1_1|23|G1OLV2J01CI5IZ|526|33	-	Root	rootrank	1.0	Bacteria	domain	1.0	Firmicutes	phylum	1.0	Negativicutes	class	1.0	Selenomonadales	order	1.0	Veillonellaceae	family	1.0	Selenomonas	genus	0.97
+S1_1|24|G1OLV2J01B40CQ|534|33	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Spirochaetes"	phylum	0.95	Spirochaetes	class	0.95	Spirochaetales	order	0.95	Spirochaetaceae	family	0.95	Treponema	genus	0.95
+S1_1|25|G1OLV2J01D1XDN|483|36	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Prevotellaceae"	family	1.0	Prevotella	genus	1.0
+S1_1|26|G1OLV2J01EA818|494|35	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Prevotellaceae"	family	1.0	Prevotella	genus	1.0
+S1_1|27|G1OLV2J01B8VEV|492|36	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Spirochaetes"	phylum	1.0	Spirochaetes	class	1.0	Spirochaetales	order	1.0	Spirochaetaceae	family	1.0	Treponema	genus	1.0
+S1_1|28|G1OLV2J01CFPZN|524|34	-	Root	rootrank	1.0	Bacteria	domain	1.0	Firmicutes	phylum	1.0	Clostridia	class	1.0	Clostridiales	order	1.0	Clostridiales_Incertae Sedis XI	family	1.0	Parvimonas	genus	1.0
+S1_1|29|G1OLV2J01CQCGV|482|35	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Prevotellaceae"	family	0.91	Prevotella	genus	0.89
+S1_1|30|G1OLV2J01AZ3MI|499|33	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Porphyromonadaceae"	family	0.76	Tannerella	genus	0.75
+S1_1|31|G1OLV2J01CJFU9|511|33	-	Root	rootrank	1.0	Bacteria	domain	1.0	Firmicutes	phylum	0.89	Bacilli	class	0.83	Bacillales	order	0.41	Bacillaceae 2	family	0.37	Tuberibacillus	genus	0.2
+S1_1|32|G1OLV2J01C4CR7|399|35	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Porphyromonadaceae"	family	0.98	Porphyromonas	genus	0.78
+S1_1|33|G1OLV2J01BTDUI|223|35	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Fusobacteria"	phylum	0.69	"Fusobacteria"	class	0.69	"Fusobacteriales"	order	0.69	"Fusobacteriaceae"	family	0.68	Clostridium XIX	genus	0.63
+S1_1|34|G1OLV2J01EGCT5|483|35	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Bacteroidetes"	phylum	1.0	"Bacteroidia"	class	1.0	"Bacteroidales"	order	1.0	"Prevotellaceae"	family	1.0	Prevotella	genus	1.0
+S1_1|35|G1OLV2J01D0ND1|491|34	-	Root	rootrank	1.0	Bacteria	domain	1.0	"Actinobacteria"	phylum	0.53	Actinobacteria	class	0.53	Actinobacteridae	subclass	0.49	Actinomycetales	order	0.49	Micrococcineae	suborder	0.34	Beutenbergiaceae	family	0.09	Miniimonas	genus	0.05

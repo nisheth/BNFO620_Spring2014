@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p><b>Project&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Samples</b></p> 
+{% if sample_list %}
+	{% for sample in sample_list %}
+		<p>{{sample.project}}</a>&nbsp;&nbsp;{{sample.name}}</p>
+	{% endfor %}	
+{% endif %}	
+{% endblock %}
