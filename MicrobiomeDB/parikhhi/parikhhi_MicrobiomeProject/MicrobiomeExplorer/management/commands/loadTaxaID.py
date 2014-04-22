@@ -21,7 +21,7 @@ class Command(BaseCommand):
 
 		for eachTaxaIDs in TaxaIDList:     #for each row in the file (row is a dict using the header row as the keys and the values in the following rows as the values)
 			print eachTaxaIDs
-			taxaID = TaxaID.createTaxaID(eachTaxaIDs['TaxaID'], eachTaxaIDs['Parent TaxaID'], eachTaxaIDs['Taxa Name'], eachTaxaIDs['Taxa Level'])
+			taxaID = TaxaID.createTaxaID(eachTaxaIDs['Taxa-Name'], eachTaxaIDs['Taxa-Level'])
 
 		self.stdout.write("Loaded all TaxaIDs in file")
 

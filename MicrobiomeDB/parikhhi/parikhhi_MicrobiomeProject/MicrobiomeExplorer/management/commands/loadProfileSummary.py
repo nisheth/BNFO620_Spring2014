@@ -21,7 +21,7 @@ class Command(BaseCommand):
 		for eachPS in profilesummaryList:     #for each row in the file (row is a dict using the header row as the keys and the values in the following rows as the values)
 			print >> sys.stderr, eachPS	
 			sample = Sample.objects.get(name=eachPS['Sample ID'])
-			classificationmethod = ClassificationMethod.objects.get(method_id=eachPS['MethodID'])
+			classificationmethod = ClassificationMethod.objects.get(method_id=eachPS['Method ID'])
 			taxaID = TaxaID.objects.get(level=eachPS['Taxa-Level'], name=eachPS['Taxa-Name'])
 			profilesummary = ProfileSummary.createProfileSummary(sample, classificationmethod, taxaID, eachPS['# of Reads'], eachPS['% of Total'], eachPS['Avg-Score'])
 

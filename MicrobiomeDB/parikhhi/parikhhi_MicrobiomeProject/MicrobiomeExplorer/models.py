@@ -119,18 +119,20 @@ class ClassificationMethod(models.Model):
 ############################
 class TaxaID(models.Model):
 	id = models.AutoField(primary_key=True)
-	taxa_id = models.CharField(max_length=50, unique=True)
-	parent_taxa_id = models.CharField(max_length=50)
+	#taxa_id = models.CharField(max_length=50, unique=True)
+	#parent_taxa_id = models.CharField(max_length=50)
 	name = models.CharField(max_length=200)
 	level = models.CharField(max_length=50)
 	
 	def __unicode__(self):
-		rep = self.name + " - " + self.taxa_id
-		return rep
+		return self.name
 	
+	class Meta:
+		unique_together = ('name', 'level')
+
 	@classmethod
-	def createTaxaID(cls, taxa_id, parent_taxa_id, name, level):
-		taxaID = TaxaID(taxa_id=taxa_id, parent_taxa_id=parent_taxa_id, name=name, level=level)
+	def createTaxaID(cls, name, level):
+		taxaID = TaxaID(name=name, level=level)
 		taxaID.save()
 		return taxaID
 
@@ -175,7 +177,7 @@ class ProfileSummary(models.Model):
 
 	def __unicode__(self):
 		rep = self.sample.name + " - " + self.taxaID.name
-		return return_str
+		return rep
 
 	class Meta:
 		unique_together = ('sample', 'classificationmethod', 'taxaID')

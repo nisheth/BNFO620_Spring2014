@@ -5,11 +5,13 @@
 <br />
 <h3>Samples:</h3>
 
-<table style="width:1250px">
+<table style="width:750px">
 
 	<tr>
 	<td><b>Project Name</b></td>
 	<td><b>Sample Name</b></td>
+	<td><b>Sample Info</b></td>
+	<td><b>Profile</b></td>
 	</tr>
 
 
@@ -17,6 +19,8 @@
 	<tr>
 	<td>{{sample.project.name}}</td>
 	<td>{{sample.name}}</td>
+	<td><a href="/listSample/{{sample.name}}_info/">View</a></td>
+	<td><a href="/listSample/{{sample.name}}_profile/">View</a></td>
 	</tr>
 {% endfor %}
 
