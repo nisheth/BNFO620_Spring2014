@@ -27,9 +27,9 @@ class Command(BaseCommand):
                 #projectname = projectname.strip()
                 #newproject = Project.objects.get(name=projectname)
 
-                newtaxa = Taxa.createTaxa(taxa_id=taxan['taxa_id'],
+                newtaxa = Taxa.createTaxa(
                                           name=taxan['name'],
-                                          level=taxan['level'],
-                                          parent_taxa_id=taxan['parent_taxa_id'])
+                                          level=taxan['level']
+                                        )
 
             self.stdout.write("Loaded all taxas from file")

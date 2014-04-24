@@ -1,0 +1,29 @@
+Show Info <link>
+
+Show Profile <link>
+
+
+
+Show Info:::
+<Multiple Choice Field> contain sample list, allow user to choose multiple samples
+<Multiple choice Field> contain list of variables
+[Submit] -> displays:
+- QUERY
+- SAMPLES CHOSEN
+- VARIABLES CHOSEN FOR THOSE SAMPLES
+
+Show Profile:::
+<Multiple Choice Field> contain sample list, allow user to choose multiple samples
+<Multiple Choice Field> contain rank list
+<Multiple Choice FIeld> contains method list (CHOOSE ONE)
+<Multiple Choice Field> contains variables (read count, % of reads, avg reads)
+^ ALL REQUIRED
+
+[Submit] -> displays:
+	Taxa Level	Taxa Name	Method		Percent
+
+S1	G		G1		1		0.5
+
+S2	G		G1		1		0.1
+
+S3	G		G2		1		1

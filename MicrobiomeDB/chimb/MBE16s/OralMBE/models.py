@@ -85,18 +85,16 @@ class ClassificationMethod(models.Model):
 
 
 class Taxa(models.Model):
-	taxa_id = models.CharField(max_length=50, primary_key=True)
 	name = models.CharField(max_length=50)
 	level = models.CharField(max_length=50)
-	parent_taxa_id = models.CharField(max_length=50, unique=True)
 
 	def __unicode__(self):
-		return_str = self.name + " - " + self.taxa_id
+		return_str = self.name + " - " + self.level
 		return return_str
 
 	@classmethod
-	def createTaxa(cls, taxa_id, name, level, parent_taxa_id):
-		taxaID = Taxa(taxa_id=taxa_id, name=name, level=level, parent_taxa_id=parent_taxa_id)
+	def createTaxa(cls, name, level):
+		taxaID = Taxa(name=name, level=level)
 		taxaID.save()
 		return taxaID
 
@@ -121,17 +119,17 @@ class ReadAssignment(models.Model):
 class ProfileSummary(models.Model):
 	sample = models.ForeignKey(Sample)
 	classificationmethod = models.ForeignKey(ClassificationMethod)
-	taxa = models.ManyToManyField(Taxa)
+	taxa = models.ForeignKey(Taxa)
 	numreads = models.IntegerField()
 	perctotal = models.FloatField()
 	avgscore = models.FloatField()
 
 	def __unicode__(self):
-		return_str = self.sample + " - " + self.taxaID
+		return_str = self.sample.name + " - " + self.taxa.name
 		return return_str
 
 	@classmethod
-	def createProfileSummary(cls, sample, classificationmethod, taxaID, numreads, perctotal, avgscore):
-		profilesummary = ProfileSummary(sample=sample, classificationmethod=classificationmethod, taxaID=taxaID, numreads=numreads, perctotal=perctotal, avgscore=avgscore)
+	def createProfileSummary(cls, sample, classificationmethod, taxa, numreads, perctotal, avgscore):
+		profilesummary = ProfileSummary(sample=sample, classificationmethod=classificationmethod, taxa=taxa, numreads=numreads, perctotal=perctotal, avgscore=avgscore)
 		profilesummary.save()
 		return profilesummary

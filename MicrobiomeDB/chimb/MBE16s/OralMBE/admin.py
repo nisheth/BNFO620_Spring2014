@@ -4,6 +4,8 @@ from OralMBE.models import Sample
 from OralMBE.models import SampleAttribute
 from OralMBE.models import ClassificationMethod
 from OralMBE.models import Taxa
+from OralMBE.models import ProfileSummary
+
 
 # Register your models here.
 class ProjectAdmin(admin.ModelAdmin):
@@ -49,15 +51,26 @@ class ClassificationMethodAdmin(admin.ModelAdmin):
     list_filter = ['key', 'description', 'contactname', 'contactemail']
 
 class TaxaAdmin(admin.ModelAdmin):
-    search_fields = ['taxa_id','name']
+    search_fields = ['name','level']
     fieldsets = [
-        ('taxa_id', {'fields':['taxa_id']}),
         ('name', {'fields':['name']}),
-        ('level', {'fields':['level']}),
-        ('parent_taxa_id', {'fields':['parent_taxa_id']})
+        ('level', {'fields':['level']})
         ]
-    list_display = ['taxa_id','name', 'level', 'parent_taxa_id']
-    list_filter = ['taxa_id','name', 'level', 'parent_taxa_id']
+    list_display = ['name', 'level']
+    list_filter = ['name', 'level']
+
+#class ProfileSummaryAdmin(admin.ModelAdmin):
+   # search_fields = ['sample','classificationmethod','taxa','numreads','perctotal','avgscore']
+   # fieldsets = [
+   #     ('sample', {'fields':['sample']}),
+   #     ('classificationmethod', {'fields':['classificationmethod']}),
+   #     ('taxa', {'fields':['taxa']}),
+   #     ('numreads', {'fields':['numreads']}),
+    #    ('perctotal', {'fields':['perctotal']}),
+   #     ('avgscore', {'fields':['avgscore']})
+    #    ]
+    #list_display = ['sample','classificationmethod','taxa','numreads','perctotal','avgscore']
+    #list_filter = ['sample','classificationmethod','taxa','numreads','perctotal','avgscore']
 
 
 admin.site.register(Project, ProjectAdmin)
@@ -69,3 +82,4 @@ admin.site.register(SampleAttribute, SampleAttributeAdmin)
 admin.site.register(ClassificationMethod, ClassificationMethodAdmin)
 
 admin.site.register(Taxa, TaxaAdmin)
+admin.site.register(ProfileSummary)
