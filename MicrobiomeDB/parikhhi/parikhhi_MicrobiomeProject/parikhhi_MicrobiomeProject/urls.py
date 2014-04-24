@@ -14,5 +14,6 @@ urlpatterns = patterns('',
     url(r'^listSample/$', 'MicrobiomeExplorer.views.listSample', name="listSample"),
     url(r'^listSample/(?P<samplename>.*)_info/$', 'MicrobiomeExplorer.views.SampleInfo', name="SampleInfo"),
     url(r'^listSample/(?P<samplename>.*)_profile/$', 'MicrobiomeExplorer.views.SampleProfile', name="SampleProfile"),
+    url(r'^SearchPage/$', 'MicrobiomeExplorer.views.SearchPage', name="SearchPage"),
 	
 )
