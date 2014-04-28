@@ -16,6 +16,9 @@ from django.db import IntegrityError
 # Import models
 from models import Project, Sample, SampleVariable, Read, ClassificationMethod, TaxaID, ReadAssignment, ProfileSummary
 
+# Import forms
+from forms import SearchForm
+
 
 def home(request):
 	return render(request, 'MicrobiomeExplorer/home.html')
@@ -53,6 +56,54 @@ def SampleProfile(request, samplename):
 		'PS_list' : PS_list,
 		}
 	return render(request, 'MicrobiomeExplorer/SampleProfile.html', params)
+
+
+def SearchPage(request):
+	if request.method == "POST":
+		form = SearchForm(request.POST)
+		sample_pk = request.POST['sample']
+		sample = Sample.objects.get(pk=sample_pk)
+		print >> sys.stderr, sample
+		if form.is_valid():
+			sample_list = request.POST['sample']
+			print >> sys.stderr, sample_list
+			params = {
+				'message' : message
+				}
+			return render(request, 'MicrobiomeExplorer/SearchPage.html', params)
+		else:
+			message = "The form is invalid"
+			params = {
+				'message' : message
+				}
+			return render(request, 'MicrobiomeExplorer/SearchPage.html', params)
+	else:
+		form = SearchForm()
+		params = {
+			'form' : form
+			}	
+		return render(request, 'MicrobiomeExplorer/SearchPage.html', params)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
