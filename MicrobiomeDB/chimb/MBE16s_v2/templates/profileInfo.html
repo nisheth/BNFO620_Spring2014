@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <h1>Profile Info</h1>
+	{% if message %}
+		<p>{{ message }}</p>
+	{% endif %}
+	<br>
+
+
+{% if profileList %}
+<style>
+table,th,td
+{
+border:1px solid black;
+}
+</style>
+
+<table align="left">
+    <tr>
+        <th>Sample Name</th>
+        <th>Taxonomy Level</th>
+        <th>Taxonomy Name</th>
+        <th>Classification Method</th>
+
+        {% if variable == 'Read Count' %}
+            <th>Read Count</th>
+        {% endif %}
+
+        {% if variable == 'Percent of Reads' %}
+            <th>Percent of Reads</th>
+        {% endif %}
+
+         {% if variable == 'Average Read Score' %}
+            <th>Average Read Score</th>
+        {% endif %}
+
+    </tr>
+
+
+        {% for profile in profileList %}
+            <tr>
+                <td>{{ profile.sample }}</td>
+                <td>{{ taxalevel }}</td>
+                <td>{{ profile.taxa.name }}</td>
+                <td>{{ profile.classificationmethod }}</td>
+
+                {% if variable == 'Read Count' %}
+                    <td>{{ profile.numreads }}</td>
+                {% endif %}
+
+                {% if variable == 'Percent of Reads' %}
+                    <td>{{ profile.perctotal }}</td>
+                {% endif %}
+
+                {% if variable == 'Average Read Score' %}
+                    <td>{{ profile.avgscore }}</td>
+                {% endif %}
+
+             </tr>
+        {% endfor %}
+
+
+
+</table>
+ <br><br><br><br><br><br><br>
+{% endif %}
+
+
+    <label><h4>Choose Samples:</h4></label>
+    {{ form.sampleChoice }}
+	<label><h4>Choose Taxonomy:</h4></label>
+    {{ form.taxalevelChoice}}
+	<label><h4>Choose Method:</h4></label>
+    {{ form.methodChoice}}
+	<label><h4>Choose Variable:</h4></label>
+    {{ form.profileVariable}}
+
+<input type="submit" value="Submit" />
+</form>
+
+
+
+{% endblock %}

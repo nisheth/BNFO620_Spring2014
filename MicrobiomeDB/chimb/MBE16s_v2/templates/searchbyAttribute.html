@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <h1>Search for Samples by Attribute Comparison</h1>
+	{% if message %}
+        {% if condition %}
+		<p>{{ message }} <b>{{ condition }}</b></p>
+	    {% else %}
+        <p>{{ message }}</p>
+        {% endif %}
+    {% endif %}
+
+
+{% if sampleList %}
+_________________________<br>
+    {% for sample in sampleList %}
+        {{ sample }} <br>
+    {% endfor %}
+<br><br><br><br><br><br>
+{% endif %}
+
+
+    <label><h4>Choose Attribute for Comparison:</h4></label>
+    {{ form.attributeChoice }}
+	<label><h4>Choose Comparator:</h4></label>
+    {{ form.comparisonType}}
+	<label><h4>Choose Value:</h4></label>
+    {{ form.valueChoice}}
+
+
+<input type="submit" value="Submit" />
+</form>
+
+
+
+{% endblock %}

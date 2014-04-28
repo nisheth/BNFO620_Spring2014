@@ -31,7 +31,7 @@ def sampleInfo(request):
     if request.method == 'POST':
         form = sampleInfoForm(request.POST)
 
-        if form.is_valid():
+        if request.POST.getlist('sampleChoice') and request.POST.getlist('attributeChoice'):
             sample_pk_List = request.POST.getlist('sampleChoice')
             sampleList = Sample.objects.filter(pk__in=sample_pk_List)
             attributeList = request.POST.getlist('attributeChoice')
@@ -90,7 +90,7 @@ def profileInfo(request):
     if request.method == 'POST':
         form = profileInfoForm(request.POST)
 
-        if form.is_valid():
+        if request.POST.getlist('sampleChoice') and request.POST['taxalevelChoice'] and request.POST['methodChoice'] and request.POST['profileVariable']:
             sample_pk_List = request.POST.getlist('sampleChoice')
             sampleList = Sample.objects.filter(pk__in=sample_pk_List)
             taxalevel = request.POST['taxalevelChoice']
@@ -154,7 +154,7 @@ def compareAttribute(request):
     if request.method == 'POST':
         form = searchbyAttribute(request.POST)
 
-        if form.is_valid():
+        if request.POST['attributeChoice'] and request.POST['comparisonType'] and request.POST['valueChoice']:
 
             attribute = request.POST['attributeChoice']
             comparator = request.POST['comparisonType']

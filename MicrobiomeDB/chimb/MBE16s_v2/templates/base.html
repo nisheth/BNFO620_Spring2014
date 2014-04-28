@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="{{STATIC_URL}}test.css" rel="stylesheet">
+    <title>{% block title %}Welcome to The Microbiome Explorer{% endblock %}</title>
+</head>
+
+<body>
+    <div class="menubar">
+        {% block sidebar %}
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'sampleInfo' %}">Show Sample Info</a></li>
+            <li><a href="{% url 'profileInfo' %}">Show Profile Info</a></li>
+            <li><a href="{% url 'searchbyAttribute' %}">Search By Attribute Comparison</a></li>
+            <li><a href="{% url 'searchbyTaxa' %}">Search By Minimum Taxonomy Threshold</a></li>
+		</ul>
+		<br>
+		<br>
+		<hr>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

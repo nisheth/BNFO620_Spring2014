@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <h1>Search for Samples by Threshold for a Specified Taxonomy</h1>
+	{% if message %}
+        {% if condition %}
+		<p>{{ message }} <b>{{ condition }}</b></p>
+	    {% else %}
+        <p>{{ message }}</p>
+        {% endif %}
+    {% endif %}
+
+{% if sampleList %}
+_________________________<br>
+    {% for sample in sampleList %}
+        {{ sample }} <br>
+    {% endfor %}
+<br><br><br><br><br><br>
+{% endif %}
+
+    <label><h4>Choose Taxonomy:</h4></label>
+    {{ form.taxaChoice }}
+	<label><h4>Choose Classification Method:</h4></label>
+    {{ form.methodChoice}}
+	<label><h4>Choose Variable for Comparison:</h4></label>
+    {{ form.profileVariable}}
+	<label><h4>Choose Threshold Value:</h4></label>
+    {{ form.threshold}}
+
+<input type="submit" value="Submit" />
+</form>
+
+
+
+{% endblock %}

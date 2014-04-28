@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <h1>Sample Info</h1>
+	{% if message %}
+		<p>{{ message }}</p>
+	{% endif %}
+	<br>
+
+
+{% if sampleAttributeDict %}
+<style>
+table,th,td
+{
+border:1px solid black;
+}
+</style>
+
+<table align="left">
+    <tr>
+        <th>Sample Name</th>
+    {% for attribute in attributeList %}
+        <th>{{ attribute }}</th>
+    {% endfor %}
+
+    </tr>
+
+
+        {% for key, sampleAttributeDict in sampleAttributeDict.items %}
+            <tr>
+                <td>{{ key }}</td>
+
+            {% for value in sampleAttributeDict %}
+                <td>{{ value }}</td>
+            {% endfor %}
+
+            </tr>
+        {% endfor %}
+
+</table>
+ <br><br><br><br><br><br><br>
+{% endif %}
+
+
+
+    <label><h4 align='left'>Choose Samples:</h4></label>
+    {{ form.sampleChoice }}
+	<label><h4 align='left'>Choose Attributes:</h4></label>
+    {{ form.attributeChoice}}
+
+
+<input type="submit" value="Submit" />
+</form>
+
+
+
+{% endblock %}

@@ -1,0 +1,86 @@
+Four Links: Show Info 	Show Profile 	Search by Attribute	Search by Taxa
+____________________________________________________________________________
+:::Show Info:::
+<Multiple Choice Field> contain sample list, allow user to choose multiple samples
+<Multiple choice Field> contain list of variables, allow user to choose multiple variables
+[Submit] -> displays:
+- QUERY submitted
+- SAMPLES CHOSEN
+- VALUES OF VARIABLES CHOSEN FOR THOSE SAMPLES
+
+form and views:
+... Forms.ModelMultipleChoiceField(queryset=SampleAttribute.objects.values('variable', flat=True).distinct())
+*varlist = request.post.getlist('modelmultiplechoicefield')
+____________________________________________________________________________
+
+
+:::Show Profile:::
+<Multiple Choice Field> contain sample list, allow user to choose multiple samples
+<Multiple Choice Field> contain rank list
+<Multiple Choice FIeld> contains method list (CHOOSE ONE)
+<Multiple Choice Field> contains variables (read count, % of reads, avg reads)
+^ ALL REQUIRED
+
+[Submit] -> displays:
+	Taxa Level	Taxa Name	Method		Percent
+
+S1	G		G1		1		0.5
+
+S2	G		G1		1		0.1
+
+S3	G		G2		1		1
+____________________________________________________________________________
+
+:::Search Samples by Attribute Comparison:::
+3 choice fields:
+- List of Variables (user selects one)
+- Comparison Type (user selects either: EQUAL TO or NOT EQUAL TO (string comparison))
+- Value (user selects a value for which to make comparison)
+SUBMIT -> returns list of samples that satisfy the condition
+
+____________________________________________________________________________
+
+:::Search by Taxa:::
+4 choice fields:
+- TAXA (user selects one)
+- Method (user selects 1 or 2)
+- Variable (no. reads | %  of samples | avg_score )
+- Threshold (user specifies some numsber)
+SUBMIT -> returns list of samples where that taxa's Variable value exceeds the specified Threshold
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

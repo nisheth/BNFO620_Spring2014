@@ -1,0 +1,40 @@
+def showSampleInfo / sampleid = name1|name2|name3 ... or more
+	    	   & varlist = var1|var2|var3 ... or more
+
+** required: sampleid list
+
+get and return specific sample attributes:
+
+ie.
+SAmpleName	Var1	Var2	Var3 ...
+name1
+name2
+name3
+
+
+def showProfileInfo / samplelist = sample1|sample2|sample
+		      methodlist= method1|method2|method3 ... or more
+		      ranklist = rank1|rank2|rank3 ... or more		      
+		      variablechoice = variable
+
+** required: samplelist and methodlist
+
+get and return profile info for specified samples
+contain ALL instances of ALL specified ranks with certain method:
+
+samplename	method	genus1	genus2	genus3 ... etc.
+
+name		1	% in sample ...
+
+
+def search:
+	user chooses a sample attribute to search on
+		request- POST .. accept chosen attribute
+			return html page containing possible values for attribute
+	user chooses desired value of sample attribute 
+		request - POST .. accept chosen value
+			return html page containing # of samples that satisfy condition
+			also display samples
+	html page contains showsampleInfo/ProfileInfo options -- user continues narrowing down
+	-- page stores previously entered queries - user has option to return results of 
+	those previous queries
