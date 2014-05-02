@@ -125,7 +125,8 @@ class TaxaID(models.Model):
 	level = models.CharField(max_length=50)
 	
 	def __unicode__(self):
-		return self.name
+		rep = self.level + " - " + self.name
+		return rep
 	
 	class Meta:
 		unique_together = ('name', 'level')

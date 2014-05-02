@@ -2,32 +2,53 @@
 
 {% block content %}
 
-<br />
-<h3>Samples:</h3>
+	<form id="select_project" action="" method="post">
+	<br />
+	<b>
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">	
+	Project: {{form.project}}<br />
+	<input type="submit" Value="Submit" />
+	</b>
+	<br />
+	</form>
 
-<table style="width:750px">
-
-	<tr>
-	<td><b>Project Name</b></td>
-	<td><b>Sample Name</b></td>
-	<td><b>Sample Info</b></td>
-	<td><b>Profile</b></td>
-	</tr>
-
-
-{% for sample in sample_list %}
-	<tr>
-	<td>{{sample.project.name}}</td>
-	<td>{{sample.name}}</td>
-	<td><a href="/listSample/{{sample.name}}_info/">View</a></td>
-	<td><a href="/listSample/{{sample.name}}_profile/">View</a></td>
-	</tr>
-{% endfor %}
+	{% if message %}
+		<br />
+		<b>{{ message }}</b>
+		<br />
+	{% endif %}
 
 
-</table>
-<br />
-<a href="/"><b>Back</b></a>
-<br />
+	{% if sample_list %}
+		<br />
+		<br />
+		<h3>Samples:</h3>
+	
+		<table style="width:750px">
+	
+			<tr>
+			<th>Project Name</th>
+			<th>Sample Name</th>
+			<th>Sample Info</th>
+			<th>Full Profile</th>
+			</tr>
+
+
+		{% for sample in sample_list %}
+			<tr>
+			<td>{{sample.project.name}}</td>
+			<td>{{sample.name}}</td>
+			<td><a href="/listSample/{{sample.name}}_info/">View</a></td>
+			<td><a href="/listSample/{{sample.name}}_profile/">View</a></td>
+			</tr>
+		{% endfor %}
+	
+		</table>
+	
+	{% endif %}	
+
+	<br />
+	<a href="/"><b>Back</b></a>
+	<br />
 
 {% endblock %}

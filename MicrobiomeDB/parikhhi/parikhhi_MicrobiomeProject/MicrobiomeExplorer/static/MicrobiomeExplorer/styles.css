@@ -7,7 +7,13 @@ h1 {
     font-family: 'Hammersmith One', sans-serif;
     text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
     position: relative;
-    color: #6Cf;
+    color: #2F4F0A;
+    text-align:center;
+}
+
+h3 {
+	font-size: 24px;
+	color: #2F4F0A;
 }
 
 ul {
@@ -15,9 +21,11 @@ ul {
 	background-color: #b0c4de;
 }
 
+
 li {
 	float: left;
 }
+
 
 li a {
 	display: block;
@@ -25,4 +33,43 @@ li a {
 	line-height: 1pc;
 	padding: .5pc;
 	text-decoration: none;
-}                                     
+}
+
+
+table, th, td {
+border: 1px solid black;
+} 
+table
+{
+border-collapse:collapse;
+}
+table 
+{
+width:100%;
+}
+th
+{
+height:50px;
+}
+td
+{
+text-align:center;
+} 
+td
+{
+height:25px;
+vertical-align:bottom;
+} 
+td
+{
+padding:15px;
+}
+table, td, th
+{
+border:2px solid green;
+}
+th
+{
+background-color:green;
+color:white;
+}                   
