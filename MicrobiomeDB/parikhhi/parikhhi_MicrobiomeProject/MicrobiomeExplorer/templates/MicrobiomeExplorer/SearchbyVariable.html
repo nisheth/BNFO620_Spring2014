@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br />
+<h3>Search Samples by Variable Values:</h3>
+
+<br />
+<br />
+<b>Please make your selections:</b>
+<br />
+<br />
+<form id= "search_by_var" action="" method="post">
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+Sample Variable: {{form.samplevariable}}
+<br />
+<br />
+{{form.comparison}}
+<br />
+<br />
+{{form.value}}
+<br />
+<br />
+<input type="submit" Value="Submit" />
+</form>
+
+{% if message %}
+	<br />
+	<br />
+	<br />
+	<b>{{ message }}</b>
+	<br />
+	<br />
+	<br />
+
+{% endif %}
+
+{% if sample_list %}
+	
+	<table style="width:750px">
+
+	<tr>
+	<th>Sample</th>
+	<th>Sample Info</th>
+	<th>Profile</th>
+	</tr>
+	
+
+	{% for sample in sample_list %}
+	<tr>
+		<td>{{ sample.name }}</td>
+		<td><a href="/listSample/{{sample.name}}_info/">View</a></td>
+		<td><a href="/listSample/{{sample.name}}_profile/">View</a></td>
+	</tr>
+	{% endfor %}
+
+	</table>
+
+{% endif %}
+
+<br />
+<br />
+<a href="/SearchbyVariable"><b>New Search</b></a>
+<br />
+
+{% endblock %}

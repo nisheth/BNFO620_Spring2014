@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'MicrobiomeExplorer/styles.css' %}" />
+	<title>{% block title %}Microbiome Explorer{% endblock %}</title>
+</head>
+
+<body>
+
+	<br />
+	<h1>Microbiome Explorer</h1>
+	<br />
+
+	<div class="menubar">
+		{% block sidebar %}
+		<h3>
+		<ul>
+			<li><a href="/">Home</a></li>	
+			<li><a href="/listProject">Projects</a></li>	
+			<li><a href="/listSample">Samples</a></li>	
+			<li><a href="/SearchPage">Search</a></li>	
+		</ul>
+		</h3>
+		<br />
+		<br />
+		<hr />
+		{% endblock %}
+	</div>
+
+	<div id="content">
+		{% block content %}
+		{% endblock %}
+	</div>
+
+</body>
+</html>
