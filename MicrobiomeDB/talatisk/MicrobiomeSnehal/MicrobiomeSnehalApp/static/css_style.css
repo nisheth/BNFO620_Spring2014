@@ -1,0 +1,55 @@
+
+/*This is the style set for unordered list*/
+ul
+{
+border:1px solid #ccc;
+border-width:1px 0;
+list-style:none;
+margin:0;
+padding:0;
+text-align:center;
+}
+/*Style for displaying the link field */
+a
+{
+display:inline-block;
+padding:20px;
+}
+
+/*This is when user hovers over the link it changes color*/
+a:hover {background-color:#ff3300;}
+li {display:inline;}
+
+
+/*This is where the background color is set*/
+body
+{
+background-color:#b0c4de;
+}
+
+
+html {
+     height:100%
+}
+body {
+     height:100%
+}
+
+/*These define the class for the division in my base html the container and content is present to stick the footer on bottom of page*/
+#container {
+     position:relative;
+     min-height:90%;
+     _height:100%; 
+}
+#content {
+     padding-bottom:90px; 
+}
+
+#footer {
+     background-color:orange;
+     position: relative;
+     margin-top:-100px;    
+}
+
+
+

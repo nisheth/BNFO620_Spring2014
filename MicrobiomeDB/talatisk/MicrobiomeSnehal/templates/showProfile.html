@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Button - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="//code.jquery.com/theme.default.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
+  <script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+
+
+
+    <style>
+        table {
+            text-align: left;
+            font-size: 12px;
+            font-family: verdana;
+            background: #c0c0c0;
+        }
+
+        table thead tr,
+        table tfoot tr {
+            background: #c0c0c0;
+        }
+
+        table tbody tr {
+            background: #f0f0f0;
+        }
+
+        td, th {
+            border: 1px solid white;
+        }
+    </style>
+  <script>
+  $(function() {
+    $( "input[type=submit], a, button" )
+      .button()
+      .click(function( event ) {
+        event.submit()
+      });
+  });
+  $(document).ready(function(){
+  $(":reset").button();
+  $("#myTable").DataTable();
+});
+  </script>
+
+{% if profile_summary %}
+
+	<br />
+	<br />
+	<h3>Sample Profile - Search Results:</h3>
+	<br />
+	<br />
+	<table id = "table_id" class="display" table="align left">
+	<table style="width:750px">
+	<thead>
+	<tr>
+	<th>Sample</th>
+	<th>Classification Method</th>
+	<th>Taxa Level</th>
+	<th>Taxa Name</th>
+	{% for var in variableList %}
+		{% if var == 'numreads' %}
+			<th>Number of Reads</th>
+		{% elif var == 'perctotal' %}
+			<th>Percentage of Total</th>
+		{% elif var == 'avgscore' %}
+			<th>Average Score</th>
+		{% endif %}
+	{% endfor %}
+	</tr>
+	</thead>
+	<tbody>
+	{% for ps in profile_summary %}
+	<tr>
+		<td>{{ ps.sample.sample_name }}</td>
+		<td>{{ ps.classificationmethod.methodName }}</td>
+		<td>{{ ps.taxaID.level }}</td>
+		<td>{{ ps.taxaID.name }}</td>
+		{% for var in variableList %}
+			{% if var == 'numreads' %}
+				<td>{{ ps.numreads }}</td>
+			{% elif var == 'perctotal' %}
+				<td>{{ ps.perctotal }}</td>
+			{% elif var == 'avgscore' %}
+				<td>{{ ps.avgscore }}</td>
+			{% endif %}
+		{% endfor %}
+	</tr>
+	</tbody>
+	{% endfor %}
+
+	</table>
+
+{% else %}
+
+	<br />
+	<h3>Search Sample Profile:</h3>
+	
+	<br />
+	<br />
+	<b>Please make your selections:</b>
+	<br />
+	<br />
+	<form id= "search_sample_profile" action="" method="post">
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+	<p>Fields marked with * are required</p>
+	
+	 <label><h4 align='left'>Choose Sample(s)*:</h4></label>
+		{{form.sample}}
+	<br />
+	<br />
+	 <label><h4 align='left'>Classification Method(s)*:</h4></label>
+	 {{form.method}}
+	<br />
+	<br />
+	 <label><h4 align='left'>Choose Taxa Level(s)*:</h4></label>
+	 {{form.taxa}}
+	<br />
+	<br />
+	  <label><h4 align='left'>Choose ProfileVariable(s)*:</h4></label>
+	 {{form.profilevariable}}
+	<br />
+	<br />
+	<input type="submit" Value="Submit" />
+	</form>
+
+
+{% endif %}
+	
+
+<br />
+<br />
+<a href="/showProfile"><b>New Search</b></a>
+<br />
+
+{% endblock %}

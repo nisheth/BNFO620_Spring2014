@@ -1,0 +1,168 @@
+{% block header_title %}
+    <div class="title">
+    <title>Welcome to the Faculty HomePage!</title>
+    </div>
+{% endblock %}
+
+<html lang="en">
+<head>
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css_style.css' %}" />
+  <meta charset="utf-8">
+  <title>jQuery UI Button - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="//code.jquery.com/theme.default.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+    <style>
+        table {
+            text-align: left;
+            font-size: 12px;
+            font-family: verdana;
+            background: #c0c0c0;
+        }
+
+        table thead tr,
+        table tfoot tr {
+            background: #c0c0c0;
+        }
+
+        table tbody tr {
+            background: #f0f0f0;
+        }
+
+        td, th {
+            border: 1px solid white;
+        }
+    </style>
+  <script>
+  $(function() {
+    $( "input[type=submit], a, button" )
+      .button()
+      .click(function( event ) {
+        event.submit()
+      });
+  });
+  $(document).ready(function(){
+  $(":reset").button();
+  $("#myTable").DataTable();
+});
+  </script>
+{% block content %}
+<br/><br/><br/>
+<style>
+h1
+{
+text-shadow: 5px 5px 5px #FF0000;
+}
+.box {
+     display:none;
+     position: left;
+     top: 30px; 
+     left: 10px;
+    background: orange;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+a:hover + .box {
+     display:block;   
+}
+</style>
+<h1> Welcome to Microbiome620 HomePage: </h1>
+<br/>
+			<div id="floatbar">
+            <a href="/projects" >Projects</a>
+			<div class="box">This page provides information regarding the details of Microbiome Projects</div><!-- This is the address of the link Register   -->
+			<br/><br/>
+			<div id="floatbar">
+            <a href="/samples">Samples</a>  <!--This is the address of the link List  -->
+            <div class="box">This page provides information regarding the types of Samples, Method Used, and a Contact Name</div>
+			<br/><br/>
+			<div id="floatbar">
+			<a href="/showInfo" >showInfo</a>
+            <div class="box">This page displays a form which the user can search all clinical values they may want to look up for various sample(s)</div>
+			<br/><br/>
+			<div id="floatbar">
+			<a href="/showProfile">showProfile</a>
+			<div class="box">This page displays a form which the user can search all information for various sample(s), Taxonomy Level(s), Method(s), and ProfileVariable(s) to obtain info on Profile Summaries</div>
+            <br/><br/>
+			<div id="floatbar">
+			<a href="/searchVariable">searchVariable</a>
+			<div class="box">This page displays a form which the user can search specific information pertaining to the clinical information relevant to a particular sample in our project</div>
+			<br/><br/>
+			<div id="floatbar">
+			<a href="/searchProfile">searchProfile</a>
+			<div class="box">This page displays a form which the user can search specific information to the Taxonomy level, Method, and Profile Summary Variable(s)</div>
+			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+			
+		<div id="footer">
+		<p>Snehal K. Talati BNFO 620</p>
+		<p>Date: 5/4/2014</p>
+        <p>Version: Uses Models and DB</p>
+		</div>	
+{% endblock %}
+	
+</body>	
+
+<!-- ONE STEP TO INSTALL DATE & TIME STAMP:
+
+   1.  Paste the coding into the BODY of your HTML document  -->
+
+<!-- STEP ONE: Copy this code into the BODY of your HTML document  -->
+
+<BODY>
+
+<CENTER>
+<SCRIPT LANGUAGE="JavaScript">
+Stamp = new Date();
+year = Stamp.getYear();
+if (year < 2000) year = 1900 + year;
+document.write('<font size="2" face="Arial"><B>' + (Stamp.getMonth() + 1) +"/"+Stamp.getDate()+ "/"+ year + '</B></font><BR>');
+var Hours;
+var Mins;
+var Time;
+Hours = Stamp.getHours();
+if (Hours >= 12) {
+Time = " P.M.";
+}
+else {
+Time = " A.M.";
+}
+if (Hours > 12) {
+Hours -= 12;
+}
+if (Hours == 0) {
+Hours = 12;
+}
+Mins = Stamp.getMinutes();
+if (Mins < 10) {
+Mins = "0" + Mins;
+}	
+document.write('<font size="2" face="Arial"><B>' + Hours + ":" + Mins + Time + '</B></font>');
+// End -->
+</SCRIPT>
+</CENTER>
+
+<p><center>
+<font face="arial, helvetica" size="-2">Free JavaScripts provided<br>
+by <a href="http://javascriptsource.com">The JavaScript Source</a></font>
+</center><p>
+
+
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+

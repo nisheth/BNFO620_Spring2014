@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Button - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="//code.jquery.com/theme.default.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+
+    <style>
+        table {
+            text-align: left;
+            font-size: 12px;
+            font-family: verdana;
+            background: #c0c0c0;
+        }
+
+        table thead tr,
+        table tfoot tr {
+            background: #c0c0c0;
+        }
+
+        table tbody tr {
+            background: #f0f0f0;
+        }
+
+        td, th {
+            border: 1px solid white;
+        }
+    </style>
+  <script>
+  $(function() {
+    $( "input[type=submit], a, button" )
+      .button()
+      .click(function( event ) {
+        event.submit()
+      });
+  });
+  $(document).ready(function(){
+  $(":reset").button();
+  $("#myTable").tablesorter();
+
+});
+  </script>
+
+
+<form action="" method="post">{% csrf_token %}
+    <h1>Sample Info</h1>
+	{% if message %}
+		<p>{{ message }}</p>
+	{% endif %}
+	<br>
+
+{% if sampleVariable %}
+<div class="container">
+<table id = "myTable" class="display" table="align left">
+<table style="width:750px">
+    <tr>
+        <th>Sample Name</th>
+    {% for attribute in svlist %}
+        <th>{{ attribute }}</th>
+    {% endfor %}
+
+    </tr>
+    <tbody>
+        {% for key, sampleVariable in sampleVariable.items %}
+            <tr>
+                <td>{{ key }}</td>
+
+            {% for value in sampleVariable %}
+                <td>{{ value }}</td>
+            {% endfor %}
+
+            </tr>
+        {% endfor %}
+</tbody>
+</table>
+
+{% else %}
+
+	<form id= "search_sample_var" action="" method="post">
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <label><h4 align='left'>Choose Samples*:</h4></label>
+    {{ form.sample }}
+	<label><h4 align='left'>Choose Attributes*:</h4></label>
+    {{ form.samplevariable}}
+    <br/><br/>
+
+</div>
+<input type="submit" value="Submit" />    <input type="reset" value="Reset">
+</form>
+{% endif %}
+
+<a href="/showInfo">New Search</a>
+
+{% endblock %}

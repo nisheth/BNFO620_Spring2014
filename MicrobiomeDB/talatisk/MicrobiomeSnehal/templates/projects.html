@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block header_title %}
+    <div class="title">
+    <title>Welcome to the Faculty HomePage!</title>
+    </div>
+{% endblock %}
+
+{% block content %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Button - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="//code.jquery.com/theme.default.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
+  <script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+
+
+
+    <style>
+        table {
+            text-align: left;
+            font-size: 12px;
+            font-family: verdana;
+            background: #c0c0c0;
+        }
+
+        table thead tr,
+        table tfoot tr {
+            background: #c0c0c0;
+        }
+
+        table tbody tr {
+            background: #f0f0f0;
+        }
+
+        td, th {
+            border: 1px solid white;
+        }
+    </style>
+  <script>
+  $(function() {
+    $( "input[type=submit], a, button" )
+      .button()
+      .click(function( event ) {
+        event.submit()
+      });
+  });
+  $(document).ready(function(){
+  $(":reset").button();
+  $("#myTable").DataTable();
+});
+  </script>
+<br/><br/><br/>
+<table style="width:1250px">
+
+	<tr>
+	<th><b>Project Name</b></th>
+	<th><b>Project Description</b></th>
+	<th><b>Contact Name</b></th>
+	<th><b>Contact Email</b></th>
+	</tr>
+
+
+{% for c in projectList %}
+	<tr>
+	<td>{{c.name}}</td>
+	<td>{{c.description}}</td>
+	<td>{{c.contactName}}</td>
+	<td>{{c.contactEmail}}</td>
+	</tr>
+{% endfor %}
+
+
+</table>
+
+{% endblock %}
+  
+  
+  
+  
+  
