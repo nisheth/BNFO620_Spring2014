@@ -1,10 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p><b>Name&nbsp;&nbsp;Description&nbsp;&nbsp;Contact_Name&nbsp;&nbsp;Contact_email</b></p> 
+	<li><a href="/">Home</a></li>
+	<li><a href="/SampleList">View Samples</a></li>
+	<li><a href="/ProjectList">View Projects</a></li>
+	<li><a href="/Variables">View Variables</a></li>
+	<li><a href="/AttributeInfo">Filter on variables</a></li>
+	<li><a href="/ProfileInfo">Filter on profile</a></li>
+	<li><a href="/SearchVariable">Search samples on variables criteria</a></li>
+	<li><a href="/SearchProfile">Search samples on profile criteria</a></li>
+	
+{% if project_list %}
+<style>
+table,th,td
+{
+border:1px solid black;
+}
+</style>
+
+<table align="left">
+    <tr>
+        <th>Name</th>
+		<th>Description</th>
+		<th>Contact Name</th>
+		<th>Contact email</th>
+	</tr>		
+ 
 {% if project_list %}
 	{% for project in project_list %}
-		<p>{{project.name}}</a>&nbsp;&nbsp;{{project.description}}&nbsp;&nbsp;{{project.contact_name}}&nbsp;&nbsp;{{project.contact_email}}</p>
+	<tr>
+		<td>{{project.name}}</td>
+		<td>{{project.description}}</td>
+		<td>{{project.contact_name}}</td>
+		<td>{{project.contact_email}}</td>
+	</tr>
 	{% endfor %}	
+{% endif %}	
+
 {% endif %}	
 {% endblock %}

@@ -1,10 +1,16 @@
 {% extends "base.html" %}
-{% block header_title %}
-    <div class="title">
-    <title>Welcome to Microbiome Explorer!</title>
-    </div>
-{% endblock %}
-
 {% block content %}
-     <p>You can search the microbiome data here.</p>
+	<li><a href="/">Home</a></li>
+	<li><a href="/SampleList">View Samples</a></li>
+	<li><a href="/ProjectList">View Projects</a></li>
+	<li><a href="/Variables">View Variables</a></li>
+	<li><a href="/AttributeInfo">Filter on variables</a></li>
+	<li><a href="/ProfileInfo">Filter on profile</a></li>
+	<li><a href="/SearchVariable">Search samples on variables criteria</a></li>
+	<li><a href="/SearchProfile">Search samples on profile criteria</a></li>
+
+	<br></br>
+	<h1> Welcome to microbiome explorer!</h1>
+	<p>You can search and filter your microbiome data here.</p>
+	
 {% endblock %}

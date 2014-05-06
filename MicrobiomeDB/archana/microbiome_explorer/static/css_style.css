@@ -1,0 +1,49 @@
+ul
+{
+border:1px solid #ccc;
+border-width:1px 0;
+list-style:none;
+margin:0;
+padding:0;
+text-align:center;
+}
+
+a
+{
+display:inline-block;
+padding:20px;
+}
+
+a:link {color:floralwhite;}      /* unvisited link */
+a:visited {color:black;}  /* visited link */
+li {display:inline;}
+
+body
+{
+background-color:lightseagreen;
+}
+
+h1
+{
+color:sienna;
+text-align:left;
+font-size:20pt;
+}
+
+html {
+     height:140%
+}
+body {
+     height:80%
+}
+
+#container {
+     position:relative;
+     min-height:90%;
+     _height:100%; 
+}
+#content {
+     padding-bottom:90px; 
+}
+
+

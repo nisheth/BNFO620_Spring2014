@@ -1,0 +1,14 @@
+{%extends "base.html"%}
+
+{% block content %}
+<li><a href="/">Home</a></li>
+ <li><a href="/SampleList">View all Sample</a></li>
+ <li><a href="/ProjectList">View all Projects</a></li>
+ <li><a href="/Variables">View all Variables</a></li>
+ <li><a href="/AttributeInfo">Select attribute criteria </a></li>
+ <li><a href="/ProfileInfo">Select profile criteria </a></li>
+
+{% if samples %}
+	<h3>You have successfully selected search criteria</h3>
+{% endif %}
+{% endblock %}

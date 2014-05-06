@@ -40,7 +40,11 @@ class SampleVariable(models.Model):
 	value = models.CharField(max_length = 100)
 	
 	def __unicode__(self):
-		return self.sample
+		return_str = self.sample.name + " - " + self.variable
+		return return_str
+
+	class Meta:
+		unique_together = ('sample', 'variable')
 
 	@classmethod
 	def createSampleVariable(cls, sample, variable, value):
@@ -76,7 +80,7 @@ class Method(models.Model):
 	contact_email = models.EmailField()
 	
 	def __unicode__(self):
-		return self.key
+		return self.name
 
 	@classmethod
 	def createMethod(cls, method_id, name, description, contact_name, contact_email):
@@ -86,21 +90,21 @@ class Method(models.Model):
 
 
 class Taxonomy(models.Model):
-	id = models.AutoField(primary_key = True)
-	taxa_id = models.CharField(max_length = 50, unique = True)
-	name = models.CharField(max_length = 100)
-	parent_taxa_id = models.CharField(max_length = 50)
-	rank = models.CharField(max_length = 50)
+	id = models.AutoField(primary_key=True)
+	name = models.CharField(max_length=200)
+	level = models.CharField(max_length=50)
 	
 	def __unicode__(self):
-		return_str = self.name + " - " + self.taxa_id
-		return return_str
+		return self.name
 	
+	class Meta:
+		unique_together = ('name', 'level')
+
 	@classmethod
-	def createTaxonomy(cls, taxa_id, name, parent_taxa_id, rank):
-		taxa_ID = Taxonomy(taxa_id = taxa_id, name = name, parent_taxa_id = parent_taxa_id, rank = rank)
-		taxa_ID.save()
-		return taxa_ID
+	def createTaxonomy(cls, level, name):
+		taxaID = Taxonomy(level=level, name=name)
+		taxaID.save()
+		return taxaID
 
 
 class ReadAssignment(models.Model):
@@ -134,7 +138,7 @@ class ProfileSummary(models.Model):
 	avg_score = models.FloatField()
 
 	def __unicode__(self):
-		return_str = self.sample + " - " + self.taxaId
+		return_str = self.sample.name + " - " + self.taxa_Id.name
 		return return_str
 	
         class Meta:

@@ -19,6 +19,6 @@ class Command(BaseCommand):
 
 	    for taxa in taxaList:     #for each row in the file (row is a dict using the header row as the keys and the values in the following rows as the values)
                 print >> sys.stderr, taxa
-		taxonomy = Taxonomy.createTaxonomy(taxa['Tax_id'], taxa['Unique_name'], taxa['Parent_tax_id'], taxa['Rank'])
+		taxonomy = Taxonomy.createTaxonomy(taxa['Taxa-Level'], taxa['Taxa-Name'])
 	
 	    self.stdout.write("Loaded all taxa details from file")

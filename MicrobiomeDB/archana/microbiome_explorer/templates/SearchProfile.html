@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<li><a href="/">Home</a></li>
+	<li><a href="/SampleList">View Samples</a></li>
+	<li><a href="/ProjectList">View Projects</a></li>
+	<li><a href="/Variables">View Variables</a></li>
+	<li><a href="/AttributeInfo">Filter on variables</a></li>
+	<li><a href="/ProfileInfo">Filter on profile</a></li>
+	<li><a href="/SearchVariable">Search samples on variables criteria</a></li>
+	<li><a href="/SearchProfile">Search samples on profile criteria</a></li>
+	
+<form action="" method="post">{% csrf_token %}
+	<label><h2>Choose Taxonomy:</h2></label>
+    {{ form.taxa}}
+	<label><h2>Choose Classification Method:</h2></label>
+    {{ form.method}}
+	<label><h2>Choose Variable for Comparison:</h2></label>
+    {{ form.variables}}
+	<label><h2>Choose Threshold Value:</h2></label>
+    {{ form.threshold}}
+	<p></p>
+	<input type="submit" value="Submit" />
+
+	{% if message %}
+		<h1>Results</h1>
+        {% if condition %}
+			<p>{{ message }} <b>{{ condition }}</b></p>
+	    {% else %}
+			<p>{{ message }}</p>
+        {% endif %}
+    {% endif %}
+</form>	
+
+{% if sample_list %}
+<style>
+table,th,td
+{
+border:2px solid black;
+}
+</style>
+
+<table align="left">
+    <tr>
+        <th>Sample Name</th>
+	</tr>	
+	
+{% if sample_list %}
+	<tr>
+    {% for sample in sample_list %}
+        <td>{{ sample }}</td>
+	</tr>	
+    {% endfor %}
+
+{% endif %}
+{% endif %}
+{% endblock %}

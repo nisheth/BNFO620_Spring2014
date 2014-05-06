@@ -1,0 +1,85 @@
+{%extends "base.html"%}
+
+{% block content %}
+	<li><a href="/">Home</a></li>
+	<li><a href="/SampleList">View Samples</a></li>
+	<li><a href="/ProjectList">View Projects</a></li>
+	<li><a href="/Variables">View Variables</a></li>
+	<li><a href="/AttributeInfo">Filter on variables</a></li>
+	<li><a href="/ProfileInfo">Filter on profile</a></li>
+	<li><a href="/SearchVariable">Search samples on variables criteria</a></li>
+	<li><a href="/SearchProfile">Search samples on profile criteria</a></li>
+ 
+<form action="" method="post">{% csrf_token %}
+	<h2>Samples</h2>
+	{{form.samples}}
+	<h2>Method</h2>
+	{{form.method}}
+	<h2>Taxa</h2>
+	{{form.taxa}}
+	<h2>Variables</h2>
+	{{form.variables}}
+	<br></br>
+<input type="submit" value="Submit" />
+
+{% if profile_list %}
+    <h1>Results</h1>
+	{% if message %}
+		<p>{{ message }}</p>
+	{% endif %}
+	<br>
+{% endif %}	
+</form>
+
+{% if profile_list %}
+<style>
+table,th,td
+{
+border:2px solid black;
+}
+</style>
+
+<table align="left">
+    <tr>
+        <th>Sample Name</th>
+        <th>Taxonomy Level</th>
+        <th>Taxonomy Name</th>
+        <th>Classification Method</th>
+        {% if variables == 'Number of reads' %}
+            <th>Number of Reads</th>
+        {% endif %}
+
+        {% if variables == 'Percentage' %}
+            <th>Percentage</th>
+        {% endif %}
+
+         {% if variables == 'Average score' %}
+            <th>Average Score</th>
+        {% endif %}
+    </tr>
+
+
+	{% for profile in profile_list %}
+		<tr>
+			<td>{{ profile.sample }}</td>
+			<td>{{ taxa_level }}</td>
+			<td>{{ profile.taxa_Id.name }}</td>
+			<td>{{ profile.method }}</td>
+			{% if variables == 'Number of reads' %}
+				<td>{{ profile.num_of_reads }}</td>
+			{% endif %}
+
+			{% if variables == 'Percentage' %}
+				<td>{{ profile.percentage }}</td>
+			{% endif %}
+
+			{% if variables == 'Average score' %}
+				<td>{{ profile.avg_score }}</td>
+			{% endif %}
+		</tr>
+	{% endfor %}
+
+</table>
+ 
+{% endif %}
+{% endblock %}
